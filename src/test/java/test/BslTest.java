@@ -26,7 +26,7 @@ public class BslTest {
         engine.setLogger(new DefaultLogger());
         engine.setInputEncoding(System.getProperty("file.encoding"));
         engine.setOutputEncoding("UTF-8");
-        engine.setSpecifiedEncoder(true);
+        engine.setSpecifiedEncoder(false);
         engine.setUseTemplateCache(true);
         engine.setResourceLoader(new FileResourceLoader(engine.getInputEncoding()));
         engine.setTextCompressor(new EmptyCompressor());
