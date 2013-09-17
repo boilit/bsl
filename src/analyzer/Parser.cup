@@ -1,0 +1,369 @@
+// Cpyright (c) 2013, Boilit. All Rights Reserved.
+
+package org.boilit.bsl.core;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import org.boilit.bsl.Template;
+import org.boilit.bsl.core.dxs.*;
+import org.boilit.bsl.core.eao.*;
+import org.boilit.bsl.core.ebo.*;
+import org.boilit.bsl.core.eoo.*;
+import org.boilit.bsl.core.euo.*;
+import org.boilit.bsl.core.exo.*;
+import org.boilit.bsl.core.exs.*;
+import org.boilit.bsl.core.sxs.*;
+import org.boilit.bsl.exception.*;
+import org.boilit.cup.*;
+
+/* Preliminaries to use the scanner. */
+scan with {: return lexer.next_token(); :};
+
+parser code {:
+	private Lexer lexer;
+	private Template template;
+
+	public Template getTemplate() {
+	    return this.template;
+	}
+
+	public void setTemplate(Template template) {
+	    this.template = template;
+	}
+
+	public final int getLine() {
+		return lexer != null ? lexer.getLine() : 0;
+	}
+
+	public final int getColumn() {
+		return lexer != null ? lexer.getColumn() : 0;
+	}
+	
+	public IExecute parse(java.io.Reader in) throws Exception {
+        this.lexer = new Lexer(in);
+        try {
+            return ((Root) this.parse().value).optimize();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            try {
+                this.lexer.yyclose();
+            } catch (Exception ignore) {
+            }
+        }
+	}
+	
+	//TODO:
+	@Override
+	protected void report_fatal_error(String message, Object info) throws ParseException {
+		done_parsing();
+		throw new ParseException("Parse Error[line:" + getLine() + ", column:" + getColumn() + "]! " + message +","+info);
+	}
+
+	@Override
+	protected void syntax_error(Symbol cur_token){
+	}
+
+	@Override
+	protected void unrecovered_syntax_error(Symbol cur_token) {
+		try{
+            report_fatal_error("Syntax Error, Failed to recover!", cur_token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+    
+	@Override
+	protected void report_error(String message, Object info) {
+		System.err.println("Parse Error[line:" + getLine() + ", column:" + getColumn() + "]! " + message +","+info);
+	}
+
+	//TODO:
+	@Override
+	protected void debug_message(String message) {
+		System.err.println(message);
+	}
+:};
+
+action code {:
+	public Template getTemplate() {
+	    return this.parser.getTemplate();
+	}
+:};
+
+/* terminals */
+terminal Integer INCLUDE, ECHO, VAR, IF, ELSE, LOOP, NEXT, BREAK, NUM_POW, MERGE;
+
+terminal Integer DOT, COLON, COMMA, SEMI,// . : , ;
+    QUESTION, QUESTION_COLON, // ? ?:
+    LGC_AND, LGC_OR, LGC_NOT, // || && !
+    LGC_CLT, LGC_CGT, LGC_CLE, LGC_CGE, LGC_CEE, LGC_CNE, // < > <= >= == !=
+    NUM_ADD, NUM_SUB, NUM_MUL, NUM_DIV, NUM_MOD, NUM_ADD1, NUM_SUB1, NUM_NGT, // + - * / ^ % ++ -- Negative'-'
+    BIT_AND, BIT_OR, BIT_NOT, BIT_XOR, BIT_LM, BIT_RM, BIT_ZRM, // & | ~ ^ << >> >>>
+    ASSIGN, LGC_AND_ASSIGN, LGC_OR_ASSIGN, // = &&= ||=
+    NUM_ADD_ASSIGN, NUM_SUB_ASSIGN, NUM_MUL_ASSIGN, NUM_DIV_ASSIGN, NUM_MOD_ASSIGN, // += -= *= /= %=
+    BIT_AND_ASSIGN, BIT_OR_ASSIGN, BIT_XOR_ASSIGN, BIT_LM_ASSIGN, BIT_RM_ASSIGN, BIT_ZRM_ASSIGN, // &= |= ^= <<= >>= >>>=
+    BRC_LEFT, BRC_RIGHT, BRK_LEFT, BRK_RIGHT, PRN_LEFT, PRN_RIGHT, HOLD_TAIL; // { } [ ] ( ) HOLD_TAIL'}'
+
+terminal NULL;
+terminal Boolean BOOL;
+terminal Byte BYTE;
+terminal Short SHORT;
+terminal Integer INTEGER;
+terminal Long LONG;
+terminal Float FLOAT;
+terminal Double DOUBLE;
+terminal String CHARS, LABEL, TEXT;
+
+/* non terminal */
+non terminal Root ast;
+non terminal IStatement statement;
+non terminal Text text;
+non terminal Hold hold;
+non terminal HoldFormat hold_format;
+non terminal Echo echo;
+non terminal EchoFormat echo_format;
+non terminal Include inc;
+non terminal Var var;
+non terminal Branch branch, branch_item;
+non terminal Loop loop;
+non terminal Block block, block_item;
+non terminal AbstractExpression expression, prior_expression, structures;
+non terminal AbstractOperator figures;
+non terminal Rank rank, rank_item;
+non terminal Hash hash, hash_item;
+non terminal Invoke call;
+non terminal Nature nature;
+non terminal List<AbstractExpression> params;
+non terminal AbstractUnitaryOperator not, ngt, bit_not; // ! NEGATIVE ~
+non terminal AbstractOneselfOperator add1, sub1; // ++ --
+non terminal AbstractBinaryOperator and, or, // && ||
+    clt, cgt, cle, cge, cee, cne, // < > <= >= == !=
+    add, sub, mul, div, pow, mod, // + - * / pow %
+    bit_and, bit_or, bit_xor, bit_lm, bit_rm, bit_zrm; // & | ^ << >> >>>
+non terminal Question question; // ? :
+non terminal QuestionT questionT; // ?
+non terminal QuestionF questionF; // ?:
+non terminal NormalAssign assign;
+non terminal AbstractAssignOperator assigns, // all op_assigns
+    and_assign, or_assign, add_assign, sub_assign, // &&= ||= += -=
+    mul_assign, div_assign, mod_assign, // *= /= %=
+    bit_and_assign, bit_or_assign, bit_xor_assign,// &= |= ^=
+    bit_lm_assign, bit_rm_assign, bit_zrm_assign; // <<= >>= >>>=
+non terminal Merge merge, merge_item;
+
+/* precedence */
+precedence left  SEMI; // ;
+precedence left  INCLUDE, ECHO, VAR, IF, ELSE, LOOP, NEXT, BREAK;// keywords
+precedence right HOLD_TAIL;
+precedence left  COMMA; // ,
+precedence right ASSIGN, NUM_ADD_ASSIGN, NUM_SUB_ASSIGN, // = += -=
+    NUM_MUL_ASSIGN, NUM_DIV_ASSIGN, NUM_MOD_ASSIGN, // *= /= %=
+    BIT_AND_ASSIGN, BIT_OR_ASSIGN, BIT_XOR_ASSIGN, // &= |= ^=
+    BIT_LM_ASSIGN, BIT_RM_ASSIGN, BIT_ZRM_ASSIGN; // <<= >>= >>>=
+precedence right QUESTION_COLON, QUESTION, COLON; // ?: ? :
+precedence left  LGC_OR; // ||
+precedence left  LGC_AND; // &&
+precedence left  BIT_XOR; // ^
+precedence left  BIT_OR; // |
+precedence left  BIT_AND; // &
+precedence left  LGC_CEE, LGC_CNE; // == !=
+precedence left  LGC_CLT, LGC_CGT, LGC_CLE, LGC_CGE;//, IOF; // < > <= >= instanceof
+precedence left  BIT_LM, BIT_RM, BIT_ZRM; // << >> >>>
+precedence left  NUM_ADD, NUM_SUB, MERGE; // + - MERGE
+precedence left  NUM_MUL, NUM_DIV, NUM_MOD, NUM_POW; // * / % NUM_POW
+precedence right NUM_NGT, NUM_ADD1, NUM_SUB1, BIT_NOT, LGC_NOT; // NEGATIVE ++ -- ~ !
+precedence left  DOT, BRK_LEFT, BRK_RIGHT, PRN_LEFT, PRN_RIGHT, BRC_LEFT, BRC_RIGHT;  // } . [ ] ( ) { }
+
+/* statements */
+ast ::= ast:a statement:b {: RESULT = a.add(b); :}
+	| {: RESULT = new Root(this.parser.getLine(), this.parser.getColumn()); :};
+
+statement ::= text:a {: RESULT=a; :}
+    | hold:a {: RESULT=a; :}
+    | hold_format:a {: RESULT=a; :}
+	| echo:a {: RESULT=a; :}
+	| echo_format:a {: RESULT=a; :}
+	| inc:a SEMI {: RESULT=a; :}
+	| var:a SEMI {: RESULT=a; :}
+    | call:a SEMI {: RESULT=a; :}
+	| assigns:a SEMI {: RESULT=a; :}
+	| branch:a {: RESULT=a; :}
+	| loop:a {: RESULT=a; :}
+	| NEXT:a SEMI {: RESULT=new Next($a.line, $a.column); :}
+	| BREAK:a SEMI {: RESULT=new Break($a.line, $a.column); :};
+
+text ::= TEXT:a {: RESULT = new Text($a.line, $a.column, a, getTemplate()); :};
+
+hold ::= expression:e HOLD_TAIL {: RESULT=new Hold($e.line, $e.column, e); :};
+hold_format ::= expression:e COMMA CHARS:b HOLD_TAIL {: RESULT = new HoldFormat($e.line, $e.column, e, b, getTemplate()); :};
+
+echo ::= ECHO:a PRN_LEFT expression:e PRN_RIGHT SEMI {: RESULT = new Echo($a.line, $a.column, e); :};
+echo_format ::= ECHO:a PRN_LEFT expression:e COMMA CHARS:b PRN_RIGHT SEMI {: RESULT = new EchoFormat($a.line, $a.column, e, b, getTemplate()); :};
+
+inc ::= INCLUDE:a PRN_LEFT expression:e PRN_RIGHT {: RESULT=new Include($a.line,$a.column, e, null, getTemplate()); :}
+    | INCLUDE:a PRN_LEFT expression:e COMMA hash:h PRN_RIGHT {: RESULT=new Include($a.line, $a.column, e, h, getTemplate()); :};
+
+var ::= var:a COMMA assign:b {: RESULT=a.add(b); :}
+    | VAR:a assign:b {: RESULT = new Var($a.line, $a.column).add(b); :};
+
+branch ::= branch_item:a {: RESULT=a; :}
+    | branch_item:a ELSE block:b {: RESULT= a.addElse(b); :};
+
+branch_item ::= IF:a PRN_LEFT expression:e PRN_RIGHT block:b {: RESULT= new Branch($a.line, $a.column).add(e, b); :}
+    | branch_item:a ELSE IF PRN_LEFT expression:e PRN_RIGHT block:b {: RESULT= a.add(e, b); :};
+
+loop ::= LOOP:p PRN_LEFT LABEL:k COMMA expression:e PRN_RIGHT block:b {: RESULT=new Loop($p.line, $p.column, k, e, b); :};
+
+block ::= block_item:a BRC_RIGHT {: RESULT=a; :};
+
+block_item ::= BRC_LEFT:a {: RESULT=new Block($a.line, $a.column); :}
+    | block_item:a statement:b {: RESULT=a.add(b); :};
+
+expression ::= assign:a {: RESULT=a; :}
+    | assigns:a {: RESULT=a; :}
+    | questionT:a {: RESULT=a; :}
+    | questionF:a {: RESULT=a; :}
+    | question:a {: RESULT=a; :}
+    | figures:a {: RESULT=a; :}
+//    | cast:a {: RESULT=a; :}
+    | structures:a {: RESULT=a; :}
+    | prior_expression:a {: RESULT=a; :}
+    | call:a {: RESULT=a; :};
+
+prior_expression ::= PRN_LEFT:a expression:e PRN_RIGHT {: RESULT=e; :};
+
+questionT ::= expression:e1 QUESTION:p expression:e2 {: RESULT=new QuestionT($p.line, $p.column, e1, e2); :};
+questionF ::= expression:e1 QUESTION_COLON:p expression:e2 {: RESULT=new QuestionF($p.line, $p.column, e1, e2); :};
+question ::= expression:e1 QUESTION:p expression:e2 COLON expression:e3 {: RESULT=new Question($p.line, $p.column, e1, e2, e3); :};
+
+call ::= expression:e DOT nature:n {: RESULT=new Invoke($e.line, $e.column, e).add(n); :}
+    | call:c DOT nature:n {: RESULT=c.add(n); :};
+
+nature ::= LABEL:a {: RESULT=new Nature($a.line, $a.column, true, a); :}
+    | LABEL:a PRN_LEFT PRN_RIGHT {: RESULT=new Nature($a.line, $a.column, false, a); :}
+    | LABEL:a PRN_LEFT params:ps PRN_RIGHT {: RESULT=new Nature($a.line, $a.column, false, a).add(ps); :};
+
+params ::= expression:e {: List<AbstractExpression> ps=new ArrayList<AbstractExpression>(); ps.add(e); RESULT=ps; :}
+    | params:ps COMMA expression:e {: ps.add(e); RESULT=ps; :};
+
+figures ::= or:a {: RESULT=a; :}
+    | and:a {: RESULT=a; :}
+    | not:a {: RESULT=a; :}
+    | clt:a {: RESULT=a; :}
+    | cgt:a {: RESULT=a; :}
+    | cle:a {: RESULT=a; :}
+    | cge:a {: RESULT=a; :}
+    | cee:a {: RESULT=a; :}
+    | cne:a {: RESULT=a; :}
+    | add:a {: RESULT=a; :}
+    | sub:a {: RESULT=a; :}
+    | mul:a {: RESULT=a; :}
+    | div:a {: RESULT=a; :}
+    | mod:a {: RESULT=a; :}
+    | ngt:a {: RESULT=a; :}
+    | bit_and:a {: RESULT=a; :}
+    | bit_or:a {: RESULT=a; :}
+    | bit_xor:a {: RESULT=a; :}
+    | bit_lm:a {: RESULT=a; :}
+    | bit_rm:a {: RESULT=a; :}
+    | bit_zrm:a {: RESULT=a; :}
+    | bit_not:a {: RESULT=a; :}
+    | add1:a {: RESULT=a; :}
+    | sub1:a {: RESULT=a; :}
+    | pow:a {: RESULT=a; :}
+    | merge:a {: RESULT=a; :};
+
+and ::= expression:e1 LGC_AND:p expression:e2 {: RESULT = new LgcAnd($p.line, $p.column, e1, e2); :};
+or ::= expression:e1 LGC_OR:p expression:e2 {: RESULT = new LgcOr($p.line, $p.column, e1, e2); :};
+not ::= LGC_NOT:p expression:e {: RESULT = new LgcNot($p.line, $p.column, e); :};
+
+clt ::= expression:e1 LGC_CLT:p expression:e2 {: RESULT = new LgcTlt($p.line, $p.column, e1, e2); :};
+cgt ::= expression:e1 LGC_CGT:p expression:e2 {: RESULT = new LgcTgt($p.line, $p.column, e1, e2); :};
+cle ::= expression:e1 LGC_CLE:p expression:e2 {: RESULT = new LgcTle($p.line, $p.column, e1, e2); :};
+cge ::= expression:e1 LGC_CGE:p expression:e2 {: RESULT = new LgcTge($p.line, $p.column, e1, e2); :};
+cee ::= expression:e1 LGC_CEE:p expression:e2 {: RESULT = new LgcTee($p.line, $p.column, e1, e2); :};
+cne ::= expression:e1 LGC_CNE:p expression:e2 {: RESULT = new LgcTne($p.line, $p.column, e1, e2); :};
+
+add ::= expression:e1 NUM_ADD:p expression:e2 {: RESULT = new NumAdd($p.line, $p.column, e1, e2); :};
+sub ::= expression:e1 NUM_SUB:p expression:e2 {: RESULT = new NumSub($p.line, $p.column, e1, e2); :};
+mul ::= expression:e1 NUM_MUL:p expression:e2 {: RESULT = new NumMul($p.line, $p.column, e1, e2); :};
+div ::= expression:e1 NUM_DIV:p expression:e2 {: RESULT = new NumDiv($p.line, $p.column, e1, e2); :};
+mod ::= expression:e1 NUM_MOD:p expression:e2 {: RESULT = new NumMod($p.line, $p.column, e1, e2); :};
+ngt ::= NUM_SUB:p expression:e {: RESULT = new NumNgt($p.line, $p.column, e); :} %prec NUM_NGT;
+pow ::= NUM_POW:p PRN_LEFT expression:e1 COMMA expression:e2 PRN_RIGHT {: RESULT = new NumPow($p.line, $p.column, e1, e2); :};
+
+bit_and ::= expression:e1 BIT_AND:p expression:e2 {: RESULT = new BitAnd($p.line, $p.column, e1, e2); :};
+bit_or ::= expression:e1 BIT_OR:p expression:e2 {: RESULT = new BitOr($p.line, $p.column, e1, e2); :};
+bit_xor ::= expression:e1 BIT_XOR:p expression:e2 {: RESULT = new BitXor($p.line, $p.column, e1, e2); :};
+bit_lm ::= expression:e1 BIT_LM:p expression:e2 {: RESULT = new BitLm($p.line, $p.column, e1, e2); :};
+bit_rm ::= expression:e1 BIT_RM:p expression:e2 {: RESULT = new BitRm($p.line, $p.column, e1, e2); :};
+bit_zrm ::= expression:e1 BIT_ZRM:p expression:e2 {: RESULT = new BitZrm($p.line, $p.column, e1, e2); :};
+bit_not ::= BIT_NOT:p expression:e {: RESULT = new BitNot($p.line, $p.column, e); :};
+
+add1 ::= NUM_ADD1:p LABEL:v {: RESULT = new NumAdd1($p.line, $p.column, v, true); :}
+    | LABEL:v NUM_ADD1:p {: RESULT = new NumAdd1($p.line, $p.column, v, false); :};
+sub1 ::= NUM_SUB1:p LABEL:v {: RESULT = new NumSub1($p.line, $p.column, v, true); :}
+    | LABEL:v NUM_SUB1:p {: RESULT = new NumSub1($p.line, $p.column, v, false); :};
+
+merge ::= merge_item:a PRN_RIGHT{: RESULT = a; :};
+merge_item ::= merge_item:a COMMA expression:e {: RESULT = a.add(e); :}
+    | MERGE:p PRN_LEFT expression:e {: RESULT=new Merge($p.line, $p.column).add(e); :};
+
+assigns ::= and_assign:a {: RESULT=a; :}
+    | or_assign:a {: RESULT=a; :}
+    | add_assign:a {: RESULT=a; :}
+    | sub_assign:a {: RESULT=a; :}
+    | mul_assign:a {: RESULT=a; :}
+    | div_assign:a {: RESULT=a; :}
+    | mod_assign:a {: RESULT=a; :}
+    | bit_and_assign:a {: RESULT=a; :}
+    | bit_or_assign:a {: RESULT=a; :}
+    | bit_xor_assign:a {: RESULT=a; :}
+    | bit_lm_assign:a {: RESULT=a; :}
+    | bit_rm_assign:a {: RESULT=a; :}
+    | bit_zrm_assign:a {: RESULT=a; :};
+
+assign ::= LABEL:v ASSIGN:p expression:e {: RESULT = new NormalAssign($p.line, $p.column, v, e); :};
+
+and_assign ::= LABEL:v LGC_AND_ASSIGN:p expression:e {: RESULT = new LgcAndAssign($p.line, $p.column, v, e); :};
+or_assign ::= LABEL:v LGC_OR_ASSIGN:p expression:e {: RESULT = new LgcOrAssign($p.line, $p.column, v, e); :};
+
+add_assign ::= LABEL:v NUM_ADD_ASSIGN:p expression:e {: RESULT = new NumAddAssign($p.line, $p.column, v, e); :};
+sub_assign ::= LABEL:v NUM_SUB_ASSIGN:p expression:e {: RESULT = new NumSubAssign($p.line, $p.column, v, e); :};
+mul_assign ::= LABEL:v NUM_MUL_ASSIGN:p expression:e {: RESULT = new NumMulAssign($p.line, $p.column, v, e); :};
+div_assign ::= LABEL:v NUM_DIV_ASSIGN:p expression:e {: RESULT = new NumDivAssign($p.line, $p.column, v, e); :};
+mod_assign ::= LABEL:v NUM_MOD_ASSIGN:p expression:e {: RESULT = new NumModAssign($p.line, $p.column, v, e); :};
+
+bit_and_assign ::= LABEL:v BIT_AND_ASSIGN:p expression:e {: RESULT = new BitAndAssign($p.line, $p.column, v, e); :};
+bit_or_assign ::= LABEL:v BIT_OR_ASSIGN:p expression:e {: RESULT = new BitOrAssign($p.line, $p.column, v, e); :};
+bit_xor_assign ::= LABEL:v BIT_XOR_ASSIGN:p expression:e {: RESULT = new BitXorAssign($p.line, $p.column, v, e); :};
+bit_lm_assign ::= LABEL:v BIT_LM_ASSIGN:p expression:e {: RESULT = new BitLmAssign($p.line, $p.column, v, e); :};
+bit_rm_assign ::= LABEL:v BIT_RM_ASSIGN:p expression:e {: RESULT = new BitRmAssign($p.line, $p.column, v, e); :};
+bit_zrm_assign ::= LABEL:v BIT_ZRM_ASSIGN:p expression:e {: RESULT = new BitZrmAssign($p.line, $p.column, v, e); :};
+
+structures ::= NULL:a {: RESULT = new Value($a.line, $a.column, null); :}
+	| BOOL:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| BYTE:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| SHORT:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| INTEGER:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| LONG:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| FLOAT:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| DOUBLE:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| CHARS:a {: RESULT = new Value($a.line, $a.column, a); :}
+	| LABEL:a {: RESULT = new Label($a.line, $a.column, a); :}
+	| rank:a {: RESULT = a; :}
+	| hash:a {: RESULT = a; :};
+
+rank ::= rank_item:a BRK_RIGHT {: RESULT=a; :}
+    | BRK_LEFT:a BRK_RIGHT {: RESULT=new Rank($a.line, $a.column); :};
+
+rank_item ::= BRK_LEFT:a expression:b {: RESULT=new Rank($a.line, $a.column).add(b); :}
+    | rank_item:a COMMA expression:b {: RESULT=a.add(b); :};
+
+hash ::= hash_item:a BRC_RIGHT {: RESULT=a; :}
+    | BRC_LEFT:a BRC_RIGHT {: RESULT=new Hash($a.line, $a.column); :};
+
+hash_item ::= BRC_LEFT:a expression:b COLON expression:c {: RESULT=new Hash($a.line, $a.column).add(b,c); :}
+    | hash_item:a COMMA expression:b COLON expression:c {: RESULT=a.add(b,c); :};

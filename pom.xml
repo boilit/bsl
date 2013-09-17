@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.boilit</groupId>
+    <artifactId>bsl</artifactId>
+    <version>0.6-SNAPSHOT</version>
+
+    <name>Boilit Script Language</name>
+    <description>an explain to perform language engine, run with jre1.5+.</description>
+
+    <url>https://boilit.github.com/bsl</url>
+
+    <!--<modules>-->
+    <!--<module>bsl</module>-->
+    <!--</modules>-->
+
+    <scm>
+        <url>https://boilit.github.com/bsl</url>
+        <connection>scm:git:https://github.com/boilit/bsl.git</connection>
+        <developerConnection>scm:git:git@github.com:boilit/bsl.git</developerConnection>
+    </scm>
+
+    <organization>
+        <name>boilit</name>
+        <url>https://github.com/boilit</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/boilit/bsl/blob/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>boilit</id>
+            <name>Jingyang Yu</name>
+            <email>boilit@163.com</email>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/boilit/bsl/issues</url>
+    </issueManagement>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+        </profile>
+    </profiles>
+</project>
