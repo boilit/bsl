@@ -29,7 +29,7 @@ public class BslTest {
         engine.setSpecifiedEncoder(true);
         engine.setUseTemplateCache(true);
         engine.setResourceLoader(new FileResourceLoader(engine.getInputEncoding()));
-        engine.setTextCompressor(new EmptyCompressor());
+        engine.setTextCompressor(new ExtremeCompressor());
 
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("date", new Date());
