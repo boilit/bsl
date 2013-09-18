@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boilit Script Language</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../themes/default/css.css">
+    <link type="text/css" rel="stylesheet" href="../scripts/prettify/themes/boilit.css" media="screen"/>
+
+    <script type="text/javascript" src="../scripts/prettify/scripts/prettify.js"></script>
+
+</head>
+<body onload="prettyPrint();">
+
+<h1>示例代码</h1>
+<pre class="prettyprint language-js linenums">
+&lt;!--[
+    // 关键字
+
+    // 包含模板，用法参考<a href="include.html">包含模板</a>
+    include
+
+    // 变量定义，用法参考<a href="vars.html">变量定义</a>
+    var
+
+    // 乘方，用法参考<a href="expression.html">表达式运算</a>
+    pow
+
+    // 输出，用法参考<a href="output.html">文本输出</a>
+    echo
+
+    // 合并多个字符串，用法参考<a href="expression.html">表达式运算</a>
+    merge
+
+    // 循环，用法参考<a href="loop.html">循环迭代</a>
+    loop
+
+    // 多路分支，用法参考<a href="branch.html">多路分支</a>
+    if
+    else if
+    else
+
+    // 其它Java语言的关键字及保留关键字
+]--&gt;
+</pre>
+<h1>代码解释：</h1>
+<pre style="line-height: 20px;">
+    1、本引擎内部定义了上述关键字，注意关键字不能用作变量名称，否则会出现语法错误；
+    2、本引擎是以Java作为宿主语言而存在的，所以除上述关键字外，Java的关键字最好也不要使用，以免出现语法错误；
+    3、上述各个关键字的用法请点击参考链接进入各自的解释页面查看；
+</pre>
+</body>
+</html>

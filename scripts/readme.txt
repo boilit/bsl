@@ -1,0 +1,1 @@
+version: jquery 1.8.0

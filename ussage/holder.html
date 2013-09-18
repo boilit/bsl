@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boilit Script Language</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../themes/default/css.css">
+    <link type="text/css" rel="stylesheet" href="../scripts/prettify/themes/boilit.css" media="screen"/>
+
+    <script type="text/javascript" src="../scripts/prettify/scripts/prettify.js"></script>
+
+</head>
+<body onload="prettyPrint();">
+
+<h1>示例代码</h1>
+<pre class="prettyprint language-html linenums">
+    &lt;!--[ echo(2+3*4); ]--&gt;
+
+    ${item.price}
+</pre>
+<h1>代码解释：</h1>
+<pre style="line-height: 20px;">
+    1、使用&lt;!--[作为代码段起始符，使用]--&gt;作为代码段终止符；
+       类html注释方式的代码段在可视化网页编辑器里不会被解释，对美工友好；
+    2、使用${作为起始占位符，}作为终止占位符；
+       类EL表达式方式的占位符是程序员比较常用的编码方式，对程序员友好；
+    3、如果要输出&lt;!--[，]，${，}则需要转义，如\&lt;!--[，\]，\${，\}
+</pre>
+</body>
+</html>

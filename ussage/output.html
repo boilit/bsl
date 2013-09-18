@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boilit Script Language</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../themes/default/css.css">
+    <link type="text/css" rel="stylesheet" href="../scripts/prettify/themes/boilit.css" media="screen"/>
+
+    <script type="text/javascript" src="../scripts/prettify/scripts/prettify.js"></script>
+
+</head>
+<body onload="prettyPrint();">
+
+<h1>示例代码</h1>
+<pre class="prettyprint language-js linenums">
+    静态文本段
+
+    ${item.price}
+
+    ${item.price ?: 0.0d}
+
+    ${item.date, 'yyyy-MM-dd'}
+
+&lt;!--[
+    echo('表达式运算结果');
+
+    echo('表达式运算结果', 'yyyy-MM-dd');
+]--&gt;
+</pre>
+<h1>代码解释：</h1>
+<pre style="line-height: 20px;">
+    1、在&lt;!--[ ]--&gt;代码段外部可以直接书写文本段，这类文本段是静态文本段；
+       静态文本段可以被预先压缩、预先转化为byte数组等，用以提升Bsl的渲染速度；
+    2、在&lt;!--[ ]--&gt;代码段外部可以直接书写占位符，这类文本段是动态文本段；
+       占位符有两种，一种直接输出（一参数），一种是格式化输出（两参数，第二参数为格式化串）；
+       目前默认提供日期格式化、数字格式化两种格式化方式；
+    3、在&lt;!--[ ]--&gt; ${ }内的表达式可以使用<a href="expression.html">三元条件表达式的二元false状态书写方式</a>来实现安全输出；
+       如${item.price ?: 0.0d}， echo(item.price ?: 0.0d)；意思是如果item.price为空则输出浮点数0.0；
+       具体表达式写法请参考<a href="expression.html">表达式运算</a>；
+    4、在&lt;!--[ ]--&gt;代码段内部可以使用echo方法输出表达式运算结果，这类文本段是动态文本段；
+       echo有两种，一种直接输出（一参数），一种是格式化输出（两参数，第二参数为格式化串）；
+       目前默认提供日期格式化、数字格式化两种格式化方式；
+       动态文本段是不能被预先压缩的，即使压缩也很容易造成性能BUG，在此Bsl没有默认实现动态文本压缩；
+       另外动态文本段也只能在运行时转换编码，令人振奋的是Bsl在转换编码方面提供了自己的专用编码器，速度高于JDK默认的；
+</pre>
+</body>
+</html>

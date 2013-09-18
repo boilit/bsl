@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boilit Script Language</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../themes/default/css.css">
+    <link type="text/css" rel="stylesheet" href="../scripts/prettify/themes/boilit.css" media="screen"/>
+
+    <script type="text/javascript" src="../scripts/prettify/scripts/prettify.js"></script>
+
+</head>
+<body onload="prettyPrint();">
+
+<h1>示例代码</h1>
+<pre class="prettyprint language-js linenums">
+&lt;!--[
+    // 数学运算：加、减、乘、除、乘方、求模、求负
+    var a = 10 + 2, b = 10 - 2, c = 10 * 2, d = 10 / 2, e = pow(10, 2), f = 10 % 2, g = -b;
+
+    // 复杂的数学运算
+    var h = 3 + 5 - 2 * 3 + (a + 6) * c / 2 + pow(2, 3) - d % 2;
+
+    // 比较运算：小于、小于等于、大于、大于等于、等于、不等于
+    var i = 2 < 1, j = 2 <= 3, k = b > c, l = c >=10, m = d == 0, n = f != 0;
+
+    // 逻辑运算：与、或、非
+    var o = true && a > 2, p = false || 1, q = !c;
+
+    // 位运算：按位与、按位或、按位非、按位异或、左移、右移、无符号右移
+    var r = 10 & 2, s = 5 | b, t = ~10, u = 10 ^ b, v = 10 << 1, w = 10 >> 1, x = -10 >>> 1;
+
+    // 字符串连接
+    var y = 'test' + 10 + "_value", z = merge('test', 10, "_value", "xxx", 'www');
+
+    // 三元条件表达式(两个例子)
+    var v1 = r1 ? p1 : p2, v2 = r1 == 0 ? p1 : p2;
+
+    // 三元条件表达式的二元true状态书写方式(两个例子) ，条件满足时返回指定值，否则返回条件值
+    var v3 = r1 ? p1, v4 = r1 == 0 ? p1;
+
+    // 三元条件表达式的二元false状态书写方式(两个例子)，条件满足时返回条件值，否则返回指定值
+    var v5 = r1 ?: p2, v6 = r1 == 0 ?: p2;
+]--&gt;
+</pre>
+<h1>代码解释：</h1>
+<pre style="line-height: 20px;">
+    1、支持数学运算、比较运算、逻辑运算、位运算、字符串连接；
+    2、除以上运算之外，属性及方法调用也属于表达式范畴（参考<a href="access.html">属性方法</a>）；
+    3、类似Java、JavaScript的三元条件表达式书写方式，条件不一定是布尔类型，可以是任何类型（参考<a href="vars.html">变量定义</a>）；
+    4、三元条件表达式简化版true、false状态的二元表达式书写方式，条件不一定是布尔类型，可以是任何类型（参考<a href="vars.html">变量定义</a>）；
+</pre>
+</body>
+</html>

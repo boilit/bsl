@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boilit Script Language</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../themes/default/css.css">
+    <link type="text/css" rel="stylesheet" href="../scripts/prettify/themes/boilit.css" media="screen"/>
+
+    <script type="text/javascript" src="../scripts/prettify/scripts/prettify.js"></script>
+
+</head>
+<body onload="prettyPrint();">
+
+<h1>示例代码</h1>
+<pre class="prettyprint language-js linenums">
+&lt;!--[
+    // 静态属性、常量、提供Getter方法的非public属性都可以使用'.'操作符访问
+    var a=item.price;
+
+    // 直接调用方法设置属性值
+    item.setPrice(10);
+
+    // 调用对象的方法，无参数的
+    var b=item.getPrice();
+
+    // 调用对象的方法，带参数的
+    var c=item.doXxx(param1, param2);
+
+    // 连续的属性方法调用
+    var d=item.field1.doXxx(param1, param2).doYyy(param);
+]--&gt;
+</pre>
+<h1>代码解释：</h1>
+<pre style="line-height: 20px;">
+    1、使用'.'操作符可以访问对象所有的public属性及提供了Getter方法的非public属性；
+    2、支持直接调用对象的Getter方法获取属性值，直接调用对象的Setter方法设置属性值；
+    3、支持直接调用对象的无参数或有参数方法；
+    4、支持连续的属性方法调用
+</pre>
+</body>
+</html>

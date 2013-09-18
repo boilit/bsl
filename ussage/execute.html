@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boilit Script Language</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../themes/default/css.css">
+    <link type="text/css" rel="stylesheet" href="../scripts/prettify/themes/boilit.css" media="screen"/>
+
+    <script type="text/javascript" src="../scripts/prettify/scripts/prettify.js"></script>
+
+</head>
+<body onload="prettyPrint();">
+
+<h1>示例代码</h1>
+<pre class="prettyprint language-java linenums">
+    // 创建数据模型
+    Map&lt;String, Object&gt; model = new HashMap&lt;String, Object&gt;();
+
+    // 将数据存入数据模型
+    model.put("items", items);
+
+    // 使用引擎获取模板并执行
+    engine.getTemplate(file).execute(model, System.out);
+
+    // 如果需要，请在模板执行完毕后关闭输出流
+</pre>
+<h1>代码解释：</h1>
+<pre style="line-height: 20px;">
+    1、创建数据模型，new HashMap<String, Object>()；并将数据存入；
+       本引擎接受Map类型的数据模型，Map内可以是非常复杂的对象；
+    2、使用引擎获取模板并执行；
+       使用engine.getTemplate获取模板，参数是字符串，该参数最终将交给引擎的ResourceLoader去获取模板；
+       获取到模板后调用模板的execute方法执行模板，参数是数据模型和输出流（OutputStream或Writer），OutputStream性能较高；
+       这里我们使用System.out作为输出流将模板输出结果输出到了控制台；
+    3、复杂的例子参考<a href="example.html">示例程序</a>
+</pre>
+</body>
+</html>
