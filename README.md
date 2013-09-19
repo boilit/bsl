@@ -2,7 +2,7 @@ Boilit Script Language
 ===
 <pre>
 
-Bsl全名为Boilit Script Language，是一款个人开发的、主要面向模板引擎方向的脚本语言。
+Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的脚本语言。
 
 软件作者：Boilit
 作者姓名：于景洋
