@@ -21,3 +21,13 @@ Download:
     Bin:<a href="http://boilit.github.io/bsl/files/bsl-1.0.0-SNAPSHOT.jar">bsl-1.0.0-SNAPSHOT.jar</a>
     Src:<a href="http://boilit.github.io/bsl/files/bsl-1.0.0-SNAPSHOT-sources.jar">bsl-1.0.0-SNAPSHOT-sources.jar</a>
 </pre>
+
+License(许可证)
+===
+<pre>
+Boilit Script Language is released under the MIT License. 
+See the bundled LICENSE file for details.
+
+Boilit Script Language依据MIT许可证发布。
+详细请看捆绑的LICENSE文件。
+</pre>
