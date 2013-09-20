@@ -20,6 +20,9 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
 Download: 
     Bin:<a href="http://boilit.github.io/bsl/files/bsl-1.0.0-SNAPSHOT.jar">bsl-1.0.0-SNAPSHOT.jar</a>
     Src:<a href="http://boilit.github.io/bsl/files/bsl-1.0.0-SNAPSHOT-sources.jar">bsl-1.0.0-SNAPSHOT-sources.jar</a>
+    
+交流群：
+<a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=aa38808704bd813440ca2314873dd634b878b76be392ab0279b005db18be006b"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Boilit技术群" title="Boilit技术群"></a>
 </pre>
 
 License(许可证)
