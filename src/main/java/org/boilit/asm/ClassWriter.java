@@ -30,10 +30,10 @@
 package org.boilit.asm;
 
 /**
- * A {@link ClassVisitor} that generates classes in bytecode form. More
+ * A {@link org.boilit.asm.ClassVisitor} that generates classes in bytecode form. More
  * precisely this visitor generates a byte array conforming to the Java class
  * file format. It can be used alone, to generate a Java class "from scratch",
- * or with one or more {@link ClassReader ClassReader} and adapter class visitor
+ * or with one or more {@link org.boilit.asm.ClassReader ClassReader} and adapter class visitor
  * to generate a modified class from one or more existing Java classes.
  * 
  * @author Eric Bruneton
@@ -43,8 +43,8 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Flag to automatically compute the maximum stack size and the maximum
      * number of local variables of methods. If this flag is set, then the
-     * arguments of the {@link MethodVisitor#visitMaxs visitMaxs} method of the
-     * {@link MethodVisitor} returned by the {@link #visitMethod visitMethod}
+     * arguments of the {@link org.boilit.asm.MethodVisitor#visitMaxs visitMaxs} method of the
+     * {@link org.boilit.asm.MethodVisitor} returned by the {@link #visitMethod visitMethod}
      * method will be ignored, and computed automatically from the signature and
      * the bytecode of each method.
      * 
@@ -55,9 +55,9 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Flag to automatically compute the stack map frames of methods from
      * scratch. If this flag is set, then the calls to the
-     * {@link MethodVisitor#visitFrame} method are ignored, and the stack map
+     * {@link org.boilit.asm.MethodVisitor#visitFrame} method are ignored, and the stack map
      * frames are recomputed from the methods bytecode. The arguments of the
-     * {@link MethodVisitor#visitMaxs visitMaxs} method are also ignored and
+     * {@link org.boilit.asm.MethodVisitor#visitMaxs visitMaxs} method are also ignored and
      * recomputed from the bytecode. In other words, computeFrames implies
      * computeMaxs.
      * 
@@ -250,7 +250,7 @@ public class ClassWriter extends ClassVisitor {
     static final int HANDLE_BASE = 20;
 
     /**
-     * Normal type Item stored in the ClassWriter {@link org.boilit.asm.ClassWriter#typeTable},
+     * Normal type Item stored in the ClassWriter {@link ClassWriter#typeTable},
      * instead of the constant pool, in order to avoid clashes with normal
      * constant pool items in the ClassWriter constant pool's hash table.
      */
@@ -258,14 +258,14 @@ public class ClassWriter extends ClassVisitor {
 
     /**
      * Uninitialized type Item stored in the ClassWriter
-     * {@link org.boilit.asm.ClassWriter#typeTable}, instead of the constant pool, in order to
+     * {@link ClassWriter#typeTable}, instead of the constant pool, in order to
      * avoid clashes with normal constant pool items in the ClassWriter constant
      * pool's hash table.
      */
     static final int TYPE_UNINIT = 31;
 
     /**
-     * Merged type Item stored in the ClassWriter {@link org.boilit.asm.ClassWriter#typeTable},
+     * Merged type Item stored in the ClassWriter {@link ClassWriter#typeTable},
      * instead of the constant pool, in order to avoid clashes with normal
      * constant pool items in the ClassWriter constant pool's hash table.
      */
@@ -336,7 +336,7 @@ public class ClassWriter extends ClassVisitor {
      * are also stored in the {@link #items} hash table. These two arrays allow
      * to retrieve an Item from its index or, conversely, to get the index of an
      * Item from its value. Each Item stores an internal name in its
-     * {@link Item#strVal1} field.
+     * {@link org.boilit.asm.Item#strVal1} field.
      */
     Item[] typeTable;
 
@@ -443,32 +443,32 @@ public class ClassWriter extends ClassVisitor {
 
     /**
      * The fields of this class. These fields are stored in a linked list of
-     * {@link FieldWriter} objects, linked to each other by their
-     * {@link FieldWriter#fv} field. This field stores the first element of this
+     * {@link org.boilit.asm.FieldWriter} objects, linked to each other by their
+     * {@link org.boilit.asm.FieldWriter#fv} field. This field stores the first element of this
      * list.
      */
     FieldWriter firstField;
 
     /**
      * The fields of this class. These fields are stored in a linked list of
-     * {@link FieldWriter} objects, linked to each other by their
-     * {@link FieldWriter#fv} field. This field stores the last element of this
+     * {@link org.boilit.asm.FieldWriter} objects, linked to each other by their
+     * {@link org.boilit.asm.FieldWriter#fv} field. This field stores the last element of this
      * list.
      */
     FieldWriter lastField;
 
     /**
      * The methods of this class. These methods are stored in a linked list of
-     * {@link MethodWriter} objects, linked to each other by their
-     * {@link MethodWriter#mv} field. This field stores the first element of
+     * {@link org.boilit.asm.MethodWriter} objects, linked to each other by their
+     * {@link org.boilit.asm.MethodWriter#mv} field. This field stores the first element of
      * this list.
      */
     MethodWriter firstMethod;
 
     /**
      * The methods of this class. These methods are stored in a linked list of
-     * {@link MethodWriter} objects, linked to each other by their
-     * {@link MethodWriter#mv} field. This field stores the last element of this
+     * {@link org.boilit.asm.MethodWriter} objects, linked to each other by their
+     * {@link org.boilit.asm.MethodWriter#mv} field. This field stores the last element of this
      * list.
      */
     MethodWriter lastMethod;
@@ -486,7 +486,7 @@ public class ClassWriter extends ClassVisitor {
 
     /**
      * <tt>true</tt> if the stack map tables of this class are invalid. The
-     * {@link MethodWriter#resizeInstructions} method cannot transform existing
+     * {@link org.boilit.asm.MethodWriter#resizeInstructions} method cannot transform existing
      * stack map tables, and so produces potentially invalid classes when it is
      * executed. In this case the class is reread and rewritten with the
      * {@link #COMPUTE_FRAMES} option (the resizeInstructions method can resize
@@ -587,7 +587,7 @@ public class ClassWriter extends ClassVisitor {
     // ------------------------------------------------------------------------
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassWriter} object.
+     * Constructs a new {@link ClassWriter} object.
      * 
      * @param flags
      *            option flags that can be used to modify the default behavior
@@ -609,7 +609,7 @@ public class ClassWriter extends ClassVisitor {
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassWriter} object and enables optimizations for
+     * Constructs a new {@link ClassWriter} object and enables optimizations for
      * "mostly add" bytecode transformations. These optimizations are the
      * following:
      * 
@@ -622,13 +622,13 @@ public class ClassWriter extends ClassVisitor {
      * directly from the original class bytecode (i.e. without emitting visit
      * events for all the method instructions), which saves a <i>lot</i> of
      * time. Untransformed methods are detected by the fact that the
-     * {@link ClassReader} receives {@link MethodVisitor} objects that come from
-     * a {@link org.boilit.asm.ClassWriter} (and not from any other {@link ClassVisitor}
+     * {@link org.boilit.asm.ClassReader} receives {@link org.boilit.asm.MethodVisitor} objects that come from
+     * a {@link ClassWriter} (and not from any other {@link org.boilit.asm.ClassVisitor}
      * instance).</li>
      * </ul>
      * 
      * @param classReader
-     *            the {@link ClassReader} used to read the original class. It
+     *            the {@link org.boilit.asm.ClassReader} used to read the original class. It
      *            will be used to copy the entire constant pool from the
      *            original class and also to copy other fragments of original
      *            bytecode where applicable.
@@ -927,7 +927,7 @@ public class ClassWriter extends ClassVisitor {
      *            the value of the constant to be added to the constant pool.
      *            This parameter must be an {@link Integer}, a {@link Float}, a
      *            {@link Long}, a {@link Double}, a {@link String} or a
-     *            {@link Type}.
+     *            {@link org.boilit.asm.Type}.
      * @return a new or already existing constant item with the given value.
      */
     Item newConstItem(final Object cst) {
@@ -978,7 +978,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a number or string constant to the constant pool of the class being
      * build. Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param cst
@@ -995,7 +995,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds an UTF8 string to the constant pool of the class being build. Does
      * nothing if the constant pool already contains a similar item. <i>This
-     * method is intended for {@link Attribute} sub classes, and is normally not
+     * method is intended for {@link org.boilit.asm.Attribute} sub classes, and is normally not
      * needed by class generators or adapters.</i>
      * 
      * @param value
@@ -1016,7 +1016,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a class reference to the constant pool of the class being build.
      * Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param value
@@ -1037,7 +1037,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a class reference to the constant pool of the class being build.
      * Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param value
@@ -1051,7 +1051,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a method type reference to the constant pool of the class being
      * build. Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param methodDesc
@@ -1072,7 +1072,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a method type reference to the constant pool of the class being
      * build. Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param methodDesc
@@ -1087,17 +1087,17 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a handle to the constant pool of the class being build. Does nothing
      * if the constant pool already contains a similar item. <i>This method is
-     * intended for {@link Attribute} sub classes, and is normally not needed by
+     * intended for {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by
      * class generators or adapters.</i>
      * 
      * @param tag
-     *            the kind of this handle. Must be {@link Opcodes#H_GETFIELD},
-     *            {@link Opcodes#H_GETSTATIC}, {@link Opcodes#H_PUTFIELD},
-     *            {@link Opcodes#H_PUTSTATIC}, {@link Opcodes#H_INVOKEVIRTUAL},
-     *            {@link Opcodes#H_INVOKESTATIC},
-     *            {@link Opcodes#H_INVOKESPECIAL},
-     *            {@link Opcodes#H_NEWINVOKESPECIAL} or
-     *            {@link Opcodes#H_INVOKEINTERFACE}.
+     *            the kind of this handle. Must be {@link org.boilit.asm.Opcodes#H_GETFIELD},
+     *            {@link org.boilit.asm.Opcodes#H_GETSTATIC}, {@link org.boilit.asm.Opcodes#H_PUTFIELD},
+     *            {@link org.boilit.asm.Opcodes#H_PUTSTATIC}, {@link org.boilit.asm.Opcodes#H_INVOKEVIRTUAL},
+     *            {@link org.boilit.asm.Opcodes#H_INVOKESTATIC},
+     *            {@link org.boilit.asm.Opcodes#H_INVOKESPECIAL},
+     *            {@link org.boilit.asm.Opcodes#H_NEWINVOKESPECIAL} or
+     *            {@link org.boilit.asm.Opcodes#H_INVOKEINTERFACE}.
      * @param owner
      *            the internal name of the field or method owner class.
      * @param name
@@ -1128,17 +1128,17 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a handle to the constant pool of the class being build. Does nothing
      * if the constant pool already contains a similar item. <i>This method is
-     * intended for {@link Attribute} sub classes, and is normally not needed by
+     * intended for {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by
      * class generators or adapters.</i>
      * 
      * @param tag
-     *            the kind of this handle. Must be {@link Opcodes#H_GETFIELD},
-     *            {@link Opcodes#H_GETSTATIC}, {@link Opcodes#H_PUTFIELD},
-     *            {@link Opcodes#H_PUTSTATIC}, {@link Opcodes#H_INVOKEVIRTUAL},
-     *            {@link Opcodes#H_INVOKESTATIC},
-     *            {@link Opcodes#H_INVOKESPECIAL},
-     *            {@link Opcodes#H_NEWINVOKESPECIAL} or
-     *            {@link Opcodes#H_INVOKEINTERFACE}.
+     *            the kind of this handle. Must be {@link org.boilit.asm.Opcodes#H_GETFIELD},
+     *            {@link org.boilit.asm.Opcodes#H_GETSTATIC}, {@link org.boilit.asm.Opcodes#H_PUTFIELD},
+     *            {@link org.boilit.asm.Opcodes#H_PUTSTATIC}, {@link org.boilit.asm.Opcodes#H_INVOKEVIRTUAL},
+     *            {@link org.boilit.asm.Opcodes#H_INVOKESTATIC},
+     *            {@link org.boilit.asm.Opcodes#H_INVOKESPECIAL},
+     *            {@link org.boilit.asm.Opcodes#H_NEWINVOKESPECIAL} or
+     *            {@link org.boilit.asm.Opcodes#H_INVOKEINTERFACE}.
      * @param owner
      *            the internal name of the field or method owner class.
      * @param name
@@ -1156,7 +1156,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds an invokedynamic reference to the constant pool of the class being
      * build. Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param name
@@ -1240,7 +1240,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds an invokedynamic reference to the constant pool of the class being
      * build. Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param name
@@ -1286,7 +1286,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a field reference to the constant pool of the class being build.
      * Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param owner
@@ -1331,7 +1331,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a method reference to the constant pool of the class being build.
      * Does nothing if the constant pool already contains a similar item.
-     * <i>This method is intended for {@link Attribute} sub classes, and is
+     * <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param owner
@@ -1449,7 +1449,7 @@ public class ClassWriter extends ClassVisitor {
     /**
      * Adds a name and type to the constant pool of the class being build. Does
      * nothing if the constant pool already contains a similar item. <i>This
-     * method is intended for {@link Attribute} sub classes, and is normally not
+     * method is intended for {@link org.boilit.asm.Attribute} sub classes, and is normally not
      * needed by class generators or adapters.</i>
      * 
      * @param name

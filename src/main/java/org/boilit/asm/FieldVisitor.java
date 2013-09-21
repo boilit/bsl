@@ -40,7 +40,7 @@ public abstract class FieldVisitor {
 
     /**
      * The ASM API version implemented by this visitor. The value of this field
-     * must be one of {@link Opcodes#ASM4}.
+     * must be one of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     protected final int api;
 
@@ -51,22 +51,22 @@ public abstract class FieldVisitor {
     protected FieldVisitor fv;
 
     /**
-     * Constructs a new {@link org.boilit.asm.FieldVisitor}.
+     * Constructs a new {@link FieldVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     public FieldVisitor(final int api) {
         this(api, null);
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.FieldVisitor}.
+     * Constructs a new {@link FieldVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      * @param fv
      *            the field visitor to which this visitor must delegate method
      *            calls. May be null.

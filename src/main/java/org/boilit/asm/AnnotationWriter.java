@@ -30,7 +30,7 @@
 package org.boilit.asm;
 
 /**
- * An {@link AnnotationVisitor} that generates annotations in bytecode form.
+ * An {@link org.boilit.asm.AnnotationVisitor} that generates annotations in bytecode form.
  * 
  * @author Eric Bruneton
  * @author Eugene Kuleshov
@@ -88,7 +88,7 @@ final class AnnotationWriter extends AnnotationVisitor {
     // ------------------------------------------------------------------------
 
     /**
-     * Constructs a new {@link org.boilit.asm.AnnotationWriter}.
+     * Constructs a new {@link AnnotationWriter}.
      * 
      * @param cw
      *            the class writer to which this annotation must be added.

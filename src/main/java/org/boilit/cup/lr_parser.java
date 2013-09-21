@@ -101,8 +101,8 @@ package org.boilit.cup;
  *
  * @author Frank Flannery
  * @version last updated: 7/3/96
- * @see org.boilit.cup.Symbol
- * @see org.boilit.cup.virtual_parse_stack
+ * @see Symbol
+ * @see virtual_parse_stack
  */
 @SuppressWarnings({"unchecked", "deprecation"})
 public abstract class lr_parser {
@@ -189,7 +189,7 @@ public abstract class lr_parser {
      * Reduces are encoded as negative values (one less than the production
      * reduced by). Error entries are denoted by zero.
      *
-     * @see org.boilit.cup.lr_parser#get_action
+     * @see lr_parser#get_action
      */
     protected abstract short[][] action_table();
 
@@ -206,7 +206,7 @@ public abstract class lr_parser {
      * state. This table is then indexed by that state and the LHS of the
      * reducing production to indicate where to "shift" to.
      *
-     * @see org.boilit.cup.lr_parser#get_reduce
+     * @see lr_parser#get_reduce
      */
     protected abstract short[][] reduce_table();
 

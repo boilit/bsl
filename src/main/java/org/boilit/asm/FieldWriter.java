@@ -30,7 +30,7 @@
 package org.boilit.asm;
 
 /**
- * An {@link FieldVisitor} that generates Java fields in bytecode form.
+ * An {@link org.boilit.asm.FieldVisitor} that generates Java fields in bytecode form.
  * 
  * @author Eric Bruneton
  */
@@ -90,16 +90,16 @@ final class FieldWriter extends FieldVisitor {
     // ------------------------------------------------------------------------
 
     /**
-     * Constructs a new {@link org.boilit.asm.FieldWriter}.
+     * Constructs a new {@link FieldWriter}.
      * 
      * @param cw
      *            the class writer to which this field must be added.
      * @param access
-     *            the field's access flags (see {@link Opcodes}).
+     *            the field's access flags (see {@link org.boilit.asm.Opcodes}).
      * @param name
      *            the field's name.
      * @param desc
-     *            the field's descriptor (see {@link Type}).
+     *            the field's descriptor (see {@link org.boilit.asm.Type}).
      * @param signature
      *            the field's signature. May be <tt>null</tt>.
      * @param value

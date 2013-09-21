@@ -31,7 +31,7 @@ package org.boilit.asm;
 
 /**
  * A constant pool item. Constant pool items can be created with the 'newXXX'
- * methods in the {@link ClassWriter} class.
+ * methods in the {@link org.boilit.asm.ClassWriter} class.
  * 
  * @author Eric Bruneton
  */
@@ -45,24 +45,24 @@ final class Item {
     /**
      * Type of this constant pool item. A single class is used to represent all
      * constant pool item types, in order to minimize the bytecode size of this
-     * package. The value of this field is one of {@link ClassWriter#INT},
-     * {@link ClassWriter#LONG}, {@link ClassWriter#FLOAT},
-     * {@link ClassWriter#DOUBLE}, {@link ClassWriter#UTF8},
-     * {@link ClassWriter#STR}, {@link ClassWriter#CLASS},
-     * {@link ClassWriter#NAME_TYPE}, {@link ClassWriter#FIELD},
-     * {@link ClassWriter#METH}, {@link ClassWriter#IMETH},
-     * {@link ClassWriter#MTYPE}, {@link ClassWriter#INDY}.
+     * package. The value of this field is one of {@link org.boilit.asm.ClassWriter#INT},
+     * {@link org.boilit.asm.ClassWriter#LONG}, {@link org.boilit.asm.ClassWriter#FLOAT},
+     * {@link org.boilit.asm.ClassWriter#DOUBLE}, {@link org.boilit.asm.ClassWriter#UTF8},
+     * {@link org.boilit.asm.ClassWriter#STR}, {@link org.boilit.asm.ClassWriter#CLASS},
+     * {@link org.boilit.asm.ClassWriter#NAME_TYPE}, {@link org.boilit.asm.ClassWriter#FIELD},
+     * {@link org.boilit.asm.ClassWriter#METH}, {@link org.boilit.asm.ClassWriter#IMETH},
+     * {@link org.boilit.asm.ClassWriter#MTYPE}, {@link org.boilit.asm.ClassWriter#INDY}.
      * 
      * MethodHandle constant 9 variations are stored using a range of 9 values
-     * from {@link ClassWriter#HANDLE_BASE} + 1 to
-     * {@link ClassWriter#HANDLE_BASE} + 9.
+     * from {@link org.boilit.asm.ClassWriter#HANDLE_BASE} + 1 to
+     * {@link org.boilit.asm.ClassWriter#HANDLE_BASE} + 9.
      * 
      * Special Item types are used for Items that are stored in the ClassWriter
-     * {@link ClassWriter#typeTable}, instead of the constant pool, in order to
+     * {@link org.boilit.asm.ClassWriter#typeTable}, instead of the constant pool, in order to
      * avoid clashes with normal constant pool items in the ClassWriter constant
      * pool's hash table. These special item types are
-     * {@link ClassWriter#TYPE_NORMAL}, {@link ClassWriter#TYPE_UNINIT} and
-     * {@link ClassWriter#TYPE_MERGED}.
+     * {@link org.boilit.asm.ClassWriter#TYPE_NORMAL}, {@link org.boilit.asm.ClassWriter#TYPE_UNINIT} and
+     * {@link org.boilit.asm.ClassWriter#TYPE_MERGED}.
      */
     int type;
 
@@ -106,13 +106,13 @@ final class Item {
     Item next;
 
     /**
-     * Constructs an uninitialized {@link org.boilit.asm.Item}.
+     * Constructs an uninitialized {@link Item}.
      */
     Item() {
     }
 
     /**
-     * Constructs an uninitialized {@link org.boilit.asm.Item} for constant pool element at
+     * Constructs an uninitialized {@link Item} for constant pool element at
      * given position.
      * 
      * @param index

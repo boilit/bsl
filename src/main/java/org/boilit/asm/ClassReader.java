@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * A Java class parser to make a {@link ClassVisitor} visit an existing class.
+ * A Java class parser to make a {@link org.boilit.asm.ClassVisitor} visit an existing class.
  * This class parses a byte array conforming to the Java class file format and
  * calls the appropriate visit methods of a given class visitor for each field,
  * method and bytecode instruction encountered.
@@ -78,8 +78,8 @@ public class ClassReader {
     /**
      * Flag to skip the debug information in the class. If this flag is set the
      * debug information of the class is not visited, i.e. the
-     * {@link MethodVisitor#visitLocalVariable visitLocalVariable} and
-     * {@link MethodVisitor#visitLineNumber visitLineNumber} methods will not be
+     * {@link org.boilit.asm.MethodVisitor#visitLocalVariable visitLocalVariable} and
+     * {@link org.boilit.asm.MethodVisitor#visitLineNumber visitLineNumber} methods will not be
      * called.
      */
     public static final int SKIP_DEBUG = 2;
@@ -87,8 +87,8 @@ public class ClassReader {
     /**
      * Flag to skip the stack map frames in the class. If this flag is set the
      * stack map frames of the class is not visited, i.e. the
-     * {@link MethodVisitor#visitFrame visitFrame} method will not be called.
-     * This flag is useful when the {@link ClassWriter#COMPUTE_FRAMES} option is
+     * {@link org.boilit.asm.MethodVisitor#visitFrame visitFrame} method will not be called.
+     * This flag is useful when the {@link org.boilit.asm.ClassWriter#COMPUTE_FRAMES} option is
      * used: it avoids visiting frames that will be ignored and recomputed from
      * scratch in the class writer.
      */
@@ -106,7 +106,7 @@ public class ClassReader {
 
     /**
      * The class to be parsed. <i>The content of this array must not be
-     * modified. This field is intended for {@link Attribute} sub classes, and
+     * modified. This field is intended for {@link org.boilit.asm.Attribute} sub classes, and
      * is normally not needed by class generators or adapters.</i>
      */
     public final byte[] b;
@@ -144,7 +144,7 @@ public class ClassReader {
     // ------------------------------------------------------------------------
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassReader} object.
+     * Constructs a new {@link ClassReader} object.
      * 
      * @param b
      *            the bytecode of the class to be read.
@@ -154,7 +154,7 @@ public class ClassReader {
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassReader} object.
+     * Constructs a new {@link ClassReader} object.
      * 
      * @param b
      *            the bytecode of the class to be read.
@@ -217,13 +217,13 @@ public class ClassReader {
     }
 
     /**
-     * Returns the class's access flags (see {@link Opcodes}). This value may
+     * Returns the class's access flags (see {@link org.boilit.asm.Opcodes}). This value may
      * not reflect Deprecated and Synthetic flags when bytecode is before 1.5
      * and those flags are represented by attributes.
      * 
      * @return the class access flags
      * 
-     * @see ClassVisitor#visit(int, int, String, String, String, String[])
+     * @see org.boilit.asm.ClassVisitor#visit(int, int, String, String, String, String[])
      */
     public int getAccess() {
         return readUnsignedShort(header);
@@ -231,11 +231,11 @@ public class ClassReader {
 
     /**
      * Returns the internal name of the class (see
-     * {@link Type#getInternalName() getInternalName}).
+     * {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      * 
      * @return the internal class name
      * 
-     * @see ClassVisitor#visit(int, int, String, String, String, String[])
+     * @see org.boilit.asm.ClassVisitor#visit(int, int, String, String, String, String[])
      */
     public String getClassName() {
         return readClass(header + 2, new char[maxStringLength]);
@@ -243,13 +243,13 @@ public class ClassReader {
 
     /**
      * Returns the internal of name of the super class (see
-     * {@link Type#getInternalName() getInternalName}). For interfaces, the
+     * {@link org.boilit.asm.Type#getInternalName() getInternalName}). For interfaces, the
      * super class is {@link Object}.
      * 
      * @return the internal name of super class, or <tt>null</tt> for
      *         {@link Object} class.
      * 
-     * @see ClassVisitor#visit(int, int, String, String, String, String[])
+     * @see org.boilit.asm.ClassVisitor#visit(int, int, String, String, String, String[])
      */
     public String getSuperName() {
         return readClass(header + 4, new char[maxStringLength]);
@@ -257,12 +257,12 @@ public class ClassReader {
 
     /**
      * Returns the internal names of the class's interfaces (see
-     * {@link Type#getInternalName() getInternalName}).
+     * {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      * 
      * @return the array of internal names for all implemented interfaces or
      *         <tt>null</tt>.
      * 
-     * @see ClassVisitor#visit(int, int, String, String, String, String[])
+     * @see org.boilit.asm.ClassVisitor#visit(int, int, String, String, String, String[])
      */
     public String[] getInterfaces() {
         int index = header + 6;
@@ -279,11 +279,11 @@ public class ClassReader {
     }
 
     /**
-     * Copies the constant pool data into the given {@link ClassWriter}. Should
-     * be called before the {@link #accept(ClassVisitor,int)} method.
+     * Copies the constant pool data into the given {@link org.boilit.asm.ClassWriter}. Should
+     * be called before the {@link #accept(org.boilit.asm.ClassVisitor,int)} method.
      * 
      * @param classWriter
-     *            the {@link ClassWriter} to copy constant pool into.
+     *            the {@link org.boilit.asm.ClassWriter} to copy constant pool into.
      */
     void copyPool(final ClassWriter classWriter) {
         char[] buf = new char[maxStringLength];
@@ -367,11 +367,11 @@ public class ClassReader {
     }
 
     /**
-     * Copies the bootstrap method data into the given {@link ClassWriter}.
-     * Should be called before the {@link #accept(ClassVisitor,int)} method.
+     * Copies the bootstrap method data into the given {@link org.boilit.asm.ClassWriter}.
+     * Should be called before the {@link #accept(org.boilit.asm.ClassVisitor,int)} method.
      * 
      * @param classWriter
-     *            the {@link ClassWriter} to copy bootstrap methods into.
+     *            the {@link org.boilit.asm.ClassWriter} to copy bootstrap methods into.
      */
     private void copyBootstrapMethods(final ClassWriter classWriter,
             final Item[] items, final char[] c) {
@@ -413,7 +413,7 @@ public class ClassReader {
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassReader} object.
+     * Constructs a new {@link ClassReader} object.
      * 
      * @param is
      *            an input stream from which to read the class.
@@ -425,7 +425,7 @@ public class ClassReader {
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassReader} object.
+     * Constructs a new {@link ClassReader} object.
      * 
      * @param name
      *            the binary qualified name of the class to be read.
@@ -491,7 +491,7 @@ public class ClassReader {
     // ------------------------------------------------------------------------
 
     /**
-     * Makes the given visitor visit the Java class of this {@link org.boilit.asm.ClassReader}
+     * Makes the given visitor visit the Java class of this {@link ClassReader}
      * . This class is the one specified in the constructor (see
      * {@link #ClassReader(byte[]) ClassReader}).
      * 
@@ -507,7 +507,7 @@ public class ClassReader {
     }
 
     /**
-     * Makes the given visitor visit the Java class of this {@link org.boilit.asm.ClassReader}.
+     * Makes the given visitor visit the Java class of this {@link ClassReader}.
      * This class is the one specified in the constructor (see
      * {@link #ClassReader(byte[]) ClassReader}).
      * 
@@ -1658,7 +1658,7 @@ public class ClassReader {
 
     /**
      * Computes the implicit frame of the method currently being parsed (as
-     * defined in the given {@link Context}) and stores it in the given context.
+     * defined in the given {@link org.boilit.asm.Context}) and stores it in the given context.
      * 
      * @param frame
      *            information about the class being parsed.
@@ -1721,7 +1721,7 @@ public class ClassReader {
 
     /**
      * Reads a stack map frame and stores the result in the given
-     * {@link Context} object.
+     * {@link org.boilit.asm.Context} object.
      * 
      * @param stackMap
      *            the start offset of a stack map frame in the class file.
@@ -1916,7 +1916,7 @@ public class ClassReader {
      *            prototypes of the attributes that must be parsed during the
      *            visit of the class. Any attribute whose type is not equal to
      *            the type of one the prototypes is ignored (i.e. an empty
-     *            {@link Attribute} instance is returned).
+     *            {@link org.boilit.asm.Attribute} instance is returned).
      * @param type
      *            the type of the attribute.
      * @param off
@@ -1968,7 +1968,7 @@ public class ClassReader {
 
     /**
      * Returns the start index of the constant pool item in {@link #b b}, plus
-     * one. <i>This method is intended for {@link Attribute} sub classes, and is
+     * one. <i>This method is intended for {@link org.boilit.asm.Attribute} sub classes, and is
      * normally not needed by class generators or adapters.</i>
      * 
      * @param item
@@ -1993,7 +1993,7 @@ public class ClassReader {
 
     /**
      * Reads a byte value in {@link #b b}. <i>This method is intended for
-     * {@link Attribute} sub classes, and is normally not needed by class
+     * {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by class
      * generators or adapters.</i>
      * 
      * @param index
@@ -2006,7 +2006,7 @@ public class ClassReader {
 
     /**
      * Reads an unsigned short value in {@link #b b}. <i>This method is intended
-     * for {@link Attribute} sub classes, and is normally not needed by class
+     * for {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by class
      * generators or adapters.</i>
      * 
      * @param index
@@ -2020,7 +2020,7 @@ public class ClassReader {
 
     /**
      * Reads a signed short value in {@link #b b}. <i>This method is intended
-     * for {@link Attribute} sub classes, and is normally not needed by class
+     * for {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by class
      * generators or adapters.</i>
      * 
      * @param index
@@ -2034,7 +2034,7 @@ public class ClassReader {
 
     /**
      * Reads a signed int value in {@link #b b}. <i>This method is intended for
-     * {@link Attribute} sub classes, and is normally not needed by class
+     * {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by class
      * generators or adapters.</i>
      * 
      * @param index
@@ -2049,7 +2049,7 @@ public class ClassReader {
 
     /**
      * Reads a signed long value in {@link #b b}. <i>This method is intended for
-     * {@link Attribute} sub classes, and is normally not needed by class
+     * {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by class
      * generators or adapters.</i>
      * 
      * @param index
@@ -2064,7 +2064,7 @@ public class ClassReader {
 
     /**
      * Reads an UTF8 string constant pool item in {@link #b b}. <i>This method
-     * is intended for {@link Attribute} sub classes, and is normally not needed
+     * is intended for {@link org.boilit.asm.Attribute} sub classes, and is normally not needed
      * by class generators or adapters.</i>
      * 
      * @param index
@@ -2139,7 +2139,7 @@ public class ClassReader {
 
     /**
      * Reads a class constant pool item in {@link #b b}. <i>This method is
-     * intended for {@link Attribute} sub classes, and is normally not needed by
+     * intended for {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by
      * class generators or adapters.</i>
      * 
      * @param index
@@ -2159,7 +2159,7 @@ public class ClassReader {
 
     /**
      * Reads a numeric or string constant pool item in {@link #b b}. <i>This
-     * method is intended for {@link Attribute} sub classes, and is normally not
+     * method is intended for {@link org.boilit.asm.Attribute} sub classes, and is normally not
      * needed by class generators or adapters.</i>
      * 
      * @param item
@@ -2168,7 +2168,7 @@ public class ClassReader {
      *            buffer to be used to read the item. This buffer must be
      *            sufficiently large. It is not automatically resized.
      * @return the {@link Integer}, {@link Float}, {@link Long}, {@link Double},
-     *         {@link String}, {@link Type} or {@link Handle} corresponding to
+     *         {@link String}, {@link org.boilit.asm.Type} or {@link org.boilit.asm.Handle} corresponding to
      *         the given constant pool item.
      */
     public Object readConst(final int item, final char[] buf) {

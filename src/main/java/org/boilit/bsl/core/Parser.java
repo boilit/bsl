@@ -23,7 +23,7 @@ import org.boilit.cup.*;
 /** CUP v0.11plus generated parser.
   * @version Tue Sep 17 10:37:02 CST 2013
   */
-public class Parser extends org.boilit.cup.lr_parser {
+public class Parser extends lr_parser {
 
 
   private static final String[] _nonTerminalNames = new String[]{
@@ -1712,7 +1712,7 @@ public class Parser extends org.boilit.cup.lr_parser {
 
 
   /** Scan to get the next Symbol. */
-  protected org.boilit.cup.Symbol scan()
+  protected Symbol scan()
     throws Exception
     {
  return lexer.next_token(); 
@@ -1804,16 +1804,16 @@ class CUP$Parser$actions {
     int                        CUP$Parser$act_id)
     throws Exception
     {
-      org.boilit.cup.Stack<org.boilit.cup.Symbol> CUP$Parser$stack = this.parser.getStack();
+      Stack<Symbol> CUP$Parser$stack = this.parser.getStack();
 
       /* select the action based on the action number */
       switch (CUP$Parser$act_id){
 	case 0: // ast ::= ast statement 
 	{
 		Root RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Root a = (Root) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		IStatement b = (IStatement) $b.value;
 		 RESULT = a.add(b); 
 		return RESULT;
@@ -1822,7 +1822,7 @@ class CUP$Parser$actions {
 	case 1: // $START ::= ast EOF 
 	{
 		Object RESULT =null;
-		org.boilit.cup.Symbol $start_val = CUP$Parser$stack.peek(1);
+		Symbol $start_val = CUP$Parser$stack.peek(1);
 		Root start_val = (Root) $start_val.value;
 		RESULT = start_val;
 		/* ACCEPT */
@@ -1840,7 +1840,7 @@ class CUP$Parser$actions {
 	case 3: // statement ::= text 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Text a = (Text) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1849,7 +1849,7 @@ class CUP$Parser$actions {
 	case 4: // statement ::= hold 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Hold a = (Hold) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1858,7 +1858,7 @@ class CUP$Parser$actions {
 	case 5: // statement ::= hold_format 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		HoldFormat a = (HoldFormat) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1867,7 +1867,7 @@ class CUP$Parser$actions {
 	case 6: // statement ::= echo 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Echo a = (Echo) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1876,7 +1876,7 @@ class CUP$Parser$actions {
 	case 7: // statement ::= echo_format 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		EchoFormat a = (EchoFormat) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1885,7 +1885,7 @@ class CUP$Parser$actions {
 	case 8: // statement ::= inc SEMI 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Include a = (Include) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1894,7 +1894,7 @@ class CUP$Parser$actions {
 	case 9: // statement ::= var SEMI 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Var a = (Var) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1903,7 +1903,7 @@ class CUP$Parser$actions {
 	case 10: // statement ::= call SEMI 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Invoke a = (Invoke) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1912,7 +1912,7 @@ class CUP$Parser$actions {
 	case 11: // statement ::= assigns SEMI 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1921,7 +1921,7 @@ class CUP$Parser$actions {
 	case 12: // statement ::= branch 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Branch a = (Branch) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1930,7 +1930,7 @@ class CUP$Parser$actions {
 	case 13: // statement ::= loop 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Loop a = (Loop) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -1939,7 +1939,7 @@ class CUP$Parser$actions {
 	case 14: // statement ::= NEXT SEMI 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Integer a = (Integer) $a.value;
 		 RESULT=new Next($a.line, $a.column); 
 		return RESULT;
@@ -1948,7 +1948,7 @@ class CUP$Parser$actions {
 	case 15: // statement ::= BREAK SEMI 
 	{
 		IStatement RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Integer a = (Integer) $a.value;
 		 RESULT=new Break($a.line, $a.column); 
 		return RESULT;
@@ -1957,7 +1957,7 @@ class CUP$Parser$actions {
 	case 16: // text ::= TEXT 
 	{
 		Text RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		String a = (String) $a.value;
 		 RESULT = new Text($a.line, $a.column, a, getTemplate()); 
 		return RESULT;
@@ -1966,7 +1966,7 @@ class CUP$Parser$actions {
 	case 17: // hold ::= expression HOLD_TAIL 
 	{
 		Hold RESULT =null;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(1);
+		Symbol $e = CUP$Parser$stack.peek(1);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT=new Hold($e.line, $e.column, e); 
 		return RESULT;
@@ -1975,9 +1975,9 @@ class CUP$Parser$actions {
 	case 18: // hold_format ::= expression COMMA CHARS HOLD_TAIL 
 	{
 		HoldFormat RESULT =null;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(3);
+		Symbol $e = CUP$Parser$stack.peek(3);
 		AbstractExpression e = (AbstractExpression) $e.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(1);
+		Symbol $b = CUP$Parser$stack.peek(1);
 		String b = (String) $b.value;
 		 RESULT = new HoldFormat($e.line, $e.column, e, b, getTemplate()); 
 		return RESULT;
@@ -1986,9 +1986,9 @@ class CUP$Parser$actions {
 	case 19: // echo ::= ECHO PRN_LEFT expression PRN_RIGHT SEMI 
 	{
 		Echo RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(4);
+		Symbol $a = CUP$Parser$stack.peek(4);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(2);
+		Symbol $e = CUP$Parser$stack.peek(2);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new Echo($a.line, $a.column, e); 
 		return RESULT;
@@ -1997,11 +1997,11 @@ class CUP$Parser$actions {
 	case 20: // echo_format ::= ECHO PRN_LEFT expression COMMA CHARS PRN_RIGHT SEMI 
 	{
 		EchoFormat RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(6);
+		Symbol $a = CUP$Parser$stack.peek(6);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(4);
+		Symbol $e = CUP$Parser$stack.peek(4);
 		AbstractExpression e = (AbstractExpression) $e.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(2);
+		Symbol $b = CUP$Parser$stack.peek(2);
 		String b = (String) $b.value;
 		 RESULT = new EchoFormat($a.line, $a.column, e, b, getTemplate()); 
 		return RESULT;
@@ -2010,9 +2010,9 @@ class CUP$Parser$actions {
 	case 21: // inc ::= INCLUDE PRN_LEFT expression PRN_RIGHT 
 	{
 		Include RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(3);
+		Symbol $a = CUP$Parser$stack.peek(3);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(1);
+		Symbol $e = CUP$Parser$stack.peek(1);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT=new Include($a.line,$a.column, e, null, getTemplate()); 
 		return RESULT;
@@ -2021,11 +2021,11 @@ class CUP$Parser$actions {
 	case 22: // inc ::= INCLUDE PRN_LEFT expression COMMA hash PRN_RIGHT 
 	{
 		Include RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(5);
+		Symbol $a = CUP$Parser$stack.peek(5);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(3);
+		Symbol $e = CUP$Parser$stack.peek(3);
 		AbstractExpression e = (AbstractExpression) $e.value;
-		org.boilit.cup.Symbol $h = CUP$Parser$stack.peek(1);
+		Symbol $h = CUP$Parser$stack.peek(1);
 		Hash h = (Hash) $h.value;
 		 RESULT=new Include($a.line, $a.column, e, h, getTemplate()); 
 		return RESULT;
@@ -2034,9 +2034,9 @@ class CUP$Parser$actions {
 	case 23: // var ::= var COMMA assign 
 	{
 		Var RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(2);
+		Symbol $a = CUP$Parser$stack.peek(2);
 		Var a = (Var) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		NormalAssign b = (NormalAssign) $b.value;
 		 RESULT=a.add(b); 
 		return RESULT;
@@ -2045,9 +2045,9 @@ class CUP$Parser$actions {
 	case 24: // var ::= VAR assign 
 	{
 		Var RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		NormalAssign b = (NormalAssign) $b.value;
 		 RESULT = new Var($a.line, $a.column).add(b); 
 		return RESULT;
@@ -2056,7 +2056,7 @@ class CUP$Parser$actions {
 	case 25: // branch ::= branch_item 
 	{
 		Branch RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Branch a = (Branch) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2065,9 +2065,9 @@ class CUP$Parser$actions {
 	case 26: // branch ::= branch_item ELSE block 
 	{
 		Branch RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(2);
+		Symbol $a = CUP$Parser$stack.peek(2);
 		Branch a = (Branch) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		Block b = (Block) $b.value;
 		 RESULT= a.addElse(b); 
 		return RESULT;
@@ -2076,11 +2076,11 @@ class CUP$Parser$actions {
 	case 27: // branch_item ::= IF PRN_LEFT expression PRN_RIGHT block 
 	{
 		Branch RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(4);
+		Symbol $a = CUP$Parser$stack.peek(4);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(2);
+		Symbol $e = CUP$Parser$stack.peek(2);
 		AbstractExpression e = (AbstractExpression) $e.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		Block b = (Block) $b.value;
 		 RESULT= new Branch($a.line, $a.column).add(e, b); 
 		return RESULT;
@@ -2089,11 +2089,11 @@ class CUP$Parser$actions {
 	case 28: // branch_item ::= branch_item ELSE IF PRN_LEFT expression PRN_RIGHT block 
 	{
 		Branch RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(6);
+		Symbol $a = CUP$Parser$stack.peek(6);
 		Branch a = (Branch) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(2);
+		Symbol $e = CUP$Parser$stack.peek(2);
 		AbstractExpression e = (AbstractExpression) $e.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		Block b = (Block) $b.value;
 		 RESULT= a.add(e, b); 
 		return RESULT;
@@ -2102,13 +2102,13 @@ class CUP$Parser$actions {
 	case 29: // loop ::= LOOP PRN_LEFT LABEL COMMA expression PRN_RIGHT block 
 	{
 		Loop RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(6);
+		Symbol $p = CUP$Parser$stack.peek(6);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $k = CUP$Parser$stack.peek(4);
+		Symbol $k = CUP$Parser$stack.peek(4);
 		String k = (String) $k.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(2);
+		Symbol $e = CUP$Parser$stack.peek(2);
 		AbstractExpression e = (AbstractExpression) $e.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		Block b = (Block) $b.value;
 		 RESULT=new Loop($p.line, $p.column, k, e, b); 
 		return RESULT;
@@ -2117,7 +2117,7 @@ class CUP$Parser$actions {
 	case 30: // block ::= block_item BRC_RIGHT 
 	{
 		Block RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Block a = (Block) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2126,7 +2126,7 @@ class CUP$Parser$actions {
 	case 31: // block_item ::= BRC_LEFT 
 	{
 		Block RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Integer a = (Integer) $a.value;
 		 RESULT=new Block($a.line, $a.column); 
 		return RESULT;
@@ -2135,9 +2135,9 @@ class CUP$Parser$actions {
 	case 32: // block_item ::= block_item statement 
 	{
 		Block RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Block a = (Block) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		IStatement b = (IStatement) $b.value;
 		 RESULT=a.add(b); 
 		return RESULT;
@@ -2146,7 +2146,7 @@ class CUP$Parser$actions {
 	case 33: // expression ::= assign 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		NormalAssign a = (NormalAssign) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2155,7 +2155,7 @@ class CUP$Parser$actions {
 	case 34: // expression ::= assigns 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2164,7 +2164,7 @@ class CUP$Parser$actions {
 	case 35: // expression ::= questionT 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		QuestionT a = (QuestionT) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2173,7 +2173,7 @@ class CUP$Parser$actions {
 	case 36: // expression ::= questionF 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		QuestionF a = (QuestionF) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2182,7 +2182,7 @@ class CUP$Parser$actions {
 	case 37: // expression ::= question 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Question a = (Question) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2191,7 +2191,7 @@ class CUP$Parser$actions {
 	case 38: // expression ::= figures 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractOperator a = (AbstractOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2200,7 +2200,7 @@ class CUP$Parser$actions {
 	case 39: // expression ::= structures 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractExpression a = (AbstractExpression) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2209,7 +2209,7 @@ class CUP$Parser$actions {
 	case 40: // expression ::= prior_expression 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractExpression a = (AbstractExpression) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2218,7 +2218,7 @@ class CUP$Parser$actions {
 	case 41: // expression ::= call 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Invoke a = (Invoke) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2227,9 +2227,9 @@ class CUP$Parser$actions {
 	case 42: // prior_expression ::= PRN_LEFT expression PRN_RIGHT 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(2);
+		Symbol $a = CUP$Parser$stack.peek(2);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(1);
+		Symbol $e = CUP$Parser$stack.peek(1);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT=e; 
 		return RESULT;
@@ -2238,11 +2238,11 @@ class CUP$Parser$actions {
 	case 43: // questionT ::= expression QUESTION expression 
 	{
 		QuestionT RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT=new QuestionT($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2251,11 +2251,11 @@ class CUP$Parser$actions {
 	case 44: // questionF ::= expression QUESTION_COLON expression 
 	{
 		QuestionF RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT=new QuestionF($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2264,13 +2264,13 @@ class CUP$Parser$actions {
 	case 45: // question ::= expression QUESTION expression COLON expression 
 	{
 		Question RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(4);
+		Symbol $e1 = CUP$Parser$stack.peek(4);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(3);
+		Symbol $p = CUP$Parser$stack.peek(3);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(2);
+		Symbol $e2 = CUP$Parser$stack.peek(2);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
-		org.boilit.cup.Symbol $e3 = CUP$Parser$stack.peek(0);
+		Symbol $e3 = CUP$Parser$stack.peek(0);
 		AbstractExpression e3 = (AbstractExpression) $e3.value;
 		 RESULT=new Question($p.line, $p.column, e1, e2, e3); 
 		return RESULT;
@@ -2279,9 +2279,9 @@ class CUP$Parser$actions {
 	case 46: // call ::= expression DOT nature 
 	{
 		Invoke RESULT =null;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(2);
+		Symbol $e = CUP$Parser$stack.peek(2);
 		AbstractExpression e = (AbstractExpression) $e.value;
-		org.boilit.cup.Symbol $n = CUP$Parser$stack.peek(0);
+		Symbol $n = CUP$Parser$stack.peek(0);
 		Nature n = (Nature) $n.value;
 		 RESULT=new Invoke($e.line, $e.column, e).add(n); 
 		return RESULT;
@@ -2290,9 +2290,9 @@ class CUP$Parser$actions {
 	case 47: // call ::= call DOT nature 
 	{
 		Invoke RESULT =null;
-		org.boilit.cup.Symbol $c = CUP$Parser$stack.peek(2);
+		Symbol $c = CUP$Parser$stack.peek(2);
 		Invoke c = (Invoke) $c.value;
-		org.boilit.cup.Symbol $n = CUP$Parser$stack.peek(0);
+		Symbol $n = CUP$Parser$stack.peek(0);
 		Nature n = (Nature) $n.value;
 		 RESULT=c.add(n); 
 		return RESULT;
@@ -2301,7 +2301,7 @@ class CUP$Parser$actions {
 	case 48: // nature ::= LABEL 
 	{
 		Nature RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		String a = (String) $a.value;
 		 RESULT=new Nature($a.line, $a.column, true, a); 
 		return RESULT;
@@ -2310,7 +2310,7 @@ class CUP$Parser$actions {
 	case 49: // nature ::= LABEL PRN_LEFT PRN_RIGHT 
 	{
 		Nature RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(2);
+		Symbol $a = CUP$Parser$stack.peek(2);
 		String a = (String) $a.value;
 		 RESULT=new Nature($a.line, $a.column, false, a); 
 		return RESULT;
@@ -2319,9 +2319,9 @@ class CUP$Parser$actions {
 	case 50: // nature ::= LABEL PRN_LEFT params PRN_RIGHT 
 	{
 		Nature RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(3);
+		Symbol $a = CUP$Parser$stack.peek(3);
 		String a = (String) $a.value;
-		org.boilit.cup.Symbol $ps = CUP$Parser$stack.peek(1);
+		Symbol $ps = CUP$Parser$stack.peek(1);
 		List<AbstractExpression> ps = (List<AbstractExpression>) $ps.value;
 		 RESULT=new Nature($a.line, $a.column, false, a).add(ps); 
 		return RESULT;
@@ -2330,7 +2330,7 @@ class CUP$Parser$actions {
 	case 51: // params ::= expression 
 	{
 		List<AbstractExpression> RESULT =null;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 List<AbstractExpression> ps=new ArrayList<AbstractExpression>(); ps.add(e); RESULT=ps; 
 		return RESULT;
@@ -2339,9 +2339,9 @@ class CUP$Parser$actions {
 	case 52: // params ::= params COMMA expression 
 	{
 		List<AbstractExpression> RESULT =null;
-		org.boilit.cup.Symbol $ps = CUP$Parser$stack.peek(2);
+		Symbol $ps = CUP$Parser$stack.peek(2);
 		List<AbstractExpression> ps = (List<AbstractExpression>) $ps.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 ps.add(e); RESULT=ps; 
 		return RESULT;
@@ -2350,7 +2350,7 @@ class CUP$Parser$actions {
 	case 53: // figures ::= or 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2359,7 +2359,7 @@ class CUP$Parser$actions {
 	case 54: // figures ::= and 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2368,7 +2368,7 @@ class CUP$Parser$actions {
 	case 55: // figures ::= not 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractUnitaryOperator a = (AbstractUnitaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2377,7 +2377,7 @@ class CUP$Parser$actions {
 	case 56: // figures ::= clt 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2386,7 +2386,7 @@ class CUP$Parser$actions {
 	case 57: // figures ::= cgt 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2395,7 +2395,7 @@ class CUP$Parser$actions {
 	case 58: // figures ::= cle 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2404,7 +2404,7 @@ class CUP$Parser$actions {
 	case 59: // figures ::= cge 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2413,7 +2413,7 @@ class CUP$Parser$actions {
 	case 60: // figures ::= cee 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2422,7 +2422,7 @@ class CUP$Parser$actions {
 	case 61: // figures ::= cne 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2431,7 +2431,7 @@ class CUP$Parser$actions {
 	case 62: // figures ::= add 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2440,7 +2440,7 @@ class CUP$Parser$actions {
 	case 63: // figures ::= sub 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2449,7 +2449,7 @@ class CUP$Parser$actions {
 	case 64: // figures ::= mul 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2458,7 +2458,7 @@ class CUP$Parser$actions {
 	case 65: // figures ::= div 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2467,7 +2467,7 @@ class CUP$Parser$actions {
 	case 66: // figures ::= mod 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2476,7 +2476,7 @@ class CUP$Parser$actions {
 	case 67: // figures ::= ngt 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractUnitaryOperator a = (AbstractUnitaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2485,7 +2485,7 @@ class CUP$Parser$actions {
 	case 68: // figures ::= bit_and 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2494,7 +2494,7 @@ class CUP$Parser$actions {
 	case 69: // figures ::= bit_or 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2503,7 +2503,7 @@ class CUP$Parser$actions {
 	case 70: // figures ::= bit_xor 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2512,7 +2512,7 @@ class CUP$Parser$actions {
 	case 71: // figures ::= bit_lm 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2521,7 +2521,7 @@ class CUP$Parser$actions {
 	case 72: // figures ::= bit_rm 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2530,7 +2530,7 @@ class CUP$Parser$actions {
 	case 73: // figures ::= bit_zrm 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2539,7 +2539,7 @@ class CUP$Parser$actions {
 	case 74: // figures ::= bit_not 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractUnitaryOperator a = (AbstractUnitaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2548,7 +2548,7 @@ class CUP$Parser$actions {
 	case 75: // figures ::= add1 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractOneselfOperator a = (AbstractOneselfOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2557,7 +2557,7 @@ class CUP$Parser$actions {
 	case 76: // figures ::= sub1 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractOneselfOperator a = (AbstractOneselfOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2566,7 +2566,7 @@ class CUP$Parser$actions {
 	case 77: // figures ::= pow 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractBinaryOperator a = (AbstractBinaryOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2575,7 +2575,7 @@ class CUP$Parser$actions {
 	case 78: // figures ::= merge 
 	{
 		AbstractOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Merge a = (Merge) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2584,11 +2584,11 @@ class CUP$Parser$actions {
 	case 79: // and ::= expression LGC_AND expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcAnd($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2597,11 +2597,11 @@ class CUP$Parser$actions {
 	case 80: // or ::= expression LGC_OR expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcOr($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2610,9 +2610,9 @@ class CUP$Parser$actions {
 	case 81: // not ::= LGC_NOT expression 
 	{
 		AbstractUnitaryOperator RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new LgcNot($p.line, $p.column, e); 
 		return RESULT;
@@ -2621,11 +2621,11 @@ class CUP$Parser$actions {
 	case 82: // clt ::= expression LGC_CLT expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcTlt($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2634,11 +2634,11 @@ class CUP$Parser$actions {
 	case 83: // cgt ::= expression LGC_CGT expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcTgt($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2647,11 +2647,11 @@ class CUP$Parser$actions {
 	case 84: // cle ::= expression LGC_CLE expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcTle($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2660,11 +2660,11 @@ class CUP$Parser$actions {
 	case 85: // cge ::= expression LGC_CGE expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcTge($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2673,11 +2673,11 @@ class CUP$Parser$actions {
 	case 86: // cee ::= expression LGC_CEE expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcTee($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2686,11 +2686,11 @@ class CUP$Parser$actions {
 	case 87: // cne ::= expression LGC_CNE expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new LgcTne($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2699,11 +2699,11 @@ class CUP$Parser$actions {
 	case 88: // add ::= expression NUM_ADD expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new NumAdd($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2712,11 +2712,11 @@ class CUP$Parser$actions {
 	case 89: // sub ::= expression NUM_SUB expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new NumSub($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2725,11 +2725,11 @@ class CUP$Parser$actions {
 	case 90: // mul ::= expression NUM_MUL expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new NumMul($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2738,11 +2738,11 @@ class CUP$Parser$actions {
 	case 91: // div ::= expression NUM_DIV expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new NumDiv($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2751,11 +2751,11 @@ class CUP$Parser$actions {
 	case 92: // mod ::= expression NUM_MOD expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new NumMod($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2764,9 +2764,9 @@ class CUP$Parser$actions {
 	case 93: // ngt ::= NUM_SUB expression 
 	{
 		AbstractUnitaryOperator RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new NumNgt($p.line, $p.column, e); 
 		return RESULT;
@@ -2775,11 +2775,11 @@ class CUP$Parser$actions {
 	case 94: // pow ::= NUM_POW PRN_LEFT expression COMMA expression PRN_RIGHT 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(5);
+		Symbol $p = CUP$Parser$stack.peek(5);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(3);
+		Symbol $e1 = CUP$Parser$stack.peek(3);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(1);
+		Symbol $e2 = CUP$Parser$stack.peek(1);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new NumPow($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2788,11 +2788,11 @@ class CUP$Parser$actions {
 	case 95: // bit_and ::= expression BIT_AND expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new BitAnd($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2801,11 +2801,11 @@ class CUP$Parser$actions {
 	case 96: // bit_or ::= expression BIT_OR expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new BitOr($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2814,11 +2814,11 @@ class CUP$Parser$actions {
 	case 97: // bit_xor ::= expression BIT_XOR expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new BitXor($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2827,11 +2827,11 @@ class CUP$Parser$actions {
 	case 98: // bit_lm ::= expression BIT_LM expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new BitLm($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2840,11 +2840,11 @@ class CUP$Parser$actions {
 	case 99: // bit_rm ::= expression BIT_RM expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new BitRm($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2853,11 +2853,11 @@ class CUP$Parser$actions {
 	case 100: // bit_zrm ::= expression BIT_ZRM expression 
 	{
 		AbstractBinaryOperator RESULT =null;
-		org.boilit.cup.Symbol $e1 = CUP$Parser$stack.peek(2);
+		Symbol $e1 = CUP$Parser$stack.peek(2);
 		AbstractExpression e1 = (AbstractExpression) $e1.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e2 = CUP$Parser$stack.peek(0);
+		Symbol $e2 = CUP$Parser$stack.peek(0);
 		AbstractExpression e2 = (AbstractExpression) $e2.value;
 		 RESULT = new BitZrm($p.line, $p.column, e1, e2); 
 		return RESULT;
@@ -2866,9 +2866,9 @@ class CUP$Parser$actions {
 	case 101: // bit_not ::= BIT_NOT expression 
 	{
 		AbstractUnitaryOperator RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new BitNot($p.line, $p.column, e); 
 		return RESULT;
@@ -2877,9 +2877,9 @@ class CUP$Parser$actions {
 	case 102: // add1 ::= NUM_ADD1 LABEL 
 	{
 		AbstractOneselfOperator RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(0);
+		Symbol $v = CUP$Parser$stack.peek(0);
 		String v = (String) $v.value;
 		 RESULT = new NumAdd1($p.line, $p.column, v, true); 
 		return RESULT;
@@ -2888,9 +2888,9 @@ class CUP$Parser$actions {
 	case 103: // add1 ::= LABEL NUM_ADD1 
 	{
 		AbstractOneselfOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(1);
+		Symbol $v = CUP$Parser$stack.peek(1);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(0);
+		Symbol $p = CUP$Parser$stack.peek(0);
 		Integer p = (Integer) $p.value;
 		 RESULT = new NumAdd1($p.line, $p.column, v, false); 
 		return RESULT;
@@ -2899,9 +2899,9 @@ class CUP$Parser$actions {
 	case 104: // sub1 ::= NUM_SUB1 LABEL 
 	{
 		AbstractOneselfOperator RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(0);
+		Symbol $v = CUP$Parser$stack.peek(0);
 		String v = (String) $v.value;
 		 RESULT = new NumSub1($p.line, $p.column, v, true); 
 		return RESULT;
@@ -2910,9 +2910,9 @@ class CUP$Parser$actions {
 	case 105: // sub1 ::= LABEL NUM_SUB1 
 	{
 		AbstractOneselfOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(1);
+		Symbol $v = CUP$Parser$stack.peek(1);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(0);
+		Symbol $p = CUP$Parser$stack.peek(0);
 		Integer p = (Integer) $p.value;
 		 RESULT = new NumSub1($p.line, $p.column, v, false); 
 		return RESULT;
@@ -2921,7 +2921,7 @@ class CUP$Parser$actions {
 	case 106: // merge ::= merge_item PRN_RIGHT 
 	{
 		Merge RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Merge a = (Merge) $a.value;
 		 RESULT = a; 
 		return RESULT;
@@ -2930,9 +2930,9 @@ class CUP$Parser$actions {
 	case 107: // merge_item ::= merge_item COMMA expression 
 	{
 		Merge RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(2);
+		Symbol $a = CUP$Parser$stack.peek(2);
 		Merge a = (Merge) $a.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = a.add(e); 
 		return RESULT;
@@ -2941,9 +2941,9 @@ class CUP$Parser$actions {
 	case 108: // merge_item ::= MERGE PRN_LEFT expression 
 	{
 		Merge RESULT =null;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(2);
+		Symbol $p = CUP$Parser$stack.peek(2);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT=new Merge($p.line, $p.column).add(e); 
 		return RESULT;
@@ -2952,7 +2952,7 @@ class CUP$Parser$actions {
 	case 109: // assigns ::= and_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2961,7 +2961,7 @@ class CUP$Parser$actions {
 	case 110: // assigns ::= or_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2970,7 +2970,7 @@ class CUP$Parser$actions {
 	case 111: // assigns ::= add_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2979,7 +2979,7 @@ class CUP$Parser$actions {
 	case 112: // assigns ::= sub_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2988,7 +2988,7 @@ class CUP$Parser$actions {
 	case 113: // assigns ::= mul_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -2997,7 +2997,7 @@ class CUP$Parser$actions {
 	case 114: // assigns ::= div_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3006,7 +3006,7 @@ class CUP$Parser$actions {
 	case 115: // assigns ::= mod_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3015,7 +3015,7 @@ class CUP$Parser$actions {
 	case 116: // assigns ::= bit_and_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3024,7 +3024,7 @@ class CUP$Parser$actions {
 	case 117: // assigns ::= bit_or_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3033,7 +3033,7 @@ class CUP$Parser$actions {
 	case 118: // assigns ::= bit_xor_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3042,7 +3042,7 @@ class CUP$Parser$actions {
 	case 119: // assigns ::= bit_lm_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3051,7 +3051,7 @@ class CUP$Parser$actions {
 	case 120: // assigns ::= bit_rm_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3060,7 +3060,7 @@ class CUP$Parser$actions {
 	case 121: // assigns ::= bit_zrm_assign 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		AbstractAssignOperator a = (AbstractAssignOperator) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3069,11 +3069,11 @@ class CUP$Parser$actions {
 	case 122: // assign ::= LABEL ASSIGN expression 
 	{
 		NormalAssign RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new NormalAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3082,11 +3082,11 @@ class CUP$Parser$actions {
 	case 123: // and_assign ::= LABEL LGC_AND_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new LgcAndAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3095,11 +3095,11 @@ class CUP$Parser$actions {
 	case 124: // or_assign ::= LABEL LGC_OR_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new LgcOrAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3108,11 +3108,11 @@ class CUP$Parser$actions {
 	case 125: // add_assign ::= LABEL NUM_ADD_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new NumAddAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3121,11 +3121,11 @@ class CUP$Parser$actions {
 	case 126: // sub_assign ::= LABEL NUM_SUB_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new NumSubAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3134,11 +3134,11 @@ class CUP$Parser$actions {
 	case 127: // mul_assign ::= LABEL NUM_MUL_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new NumMulAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3147,11 +3147,11 @@ class CUP$Parser$actions {
 	case 128: // div_assign ::= LABEL NUM_DIV_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new NumDivAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3160,11 +3160,11 @@ class CUP$Parser$actions {
 	case 129: // mod_assign ::= LABEL NUM_MOD_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new NumModAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3173,11 +3173,11 @@ class CUP$Parser$actions {
 	case 130: // bit_and_assign ::= LABEL BIT_AND_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new BitAndAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3186,11 +3186,11 @@ class CUP$Parser$actions {
 	case 131: // bit_or_assign ::= LABEL BIT_OR_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new BitOrAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3199,11 +3199,11 @@ class CUP$Parser$actions {
 	case 132: // bit_xor_assign ::= LABEL BIT_XOR_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new BitXorAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3212,11 +3212,11 @@ class CUP$Parser$actions {
 	case 133: // bit_lm_assign ::= LABEL BIT_LM_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new BitLmAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3225,11 +3225,11 @@ class CUP$Parser$actions {
 	case 134: // bit_rm_assign ::= LABEL BIT_RM_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new BitRmAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3238,11 +3238,11 @@ class CUP$Parser$actions {
 	case 135: // bit_zrm_assign ::= LABEL BIT_ZRM_ASSIGN expression 
 	{
 		AbstractAssignOperator RESULT =null;
-		org.boilit.cup.Symbol $v = CUP$Parser$stack.peek(2);
+		Symbol $v = CUP$Parser$stack.peek(2);
 		String v = (String) $v.value;
-		org.boilit.cup.Symbol $p = CUP$Parser$stack.peek(1);
+		Symbol $p = CUP$Parser$stack.peek(1);
 		Integer p = (Integer) $p.value;
-		org.boilit.cup.Symbol $e = CUP$Parser$stack.peek(0);
+		Symbol $e = CUP$Parser$stack.peek(0);
 		AbstractExpression e = (AbstractExpression) $e.value;
 		 RESULT = new BitZrmAssign($p.line, $p.column, v, e); 
 		return RESULT;
@@ -3251,7 +3251,7 @@ class CUP$Parser$actions {
 	case 136: // structures ::= NULL 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Object a = (Object) $a.value;
 		 RESULT = new Value($a.line, $a.column, null); 
 		return RESULT;
@@ -3260,7 +3260,7 @@ class CUP$Parser$actions {
 	case 137: // structures ::= BOOL 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Boolean a = (Boolean) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3269,7 +3269,7 @@ class CUP$Parser$actions {
 	case 138: // structures ::= BYTE 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Byte a = (Byte) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3278,7 +3278,7 @@ class CUP$Parser$actions {
 	case 139: // structures ::= SHORT 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Short a = (Short) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3287,7 +3287,7 @@ class CUP$Parser$actions {
 	case 140: // structures ::= INTEGER 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Integer a = (Integer) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3296,7 +3296,7 @@ class CUP$Parser$actions {
 	case 141: // structures ::= LONG 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Long a = (Long) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3305,7 +3305,7 @@ class CUP$Parser$actions {
 	case 142: // structures ::= FLOAT 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Float a = (Float) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3314,7 +3314,7 @@ class CUP$Parser$actions {
 	case 143: // structures ::= DOUBLE 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Double a = (Double) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3323,7 +3323,7 @@ class CUP$Parser$actions {
 	case 144: // structures ::= CHARS 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		String a = (String) $a.value;
 		 RESULT = new Value($a.line, $a.column, a); 
 		return RESULT;
@@ -3332,7 +3332,7 @@ class CUP$Parser$actions {
 	case 145: // structures ::= LABEL 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		String a = (String) $a.value;
 		 RESULT = new Label($a.line, $a.column, a); 
 		return RESULT;
@@ -3341,7 +3341,7 @@ class CUP$Parser$actions {
 	case 146: // structures ::= rank 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Rank a = (Rank) $a.value;
 		 RESULT = a; 
 		return RESULT;
@@ -3350,7 +3350,7 @@ class CUP$Parser$actions {
 	case 147: // structures ::= hash 
 	{
 		AbstractExpression RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(0);
+		Symbol $a = CUP$Parser$stack.peek(0);
 		Hash a = (Hash) $a.value;
 		 RESULT = a; 
 		return RESULT;
@@ -3359,7 +3359,7 @@ class CUP$Parser$actions {
 	case 148: // rank ::= rank_item BRK_RIGHT 
 	{
 		Rank RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Rank a = (Rank) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3368,7 +3368,7 @@ class CUP$Parser$actions {
 	case 149: // rank ::= BRK_LEFT BRK_RIGHT 
 	{
 		Rank RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Integer a = (Integer) $a.value;
 		 RESULT=new Rank($a.line, $a.column); 
 		return RESULT;
@@ -3377,9 +3377,9 @@ class CUP$Parser$actions {
 	case 150: // rank_item ::= BRK_LEFT expression 
 	{
 		Rank RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		AbstractExpression b = (AbstractExpression) $b.value;
 		 RESULT=new Rank($a.line, $a.column).add(b); 
 		return RESULT;
@@ -3388,9 +3388,9 @@ class CUP$Parser$actions {
 	case 151: // rank_item ::= rank_item COMMA expression 
 	{
 		Rank RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(2);
+		Symbol $a = CUP$Parser$stack.peek(2);
 		Rank a = (Rank) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(0);
+		Symbol $b = CUP$Parser$stack.peek(0);
 		AbstractExpression b = (AbstractExpression) $b.value;
 		 RESULT=a.add(b); 
 		return RESULT;
@@ -3399,7 +3399,7 @@ class CUP$Parser$actions {
 	case 152: // hash ::= hash_item BRC_RIGHT 
 	{
 		Hash RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Hash a = (Hash) $a.value;
 		 RESULT=a; 
 		return RESULT;
@@ -3408,7 +3408,7 @@ class CUP$Parser$actions {
 	case 153: // hash ::= BRC_LEFT BRC_RIGHT 
 	{
 		Hash RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(1);
+		Symbol $a = CUP$Parser$stack.peek(1);
 		Integer a = (Integer) $a.value;
 		 RESULT=new Hash($a.line, $a.column); 
 		return RESULT;
@@ -3417,11 +3417,11 @@ class CUP$Parser$actions {
 	case 154: // hash_item ::= BRC_LEFT expression COLON expression 
 	{
 		Hash RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(3);
+		Symbol $a = CUP$Parser$stack.peek(3);
 		Integer a = (Integer) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(2);
+		Symbol $b = CUP$Parser$stack.peek(2);
 		AbstractExpression b = (AbstractExpression) $b.value;
-		org.boilit.cup.Symbol $c = CUP$Parser$stack.peek(0);
+		Symbol $c = CUP$Parser$stack.peek(0);
 		AbstractExpression c = (AbstractExpression) $c.value;
 		 RESULT=new Hash($a.line, $a.column).add(b,c); 
 		return RESULT;
@@ -3430,11 +3430,11 @@ class CUP$Parser$actions {
 	case 155: // hash_item ::= hash_item COMMA expression COLON expression 
 	{
 		Hash RESULT =null;
-		org.boilit.cup.Symbol $a = CUP$Parser$stack.peek(4);
+		Symbol $a = CUP$Parser$stack.peek(4);
 		Hash a = (Hash) $a.value;
-		org.boilit.cup.Symbol $b = CUP$Parser$stack.peek(2);
+		Symbol $b = CUP$Parser$stack.peek(2);
 		AbstractExpression b = (AbstractExpression) $b.value;
-		org.boilit.cup.Symbol $c = CUP$Parser$stack.peek(0);
+		Symbol $c = CUP$Parser$stack.peek(0);
 		AbstractExpression c = (AbstractExpression) $c.value;
 		 RESULT=a.add(b,c); 
 		return RESULT;

@@ -31,7 +31,7 @@
 package org.boilit.asm;
 
 /**
- * Information about a class being parsed in a {@link ClassReader}.
+ * Information about a class being parsed in a {@link org.boilit.asm.ClassReader}.
  * 
  * @author Eric Bruneton
  */
@@ -43,7 +43,7 @@ class Context {
     Attribute[] attrs;
 
     /**
-     * The {@link ClassReader} option flags for the parsing of this class.
+     * The {@link org.boilit.asm.ClassReader} option flags for the parsing of this class.
      */
     int flags;
 

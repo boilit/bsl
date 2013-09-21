@@ -40,11 +40,11 @@ public final class Handle {
 
     /**
      * The kind of field or method designated by this Handle. Should be
-     * {@link Opcodes#H_GETFIELD}, {@link Opcodes#H_GETSTATIC},
-     * {@link Opcodes#H_PUTFIELD}, {@link Opcodes#H_PUTSTATIC},
-     * {@link Opcodes#H_INVOKEVIRTUAL}, {@link Opcodes#H_INVOKESTATIC},
-     * {@link Opcodes#H_INVOKESPECIAL}, {@link Opcodes#H_NEWINVOKESPECIAL} or
-     * {@link Opcodes#H_INVOKEINTERFACE}.
+     * {@link org.boilit.asm.Opcodes#H_GETFIELD}, {@link org.boilit.asm.Opcodes#H_GETSTATIC},
+     * {@link org.boilit.asm.Opcodes#H_PUTFIELD}, {@link org.boilit.asm.Opcodes#H_PUTSTATIC},
+     * {@link org.boilit.asm.Opcodes#H_INVOKEVIRTUAL}, {@link org.boilit.asm.Opcodes#H_INVOKESTATIC},
+     * {@link org.boilit.asm.Opcodes#H_INVOKESPECIAL}, {@link org.boilit.asm.Opcodes#H_NEWINVOKESPECIAL} or
+     * {@link org.boilit.asm.Opcodes#H_INVOKEINTERFACE}.
      */
     final int tag;
 
@@ -68,13 +68,13 @@ public final class Handle {
      * 
      * @param tag
      *            the kind of field or method designated by this Handle. Must be
-     *            {@link Opcodes#H_GETFIELD}, {@link Opcodes#H_GETSTATIC},
-     *            {@link Opcodes#H_PUTFIELD}, {@link Opcodes#H_PUTSTATIC},
-     *            {@link Opcodes#H_INVOKEVIRTUAL},
-     *            {@link Opcodes#H_INVOKESTATIC},
-     *            {@link Opcodes#H_INVOKESPECIAL},
-     *            {@link Opcodes#H_NEWINVOKESPECIAL} or
-     *            {@link Opcodes#H_INVOKEINTERFACE}.
+     *            {@link org.boilit.asm.Opcodes#H_GETFIELD}, {@link org.boilit.asm.Opcodes#H_GETSTATIC},
+     *            {@link org.boilit.asm.Opcodes#H_PUTFIELD}, {@link org.boilit.asm.Opcodes#H_PUTSTATIC},
+     *            {@link org.boilit.asm.Opcodes#H_INVOKEVIRTUAL},
+     *            {@link org.boilit.asm.Opcodes#H_INVOKESTATIC},
+     *            {@link org.boilit.asm.Opcodes#H_INVOKESPECIAL},
+     *            {@link org.boilit.asm.Opcodes#H_NEWINVOKESPECIAL} or
+     *            {@link org.boilit.asm.Opcodes#H_INVOKEINTERFACE}.
      * @param owner
      *            the internal name of the field or method designed by this
      *            handle.
@@ -94,12 +94,12 @@ public final class Handle {
     /**
      * Returns the kind of field or method designated by this handle.
      * 
-     * @return {@link Opcodes#H_GETFIELD}, {@link Opcodes#H_GETSTATIC},
-     *         {@link Opcodes#H_PUTFIELD}, {@link Opcodes#H_PUTSTATIC},
-     *         {@link Opcodes#H_INVOKEVIRTUAL}, {@link Opcodes#H_INVOKESTATIC},
-     *         {@link Opcodes#H_INVOKESPECIAL},
-     *         {@link Opcodes#H_NEWINVOKESPECIAL} or
-     *         {@link Opcodes#H_INVOKEINTERFACE}.
+     * @return {@link org.boilit.asm.Opcodes#H_GETFIELD}, {@link org.boilit.asm.Opcodes#H_GETSTATIC},
+     *         {@link org.boilit.asm.Opcodes#H_PUTFIELD}, {@link org.boilit.asm.Opcodes#H_PUTSTATIC},
+     *         {@link org.boilit.asm.Opcodes#H_INVOKEVIRTUAL}, {@link org.boilit.asm.Opcodes#H_INVOKESTATIC},
+     *         {@link org.boilit.asm.Opcodes#H_INVOKESPECIAL},
+     *         {@link org.boilit.asm.Opcodes#H_NEWINVOKESPECIAL} or
+     *         {@link org.boilit.asm.Opcodes#H_INVOKEINTERFACE}.
      */
     public int getTag() {
         return tag;

@@ -60,7 +60,7 @@ public class Label {
 
     /**
      * Indicates if this basic block has been pushed in the basic block stack.
-     * See {@link MethodWriter#visitMaxs visitMaxs}.
+     * See {@link org.boilit.asm.MethodWriter#visitMaxs visitMaxs}.
      */
     static final int PUSHED = 8;
 
@@ -214,7 +214,7 @@ public class Label {
 
     /**
      * Information about the input and output stack map frames of this basic
-     * block. This field is only used when {@link ClassWriter#COMPUTE_FRAMES}
+     * block. This field is only used when {@link org.boilit.asm.ClassWriter#COMPUTE_FRAMES}
      * option is used.
      */
     Frame frame;
@@ -222,7 +222,7 @@ public class Label {
     /**
      * The successor of this label, in the order they are visited. This linked
      * list does not include labels used for debug info only. If
-     * {@link ClassWriter#COMPUTE_FRAMES} option is used then, in addition, it
+     * {@link org.boilit.asm.ClassWriter#COMPUTE_FRAMES} option is used then, in addition, it
      * does not contain successive labels that denote the same bytecode position
      * (in this case only the first label appears in this list).
      */
@@ -230,8 +230,8 @@ public class Label {
 
     /**
      * The successors of this node in the control flow graph. These successors
-     * are stored in a linked list of {@link Edge Edge} objects, linked to each
-     * other by their {@link Edge#next} field.
+     * are stored in a linked list of {@link org.boilit.asm.Edge Edge} objects, linked to each
+     * other by their {@link org.boilit.asm.Edge#next} field.
      */
     Edge successors;
 
@@ -241,7 +241,7 @@ public class Label {
      * control flow analysis algorithms. It is also used in
      * {@link #visitSubroutine} to avoid using a recursive method.
      * 
-     * @see MethodWriter#visitMaxs
+     * @see org.boilit.asm.MethodWriter#visitMaxs
      */
     Label next;
 
@@ -262,7 +262,7 @@ public class Label {
     /**
      * Returns the offset corresponding to this label. This offset is computed
      * from the start of the method's bytecode. <i>This method is intended for
-     * {@link Attribute} sub classes, and is normally not needed by class
+     * {@link org.boilit.asm.Attribute} sub classes, and is normally not needed by class
      * generators or adapters.</i>
      * 
      * @return the offset corresponding to this label.
@@ -361,7 +361,7 @@ public class Label {
      *         opcodes) using an unsigned two bytes offset. These pseudo
      *         instructions will need to be replaced with true instructions with
      *         wider offsets (4 bytes instead of 2). This is done in
-     *         {@link MethodWriter#resizeInstructions}.
+     *         {@link org.boilit.asm.MethodWriter#resizeInstructions}.
      * @throws IllegalArgumentException
      *             if this label has already been resolved, or if it has not
      *             been created by the given code writer.

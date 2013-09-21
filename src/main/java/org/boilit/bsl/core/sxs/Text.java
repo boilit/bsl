@@ -3,13 +3,15 @@ package org.boilit.bsl.core.sxs;
 import org.boilit.bsl.Template;
 import org.boilit.bsl.core.AbstractStatement;
 import org.boilit.bsl.core.ExecuteContext;
+import org.boilit.bsl.xio.IPrinter;
 
 /**
  * @author Boilit
  * @see
  */
 public final class Text extends AbstractStatement {
-    private Object value;
+    private String value;
+    private byte[] bytes;
     private final Template template;
 
     public Text(final int line, final int column, final String value, final Template template) {
@@ -20,20 +22,25 @@ public final class Text extends AbstractStatement {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        context.getPrinter().print(value);
+        final IPrinter printer = context.getPrinter();
+        if(printer.getPrinterKind() == IPrinter.BYTES_PRINTER) {
+            printer.print(bytes);
+        } else {
+            printer.print(value);
+        }
         return null;
     }
 
     @Override
     public final AbstractStatement optimize() throws Exception {
-        if (value == null || ((String) value).trim().length() == 0) {
+        if (value == null || (value).trim().length() == 0) {
             return null;
         }
-        value = template.getTextCompressor().doCompress((String) value);
-        if(value==null || ((String) value).trim().length() == 0) {
+        value = template.getTextCompressor().doCompress(value);
+        if(value==null || (value).trim().length() == 0) {
             return null;
         }
-        value = ((String) value).getBytes(template.getOutputEncoding());
+        bytes = value.getBytes(template.getOutputEncoding());
         return this;
     }
 }

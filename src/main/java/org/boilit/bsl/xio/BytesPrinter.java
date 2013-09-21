@@ -37,14 +37,7 @@ public final class BytesPrinter implements IPrinter {
         if(object == null) {
             return;
         }
-        final Class clazz = object.getClass();
-        if(clazz == byte[].class) {
-            this.print((byte[]) object);
-        } else if(object == String.class) {
-            this.print((String) object);
-        } else {
-            this.print(object.toString());
-        }
+        this.print(object.toString());
     }
 
     @Override

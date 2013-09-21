@@ -41,7 +41,7 @@ public abstract class AnnotationVisitor {
 
     /**
      * The ASM API version implemented by this visitor. The value of this field
-     * must be one of {@link Opcodes#ASM4}.
+     * must be one of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     protected final int api;
 
@@ -52,22 +52,22 @@ public abstract class AnnotationVisitor {
     protected AnnotationVisitor av;
 
     /**
-     * Constructs a new {@link org.boilit.asm.AnnotationVisitor}.
+     * Constructs a new {@link AnnotationVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     public AnnotationVisitor(final int api) {
         this(api, null);
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.AnnotationVisitor}.
+     * Constructs a new {@link AnnotationVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      * @param av
      *            the annotation visitor to which this visitor must delegate
      *            method calls. May be null.
@@ -89,7 +89,7 @@ public abstract class AnnotationVisitor {
      *            the actual value, whose type must be {@link Byte},
      *            {@link Boolean}, {@link Character}, {@link Short},
      *            {@link Integer} , {@link Long}, {@link Float}, {@link Double},
-     *            {@link String} or {@link Type} or OBJECT or ARRAY sort. This
+     *            {@link String} or {@link org.boilit.asm.Type} or OBJECT or ARRAY sort. This
      *            value can also be an array of byte, boolean, short, char, int,
      *            long, float or double values (this is equivalent to using
      *            {@link #visitArray visitArray} and visiting each array element
@@ -141,7 +141,7 @@ public abstract class AnnotationVisitor {
      * Visits an array value of the annotation. Note that arrays of primitive
      * types (such as byte, boolean, short, char, int, long, float or double)
      * can be passed as value to {@link #visit visit}. This is what
-     * {@link ClassReader} does.
+     * {@link org.boilit.asm.ClassReader} does.
      * 
      * @param name
      *            the value name.

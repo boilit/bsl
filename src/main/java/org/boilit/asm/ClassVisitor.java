@@ -42,7 +42,7 @@ public abstract class ClassVisitor {
 
     /**
      * The ASM API version implemented by this visitor. The value of this field
-     * must be one of {@link Opcodes#ASM4}.
+     * must be one of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     protected final int api;
 
@@ -53,22 +53,22 @@ public abstract class ClassVisitor {
     protected ClassVisitor cv;
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassVisitor}.
+     * Constructs a new {@link ClassVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     public ClassVisitor(final int api) {
         this(api, null);
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.ClassVisitor}.
+     * Constructs a new {@link ClassVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      * @param cv
      *            the class visitor to which this visitor must delegate method
      *            calls. May be null.
@@ -87,23 +87,23 @@ public abstract class ClassVisitor {
      * @param version
      *            the class version.
      * @param access
-     *            the class's access flags (see {@link Opcodes}). This parameter
+     *            the class's access flags (see {@link org.boilit.asm.Opcodes}). This parameter
      *            also indicates if the class is deprecated.
      * @param name
      *            the internal name of the class (see
-     *            {@link Type#getInternalName() getInternalName}).
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      * @param signature
      *            the signature of this class. May be <tt>null</tt> if the class
      *            is not a generic one, and does not extend or implement generic
      *            classes or interfaces.
      * @param superName
      *            the internal of name of the super class (see
-     *            {@link Type#getInternalName() getInternalName}). For
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}). For
      *            interfaces, the super class is {@link Object}. May be
      *            <tt>null</tt>, but only for the {@link Object} class.
      * @param interfaces
      *            the internal names of the class's interfaces (see
-     *            {@link Type#getInternalName() getInternalName}). May be
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}). May be
      *            <tt>null</tt>.
      */
     public void visit(int version, int access, String name, String signature,
@@ -186,10 +186,10 @@ public abstract class ClassVisitor {
      * 
      * @param name
      *            the internal name of an inner class (see
-     *            {@link Type#getInternalName() getInternalName}).
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      * @param outerName
      *            the internal name of the class to which the inner class
-     *            belongs (see {@link Type#getInternalName() getInternalName}).
+     *            belongs (see {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      *            May be <tt>null</tt> for not member classes.
      * @param innerName
      *            the (simple) name of the inner class inside its enclosing
@@ -209,12 +209,12 @@ public abstract class ClassVisitor {
      * Visits a field of the class.
      * 
      * @param access
-     *            the field's access flags (see {@link Opcodes}). This parameter
+     *            the field's access flags (see {@link org.boilit.asm.Opcodes}). This parameter
      *            also indicates if the field is synthetic and/or deprecated.
      * @param name
      *            the field's name.
      * @param desc
-     *            the field's descriptor (see {@link Type Type}).
+     *            the field's descriptor (see {@link org.boilit.asm.Type Type}).
      * @param signature
      *            the field's signature. May be <tt>null</tt> if the field's
      *            type does not use generic types.
@@ -242,24 +242,24 @@ public abstract class ClassVisitor {
 
     /**
      * Visits a method of the class. This method <i>must</i> return a new
-     * {@link MethodVisitor} instance (or <tt>null</tt>) each time it is called,
+     * {@link org.boilit.asm.MethodVisitor} instance (or <tt>null</tt>) each time it is called,
      * i.e., it should not return a previously returned visitor.
      * 
      * @param access
-     *            the method's access flags (see {@link Opcodes}). This
+     *            the method's access flags (see {@link org.boilit.asm.Opcodes}). This
      *            parameter also indicates if the method is synthetic and/or
      *            deprecated.
      * @param name
      *            the method's name.
      * @param desc
-     *            the method's descriptor (see {@link Type Type}).
+     *            the method's descriptor (see {@link org.boilit.asm.Type Type}).
      * @param signature
      *            the method's signature. May be <tt>null</tt> if the method
      *            parameters, return type and exceptions do not use generic
      *            types.
      * @param exceptions
      *            the internal names of the method's exception classes (see
-     *            {@link Type#getInternalName() getInternalName}). May be
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}). May be
      *            <tt>null</tt>.
      * @return an object to visit the byte code of the method, or <tt>null</tt>
      *         if this class visitor is not interested in visiting the code of

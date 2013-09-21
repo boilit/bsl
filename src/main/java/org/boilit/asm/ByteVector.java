@@ -48,7 +48,7 @@ public class ByteVector {
     int length;
 
     /**
-     * Constructs a new {@link org.boilit.asm.ByteVector ByteVector} with a default initial
+     * Constructs a new {@link ByteVector ByteVector} with a default initial
      * size.
      */
     public ByteVector() {
@@ -56,7 +56,7 @@ public class ByteVector {
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.ByteVector ByteVector} with the given initial
+     * Constructs a new {@link ByteVector ByteVector} with the given initial
      * size.
      * 
      * @param initialSize

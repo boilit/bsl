@@ -14,7 +14,7 @@ package org.boilit.cup;
  *
  * @author Frank Flannery
  * @version last updated: 7/3/96
- * @see org.boilit.cup.lr_parser
+ * @see lr_parser
  */
 public final class virtual_parse_stack {
     /*-----------------------------------------------------------*/

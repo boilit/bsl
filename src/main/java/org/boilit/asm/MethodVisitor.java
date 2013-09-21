@@ -50,7 +50,7 @@ public abstract class MethodVisitor {
 
     /**
      * The ASM API version implemented by this visitor. The value of this field
-     * must be one of {@link Opcodes#ASM4}.
+     * must be one of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     protected final int api;
 
@@ -61,22 +61,22 @@ public abstract class MethodVisitor {
     protected MethodVisitor mv;
 
     /**
-     * Constructs a new {@link org.boilit.asm.MethodVisitor}.
+     * Constructs a new {@link MethodVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      */
     public MethodVisitor(final int api) {
         this(api, null);
     }
 
     /**
-     * Constructs a new {@link org.boilit.asm.MethodVisitor}.
+     * Constructs a new {@link MethodVisitor}.
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4}.
+     *            of {@link org.boilit.asm.Opcodes#ASM4}.
      * @param mv
      *            the method visitor to which this visitor must delegate method
      *            calls. May be null.
@@ -178,7 +178,7 @@ public abstract class MethodVisitor {
      * before</i> <b>i</b> is executed.<br>
      * <br>
      * (*) this is mandatory only for classes whose version is greater than or
-     * equal to {@link Opcodes#V1_6 V1_6}. <br>
+     * equal to {@link org.boilit.asm.Opcodes#V1_6 V1_6}. <br>
      * <br>
      * The frames of a method must be given either in expanded form, or in
      * compressed form (all frames must use the same format, i.e. you must not
@@ -188,20 +188,20 @@ public abstract class MethodVisitor {
      * <li>In compressed form, frames are basically "deltas" from the state of
      * the previous frame:
      * <ul>
-     * <li>{@link Opcodes#F_SAME} representing frame with exactly the same
+     * <li>{@link org.boilit.asm.Opcodes#F_SAME} representing frame with exactly the same
      * locals as the previous frame and with the empty stack.</li>
-     * <li>{@link Opcodes#F_SAME1} representing frame with exactly the same
+     * <li>{@link org.boilit.asm.Opcodes#F_SAME1} representing frame with exactly the same
      * locals as the previous frame and with single value on the stack (
      * <code>nStack</code> is 1 and <code>stack[0]</code> contains value for the
      * type of the stack item).</li>
-     * <li>{@link Opcodes#F_APPEND} representing frame with current locals are
+     * <li>{@link org.boilit.asm.Opcodes#F_APPEND} representing frame with current locals are
      * the same as the locals in the previous frame, except that additional
      * locals are defined (<code>nLocal</code> is 1, 2 or 3 and
      * <code>local</code> elements contains values representing added types).</li>
-     * <li>{@link Opcodes#F_CHOP} representing frame with current locals are the
+     * <li>{@link org.boilit.asm.Opcodes#F_CHOP} representing frame with current locals are the
      * same as the locals in the previous frame, except that the last 1-3 locals
      * are absent and with the empty stack (<code>nLocals</code> is 1, 2 or 3).</li>
-     * <li>{@link Opcodes#F_FULL} representing complete frame data.</li></li>
+     * <li>{@link org.boilit.asm.Opcodes#F_FULL} representing complete frame data.</li></li>
      * </ul>
      * </ul> <br>
      * In both cases the first frame, corresponding to the method's parameters
@@ -211,20 +211,20 @@ public abstract class MethodVisitor {
      * 
      * @param type
      *            the type of this stack map frame. Must be
-     *            {@link Opcodes#F_NEW} for expanded frames, or
-     *            {@link Opcodes#F_FULL}, {@link Opcodes#F_APPEND},
-     *            {@link Opcodes#F_CHOP}, {@link Opcodes#F_SAME} or
-     *            {@link Opcodes#F_APPEND}, {@link Opcodes#F_SAME1} for
+     *            {@link org.boilit.asm.Opcodes#F_NEW} for expanded frames, or
+     *            {@link org.boilit.asm.Opcodes#F_FULL}, {@link org.boilit.asm.Opcodes#F_APPEND},
+     *            {@link org.boilit.asm.Opcodes#F_CHOP}, {@link org.boilit.asm.Opcodes#F_SAME} or
+     *            {@link org.boilit.asm.Opcodes#F_APPEND}, {@link org.boilit.asm.Opcodes#F_SAME1} for
      *            compressed frames.
      * @param nLocal
      *            the number of local variables in the visited frame.
      * @param local
      *            the local variable types in this frame. This array must not be
      *            modified. Primitive types are represented by
-     *            {@link Opcodes#TOP}, {@link Opcodes#INTEGER},
-     *            {@link Opcodes#FLOAT}, {@link Opcodes#LONG},
-     *            {@link Opcodes#DOUBLE},{@link Opcodes#NULL} or
-     *            {@link Opcodes#UNINITIALIZED_THIS} (long and double are
+     *            {@link org.boilit.asm.Opcodes#TOP}, {@link org.boilit.asm.Opcodes#INTEGER},
+     *            {@link org.boilit.asm.Opcodes#FLOAT}, {@link org.boilit.asm.Opcodes#LONG},
+     *            {@link org.boilit.asm.Opcodes#DOUBLE},{@link org.boilit.asm.Opcodes#NULL} or
+     *            {@link org.boilit.asm.Opcodes#UNINITIALIZED_THIS} (long and double are
      *            represented by a single element). Reference types are
      *            represented by String objects (representing internal names),
      *            and uninitialized types by Label objects (this label
@@ -291,10 +291,10 @@ public abstract class MethodVisitor {
      *            When opcode is SIPUSH, operand value should be between
      *            Short.MIN_VALUE and Short.MAX_VALUE.<br>
      *            When opcode is NEWARRAY, operand value should be one of
-     *            {@link Opcodes#T_BOOLEAN}, {@link Opcodes#T_CHAR},
-     *            {@link Opcodes#T_FLOAT}, {@link Opcodes#T_DOUBLE},
-     *            {@link Opcodes#T_BYTE}, {@link Opcodes#T_SHORT},
-     *            {@link Opcodes#T_INT} or {@link Opcodes#T_LONG}.
+     *            {@link org.boilit.asm.Opcodes#T_BOOLEAN}, {@link org.boilit.asm.Opcodes#T_CHAR},
+     *            {@link org.boilit.asm.Opcodes#T_FLOAT}, {@link org.boilit.asm.Opcodes#T_DOUBLE},
+     *            {@link org.boilit.asm.Opcodes#T_BYTE}, {@link org.boilit.asm.Opcodes#T_SHORT},
+     *            {@link org.boilit.asm.Opcodes#T_INT} or {@link org.boilit.asm.Opcodes#T_LONG}.
      */
     public void visitIntInsn(int opcode, int operand) {
         if (mv != null) {
@@ -330,7 +330,7 @@ public abstract class MethodVisitor {
      * @param type
      *            the operand of the instruction to be visited. This operand
      *            must be the internal name of an object or array class (see
-     *            {@link Type#getInternalName() getInternalName}).
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      */
     public void visitTypeInsn(int opcode, String type) {
         if (mv != null) {
@@ -347,11 +347,11 @@ public abstract class MethodVisitor {
      *            is either GETSTATIC, PUTSTATIC, GETFIELD or PUTFIELD.
      * @param owner
      *            the internal name of the field's owner class (see
-     *            {@link Type#getInternalName() getInternalName}).
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      * @param name
      *            the field's name.
      * @param desc
-     *            the field's descriptor (see {@link Type Type}).
+     *            the field's descriptor (see {@link org.boilit.asm.Type Type}).
      */
     public void visitFieldInsn(int opcode, String owner, String name,
             String desc) {
@@ -370,11 +370,11 @@ public abstract class MethodVisitor {
      *            INVOKEINTERFACE.
      * @param owner
      *            the internal name of the method's owner class (see
-     *            {@link Type#getInternalName() getInternalName}).
+     *            {@link org.boilit.asm.Type#getInternalName() getInternalName}).
      * @param name
      *            the method's name.
      * @param desc
-     *            the method's descriptor (see {@link Type Type}).
+     *            the method's descriptor (see {@link org.boilit.asm.Type Type}).
      */
     public void visitMethodInsn(int opcode, String owner, String name,
             String desc) {
@@ -389,13 +389,13 @@ public abstract class MethodVisitor {
      * @param name
      *            the method's name.
      * @param desc
-     *            the method's descriptor (see {@link Type Type}).
+     *            the method's descriptor (see {@link org.boilit.asm.Type Type}).
      * @param bsm
      *            the bootstrap method.
      * @param bsmArgs
      *            the bootstrap method constant arguments. Each argument must be
      *            an {@link Integer}, {@link Float}, {@link Long},
-     *            {@link Double}, {@link String}, {@link Type} or {@link Handle}
+     *            {@link Double}, {@link String}, {@link org.boilit.asm.Type} or {@link org.boilit.asm.Handle}
      *            value. This method is allowed to modify the content of the
      *            array so a caller should expect that this array may change.
      */
@@ -431,7 +431,7 @@ public abstract class MethodVisitor {
      * just after it.
      * 
      * @param label
-     *            a {@link Label Label} object.
+     *            a {@link org.boilit.asm.Label Label} object.
      */
     public void visitLabel(Label label) {
         if (mv != null) {
@@ -481,10 +481,10 @@ public abstract class MethodVisitor {
      * @param cst
      *            the constant to be loaded on the stack. This parameter must be
      *            a non null {@link Integer}, a {@link Float}, a {@link Long}, a
-     *            {@link Double}, a {@link String}, a {@link Type} of OBJECT or
+     *            {@link Double}, a {@link String}, a {@link org.boilit.asm.Type} of OBJECT or
      *            ARRAY sort for <tt>.class</tt> constants, for classes whose
-     *            version is 49.0, a {@link Type} of METHOD sort or a
-     *            {@link Handle} for MethodType and MethodHandle constants, for
+     *            version is 49.0, a {@link org.boilit.asm.Type} of METHOD sort or a
+     *            {@link org.boilit.asm.Handle} for MethodType and MethodHandle constants, for
      *            classes whose version is 51.0.
      */
     public void visitLdcInsn(Object cst) {
@@ -548,7 +548,7 @@ public abstract class MethodVisitor {
      * Visits a MULTIANEWARRAY instruction.
      * 
      * @param desc
-     *            an array type descriptor (see {@link Type Type}).
+     *            an array type descriptor (see {@link org.boilit.asm.Type Type}).
      * @param dims
      *            number of dimensions of the array to allocate.
      */
