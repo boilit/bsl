@@ -9,6 +9,9 @@ import org.boilit.bsl.xtc.ITextCompressor;
 import org.boilit.logger.DefaultLogger;
 import org.boilit.logger.ILogger;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -17,6 +20,7 @@ import java.util.concurrent.ConcurrentMap;
  * @see
  */
 public final class Engine {
+    public static final String PROPERTIES_BSL = "bsl.properties";
     private ILogger logger;
     private String inputEncoding;
     private String outputEncoding;
@@ -33,9 +37,52 @@ public final class Engine {
         this.outputEncoding = "UTF-8";
         this.specifiedEncoder = true;
         this.useTemplateCache = true;
-        this.templateCache = new ConcurrentHashMap<String, Template>();
         this.textCompressor = new EmptyCompressor();
         this.formatterManager = new FormatterManager();
+        this.templateCache = new ConcurrentHashMap<String, Template>();
+    }
+
+    public static final Engine getEngine() throws Exception {
+        return getEngine(Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES_BSL));
+    }
+
+    public static final Engine getEngine(InputStream inputStream) throws Exception {
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        return getEngine(properties);
+    }
+
+    public static final Engine getEngine(Properties properties) throws Exception {
+        if (properties == null) {
+            return new Engine();
+        }
+        Engine engine = new Engine();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        final String logger = properties.getProperty("logger");
+        if (logger != null && logger.trim().length() > 0) {
+            engine.setLogger((ILogger) classLoader.loadClass(logger).newInstance());
+        }
+        final String inputEncoding = properties.getProperty("inputEncoding");
+        if (inputEncoding != null && inputEncoding.trim().length() > 0) {
+            engine.setInputEncoding(inputEncoding);
+        }
+        final String outputEncoding = properties.getProperty("outputEncoding");
+        if (outputEncoding != null && outputEncoding.trim().length() > 0) {
+            engine.setOutputEncoding(outputEncoding);
+        }
+        final String specifiedEncoder = properties.getProperty("specifiedEncoder");
+        if (specifiedEncoder != null && specifiedEncoder.trim().length() > 0) {
+            engine.setSpecifiedEncoder(Boolean.parseBoolean(specifiedEncoder));
+        }
+        final String useTemplateCache = properties.getProperty("useTemplateCache");
+        if (useTemplateCache != null && useTemplateCache.trim().length() > 0) {
+            engine.setUseTemplateCache(Boolean.parseBoolean(useTemplateCache));
+        }
+        final String textCompressor = properties.getProperty("textCompressor");
+        if (textCompressor != null && textCompressor.trim().length() > 0) {
+            engine.setTextCompressor((ITextCompressor) classLoader.loadClass(textCompressor).newInstance());
+        }
+        return engine;
     }
 
     public final ILogger getLogger() {
