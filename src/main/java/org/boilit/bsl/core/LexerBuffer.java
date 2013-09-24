@@ -27,6 +27,7 @@ public final class LexerBuffer {
         final int size = this.size, length = string.length();
         this.ensureCapacity(size + length);
         string.getChars(0, length, this.elements, size);
+        this.size += length;
         return this;
     }
 
