@@ -27,6 +27,8 @@ Download: <a href="http://boilit.github.io/bsl/files/bsl-1.0.2.jar">bsl-1.0.2.ja
 版本更新
 ===
 <pre>
+1.0.2:
+    更新字符缓冲实现，转义字符BUG修复；
 1.0.1：
     更新专用GBKEncoder；
     更新静态文本输出方法及IO部分IPrinter接口的实现；
