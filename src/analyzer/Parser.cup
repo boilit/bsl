@@ -214,7 +214,7 @@ branch ::= branch_item:a {: RESULT=a; :}
 branch_item ::= IF:a PRN_LEFT expression:e PRN_RIGHT block:b {: RESULT= new Branch($a.line, $a.column).add(e, b); :}
     | branch_item:a ELSE IF PRN_LEFT expression:e PRN_RIGHT block:b {: RESULT= a.add(e, b); :};
 
-loop ::= LOOP:p PRN_LEFT LABEL:k COMMA expression:e PRN_RIGHT block:b {: RESULT=new Loop($p.line, $p.column, k, e, b); :};
+loop ::= LOOP:p PRN_LEFT LABEL:k COLON expression:e PRN_RIGHT block:b {: RESULT=new Loop($p.line, $p.column, k, e, b); :};
 
 block ::= block_item:a BRC_RIGHT {: RESULT=a; :};
 
