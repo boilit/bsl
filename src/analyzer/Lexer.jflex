@@ -62,6 +62,10 @@ import org.boilit.cup.Scanner;
 	private void append(String string) {
 		buffer.append(string);
 	}
+
+	private void delCodeLineEscape() {
+		buffer.delCodeLineEscape();
+	}
 	
 	private String pop() {
 		String chars = buffer.toString();
@@ -88,7 +92,7 @@ import org.boilit.cup.Scanner;
 	}
 %}
 
-Line	 		= \r|\n|\r\n
+Line	 		= \r|\n|\r\n|\n\r
 Null			= "null"
 Bool			= "true" | "false"
 Byte            = [0-9]+ [bB]
@@ -116,10 +120,11 @@ MatchHoldHead	= [\\]* {HoldHead}
 <YYINITIAL>{
 	/* CodeHead Matched */
 	{MatchCodeHead} {
-		int n = yylength()-5;
+		int n = yylength() -5;
 		append('\\',n/2);
 		if(n%2 == 0){
 		    holded = false;
+		    delCodeLineEscape();
 		    yybegin(YYSTATEMENT);
 		    return symbol(TEXT, line, column, pop());
 		} else {
