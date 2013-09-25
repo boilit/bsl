@@ -4,13 +4,9 @@ import org.boilit.bsl.Engine;
 import org.boilit.bsl.core.Operation;
 import org.boilit.bsl.xio.FileResourceLoader;
 import org.boilit.bsl.xtc.EmptyCompressor;
-import org.boilit.bsl.xtc.ExtremeCompressor;
-import org.boilit.bsl.xtc.GeneralCompressor;
-import org.boilit.logger.DefaultLogger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +23,12 @@ public class Test {
 
         Engine engine = new Engine();
         engine.clearTemplateCache();
-        engine.setLogger(new DefaultLogger());
         engine.setInputEncoding(System.getProperty("file.encoding"));
         engine.setOutputEncoding("UTF-8");
         engine.setSpecifiedEncoder(true);
         engine.setUseTemplateCache(true);
         engine.setResourceLoader(new FileResourceLoader(engine.getInputEncoding()));
-        engine.setTextCompressor(new ExtremeCompressor());
+        engine.setTextCompressor(new EmptyCompressor());
 
         Map<String, Object> model;
 
