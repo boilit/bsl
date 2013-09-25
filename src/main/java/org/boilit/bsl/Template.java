@@ -12,7 +12,6 @@ import org.boilit.bsl.xio.CharsPrinter;
 import org.boilit.bsl.xio.IPrinter;
 import org.boilit.bsl.xio.IResource;
 import org.boilit.bsl.xtc.ITextCompressor;
-import org.boilit.logger.ILogger;
 
 import java.io.OutputStream;
 import java.io.Reader;
@@ -52,10 +51,6 @@ public final class Template {
         }
     }
 
-    public final ILogger getLogger() {
-        return engine.getLogger();
-    }
-
     public final Engine getEngine() {
         return engine;
     }
@@ -84,34 +79,24 @@ public final class Template {
         return formatterManager;
     }
 
-    public final Object execute(final Map<String, Object> model, final OutputStream outputStream) {
+    public final Object execute(final Map<String, Object> model, final OutputStream outputStream) throws Exception  {
         final IEncoder encoder = EncoderFactory.getEncoder(this.getOutputEncoding(), this.isSpecifiedEncoder());
         return this.execute(model, new BytesPrinter(outputStream, encoder));
     }
 
-    public final Object execute(final Map<String, Object> model, final Writer writer) {
+    public final Object execute(final Map<String, Object> model, final Writer writer) throws Exception  {
         final IEncoder encoder = EncoderFactory.getEncoder(this.getOutputEncoding(), this.isSpecifiedEncoder());
         return this.execute(model, new CharsPrinter(writer, encoder));
     }
 
-    public final Object execute(final Map<String, Object> model, final IPrinter printer) {
+    public final Object execute(final Map<String, Object> model, final IPrinter printer) throws Exception {
         return this.execute(new ExecuteContext(model, printer));
     }
 
-    public final Object execute(final ExecuteContext context) {
-        Object value = null;
-        try {
-            value = executor.execute(context);
-            context.getPrinter().flush();
-            context.clear();
-        } catch (ScriptException e) {
-            ScriptException se = e.toScriptException();
-            this.getLogger().error(se, "Template[{}] execute error!", this.getResource().getName());
-            throw new RuntimeException(se);
-        } catch (Exception e) {
-            this.getLogger().error(e, "Template[{}] execute error!", this.getResource().getName());
-            throw new RuntimeException(e);
-        }
+    public final Object execute(final ExecuteContext context) throws Exception {
+        Object value = executor.execute(context);
+        context.getPrinter().flush();
+        context.clear();
         return value;
     }
 }

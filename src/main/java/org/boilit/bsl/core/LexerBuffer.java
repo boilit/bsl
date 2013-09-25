@@ -50,6 +50,26 @@ public final class LexerBuffer {
         return this;
     }
 
+    public void delCodeLineEscape() {
+        char c;
+        for (int i = size - 1; i >= 0; i--) {
+            c = elements[i];
+            if (c == ' ' || c == '\t') {
+                size--;
+            } else {
+                break;
+            }
+        }
+        for (int i = size - 1; i >= 0; i--) {
+            c = elements[i];
+            if (c == '\n' || c == '\r') {
+                size--;
+            } else {
+                break;
+            }
+        }
+    }
+
     public final LexerBuffer clear() {
         this.size = 0;
         return this;

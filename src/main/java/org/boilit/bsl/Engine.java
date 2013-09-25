@@ -6,8 +6,6 @@ import org.boilit.bsl.xio.FileResourceLoader;
 import org.boilit.bsl.xio.IResourceLoader;
 import org.boilit.bsl.xtc.EmptyCompressor;
 import org.boilit.bsl.xtc.ITextCompressor;
-import org.boilit.logger.DefaultLogger;
-import org.boilit.logger.ILogger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +19,6 @@ import java.util.concurrent.ConcurrentMap;
  */
 public final class Engine {
     public static final String PROPERTIES_BSL = "bsl.properties";
-    private ILogger logger;
     private String inputEncoding;
     private String outputEncoding;
     private boolean specifiedEncoder;
@@ -32,7 +29,6 @@ public final class Engine {
     private final FormatterManager formatterManager;
 
     public Engine() {
-        this.logger = new DefaultLogger();
         this.inputEncoding = System.getProperty("file.encoding");
         this.outputEncoding = "UTF-8";
         this.specifiedEncoder = true;
@@ -58,10 +54,6 @@ public final class Engine {
         }
         Engine engine = new Engine();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        final String logger = properties.getProperty("logger");
-        if (logger != null && logger.trim().length() > 0) {
-            engine.setLogger((ILogger) classLoader.loadClass(logger).newInstance());
-        }
         final String inputEncoding = properties.getProperty("inputEncoding");
         if (inputEncoding != null && inputEncoding.trim().length() > 0) {
             engine.setInputEncoding(inputEncoding);
@@ -78,19 +70,15 @@ public final class Engine {
         if (useTemplateCache != null && useTemplateCache.trim().length() > 0) {
             engine.setUseTemplateCache(Boolean.parseBoolean(useTemplateCache));
         }
+        final String resourceLoader = properties.getProperty("resourceLoader");
+        if (resourceLoader != null && resourceLoader.trim().length() > 0) {
+            engine.setResourceLoader((IResourceLoader) classLoader.loadClass(resourceLoader).newInstance());
+        }
         final String textCompressor = properties.getProperty("textCompressor");
         if (textCompressor != null && textCompressor.trim().length() > 0) {
             engine.setTextCompressor((ITextCompressor) classLoader.loadClass(textCompressor).newInstance());
         }
         return engine;
-    }
-
-    public final ILogger getLogger() {
-        return logger;
-    }
-
-    public final void setLogger(final ILogger logger) {
-        this.logger = logger == null ? new DefaultLogger() : logger;
     }
 
     public final String getInputEncoding() {
