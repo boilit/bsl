@@ -9,7 +9,7 @@ import java.util.Map;
  * @author Boilit
  * @see
  */
-public final class ExecuteContext implements Cloneable {
+public final class ExecuteContext {
     public static final int CONTROL_GOON = 0xf0;
     public static final int CONTROL_NEXT = 0x01;
     public static final int CONTROL_BREAK = 0x03;
@@ -23,9 +23,6 @@ public final class ExecuteContext implements Cloneable {
     private ExecuteVariant[] elements;
 
     private IPrinter printer;
-
-    private ExecuteContext() {
-    }
 
     public ExecuteContext(final IPrinter printer) {
         this(null, printer);
@@ -136,19 +133,6 @@ public final class ExecuteContext implements Cloneable {
             map.putAll(elements[i].toMap());
         }
         return map;
-    }
-
-    public final ExecuteContext cloneExecuteContext() {
-        final ExecuteContext ec = new ExecuteContext();
-        ec.size = size;
-        ec.index = index;
-        ec.printer = printer;
-        ec.elements = new ExecuteVariant[size];
-        final int n = index;
-        for (int i = 0; i < n; i++) {
-            ec.elements[i] = elements[i].cloneExecuteVariant();
-        }
-        return ec;
     }
 
     private final void ensureCapacity(final int minCapacity) {

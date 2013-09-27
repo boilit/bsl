@@ -85,14 +85,6 @@ public final class ExecuteVariant {
         return map;
     }
 
-    public final ExecuteVariant cloneExecuteVariant() {
-        final ExecuteVariant ev = new ExecuteVariant(size);
-        ev.size = size;
-        System.arraycopy(keys, 0, ev.keys, 0, size);
-        System.arraycopy(values, 0, ev.values, 0, size);
-        return ev;
-    }
-
     private final void ensureCapacity(final int minCapacity) {
         if (minCapacity > keys.length) {
             int newCapacity = ((keys.length * 3) >> 1) + 1;

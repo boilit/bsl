@@ -34,11 +34,17 @@ public final class Include extends AbstractDirective {
                 template.getResource().getName(),
                 Operation.toString(expression.execute(context))
         ).substring(1);
-        final ExecuteContext ec = context.cloneExecuteContext();
-        if (this.hash != null) {
-            ec.occupy((Map) this.hash.execute(context));
+        final Map<String, Object> model = context.toMap();
+        final Hash hash = this.hash;
+        if (hash != null) {
+            Map.Entry entry;
+            Iterator<Map.Entry> it = ((Map) hash.execute(context)).entrySet().iterator();
+            while (it.hasNext()) {
+                entry = it.next();
+                model.put(Operation.toString(entry.getKey()), entry.getValue());
+            }
         }
-        template.getEngine().getTemplate(name).execute(ec);
+        template.getEngine().getTemplate(name).execute(new ExecuteContext(model, context.getPrinter()));
         return null;
     }
 
