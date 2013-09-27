@@ -25,7 +25,7 @@ public final class Block extends AbstractDirective {
     public final Object execute(final ExecuteContext context) throws Exception {
         final IStatement[] statements = this.statements;
         final int n = statements.length;
-        for (int i = 0; i < n && context.isGoon(); i++) {
+        for (int i = 0; i < n && context.isBlockGoon(); i++) {
             statements[i].execute(context);
         }
         return null;

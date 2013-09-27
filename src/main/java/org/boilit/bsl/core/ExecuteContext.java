@@ -9,27 +9,29 @@ import java.util.Map;
  * @author Boilit
  * @see
  */
-public final class ExecuteContext {
+public final class ExecuteContext implements Cloneable {
     public static final int CONTROL_GOON = 0xf0;
     public static final int CONTROL_NEXT = 0x01;
     public static final int CONTROL_BREAK = 0x03;
 
-    private boolean goon = true;
+    private boolean loopGoon = true;
+    private boolean blockGoon = true;
     private int control = CONTROL_GOON;
 
-    private int size;
-    private int index;
+    private int size = 0;
+    private int index = 0;
     private ExecuteVariant[] elements;
 
     private IPrinter printer;
+
+    private ExecuteContext() {
+    }
 
     public ExecuteContext(final IPrinter printer) {
         this(null, printer);
     }
 
     public ExecuteContext(final Map<String, Object> model, final IPrinter printer) {
-        size = 0;
-        index = 0;
         elements = new ExecuteVariant[8];
         if (model != null) {
             this.occupy(model);
@@ -38,8 +40,12 @@ public final class ExecuteContext {
         this.printer = printer;
     }
 
-    public final boolean isGoon() {
-        return goon;
+    public final boolean isLoopGoon() {
+        return loopGoon;
+    }
+
+    public final boolean isBlockGoon() {
+        return blockGoon;
     }
 
     public final int getControl() {
@@ -49,13 +55,16 @@ public final class ExecuteContext {
     public final int setControl(final int control) {
         switch (control) {
             case CONTROL_NEXT:
-                goon = false;
+                loopGoon = true;
+                blockGoon = false;
                 break;
             case CONTROL_BREAK:
-                goon = false;
+                loopGoon = false;
+                blockGoon = false;
                 break;
             default:
-                goon = true;
+                loopGoon = true;
+                blockGoon = true;
         }
         return this.control = control;
     }
@@ -68,7 +77,7 @@ public final class ExecuteContext {
         return this.occupy(null);
     }
 
-    private final ExecuteVariant occupy(final Map<String, Object> model) {
+    public final ExecuteVariant occupy(final Map<String, Object> model) {
         if (index < size) {
             return elements[index++];
         }
@@ -81,7 +90,7 @@ public final class ExecuteContext {
     }
 
     public void clear() {
-        for(int i=size - 1; i>=0;i--) {
+        for (int i = size - 1; i >= 0; i--) {
             elements[i].clear();
         }
         size = 0;
@@ -129,13 +138,26 @@ public final class ExecuteContext {
         return map;
     }
 
+    public final ExecuteContext cloneExecuteContext() {
+        final ExecuteContext ec = new ExecuteContext();
+        ec.size = size;
+        ec.index = index;
+        ec.printer = printer;
+        ec.elements = new ExecuteVariant[size];
+        final int n = index;
+        for (int i = 0; i < n; i++) {
+            ec.elements[i] = elements[i].cloneExecuteVariant();
+        }
+        return ec;
+    }
+
     private final void ensureCapacity(final int minCapacity) {
         if (minCapacity > elements.length) {
             int newCapacity = ((elements.length * 3) >> 1) + 1;
             newCapacity = newCapacity < minCapacity ? minCapacity : newCapacity;
             ExecuteVariant[] oldData = this.elements;
             this.elements = new ExecuteVariant[newCapacity];
-            System.arraycopy(oldData, 0, this.elements, 0, size);
+            System.arraycopy(oldData, 0, this.elements, 0, oldData.length);
         }
     }
 }

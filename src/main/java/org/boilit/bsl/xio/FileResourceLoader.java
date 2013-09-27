@@ -4,7 +4,7 @@ package org.boilit.bsl.xio;
  * @author Boilit
  * @see
  */
-public final class FileResourceLoader extends AbstractLoader {
+public final class FileResourceLoader extends AbstractResourceLoader {
 
     public FileResourceLoader(final String encoding) {
         super(encoding);

@@ -43,7 +43,7 @@ public final class Loop extends AbstractDirective {
         int count = 0;
         final Iterator iterator = new ObjectIterator(expression.execute(context));
         final Block block = this.block;
-        while (context.isGoon() && iterator.hasNext()) {
+        while (iterator.hasNext() && context.isLoopGoon()) {
             context.occupy();
             context.addVariable(label, iterator.next());
             context.addVariable(index, count++);

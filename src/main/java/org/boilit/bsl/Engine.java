@@ -9,6 +9,7 @@ import org.boilit.bsl.xtc.ITextCompressor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -56,27 +57,29 @@ public final class Engine {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         final String inputEncoding = properties.getProperty("inputEncoding");
         if (inputEncoding != null && inputEncoding.trim().length() > 0) {
-            engine.setInputEncoding(inputEncoding);
+            engine.setInputEncoding(inputEncoding.trim());
         }
         final String outputEncoding = properties.getProperty("outputEncoding");
         if (outputEncoding != null && outputEncoding.trim().length() > 0) {
-            engine.setOutputEncoding(outputEncoding);
+            engine.setOutputEncoding(outputEncoding.trim());
         }
         final String specifiedEncoder = properties.getProperty("specifiedEncoder");
         if (specifiedEncoder != null && specifiedEncoder.trim().length() > 0) {
-            engine.setSpecifiedEncoder(Boolean.parseBoolean(specifiedEncoder));
+            engine.setSpecifiedEncoder(Boolean.parseBoolean(specifiedEncoder.trim()));
         }
         final String useTemplateCache = properties.getProperty("useTemplateCache");
         if (useTemplateCache != null && useTemplateCache.trim().length() > 0) {
-            engine.setUseTemplateCache(Boolean.parseBoolean(useTemplateCache));
+            engine.setUseTemplateCache(Boolean.parseBoolean(useTemplateCache.trim()));
         }
         final String resourceLoader = properties.getProperty("resourceLoader");
         if (resourceLoader != null && resourceLoader.trim().length() > 0) {
-            engine.setResourceLoader((IResourceLoader) classLoader.loadClass(resourceLoader).newInstance());
+            Class clazz = classLoader.loadClass(resourceLoader.trim());
+            Constructor constructor = clazz.getConstructor(new Class[]{String.class});
+            engine.setResourceLoader((IResourceLoader) constructor.newInstance(engine.getInputEncoding()));
         }
         final String textCompressor = properties.getProperty("textCompressor");
         if (textCompressor != null && textCompressor.trim().length() > 0) {
-            engine.setTextCompressor((ITextCompressor) classLoader.loadClass(textCompressor).newInstance());
+            engine.setTextCompressor((ITextCompressor) classLoader.loadClass(textCompressor.trim()).newInstance());
         }
         return engine;
     }

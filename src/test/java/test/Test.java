@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) throws Exception {
-        String file = "D:\\W04WorkSpace\\Maven001\\Bsl\\src\\test\\java\\test\\bsl.html";
+        String file = "D:\\W04WorkSpace\\Maven001\\Bsl\\src\\test\\java\\test\\bsl1.html";
 
         List<Stock> items = Stock.dummyItems();
 

@@ -94,9 +94,14 @@ public final class Template {
     }
 
     public final Object execute(final ExecuteContext context) throws Exception {
-        Object value = executor.execute(context);
-        context.getPrinter().flush();
-        context.clear();
+        Object value = null;
+        try{
+            this.executor.execute(context);
+            context.getPrinter().flush();
+            context.clear();
+        } catch (ScriptException e) {
+            throw e.toScriptException();
+        }
         return value;
     }
 }

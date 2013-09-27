@@ -50,23 +50,23 @@ public final class LexerBuffer {
         return this;
     }
 
-    public void delCodeLineEscape() {
-        char c;
-        for (int i = size - 1; i >= 0; i--) {
-            c = elements[i];
-            if (c == ' ' || c == '\t') {
-                size--;
-            } else {
-                break;
-            }
+    public final void delCodeLineEscape() {
+        while (size > 0 && (elements[size - 1] == ' ' || elements[size - 1] == '\t')) {
+            size--;
         }
-        for (int i = size - 1; i >= 0; i--) {
-            c = elements[i];
-            if (c == '\n' || c == '\r') {
-                size--;
-            } else {
-                break;
-            }
+        if (size == 0) {
+            return;
+        }
+        final char c1 = elements[size - 1];
+        if (c1 == '\n' || c1 == '\r') {
+            size--;
+        }
+        if (size == 0) {
+            return;
+        }
+        final char c2 = elements[size - 1];
+        if ((c2 == '\n' || c2 == '\r') && c2 != c1) {
+            size--;
         }
     }
 
