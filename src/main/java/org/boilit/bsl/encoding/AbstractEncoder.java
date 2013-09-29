@@ -9,14 +9,14 @@ import java.io.Writer;
  * @see
  */
 public abstract class AbstractEncoder implements IEncoder {
-    private ThreadLocal<FixedByteArray> localFixedByteArray;
+    private ThreadLocal<ByteArrayBuffer> localFixedByteArray;
 
     private final String encoding;
 
     public AbstractEncoder(final String encoding) {
         this.encoding = encoding;
-        this.localFixedByteArray = new ThreadLocal<FixedByteArray>();
-        this.localFixedByteArray.set(new FixedByteArray(1024));
+        this.localFixedByteArray = new ThreadLocal<ByteArrayBuffer>();
+        this.localFixedByteArray.set(new ByteArrayBuffer(1024));
     }
 
     @Override
@@ -38,7 +38,7 @@ public abstract class AbstractEncoder implements IEncoder {
         return encoding;
     }
 
-    protected final FixedByteArray getFixedByteArray() {
+    protected final ByteArrayBuffer getFixedByteArray() {
         return localFixedByteArray.get();
     }
 }

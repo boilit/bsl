@@ -86,7 +86,7 @@ public final class LexerBuffer {
             newCapacity = newCapacity < minCapacity ? minCapacity : newCapacity;
             char[] oldData = this.elements;
             this.elements = new char[newCapacity];
-            System.arraycopy(oldData, 0, this.elements, 0, size);
+            System.arraycopy(oldData, 0, this.elements, 0, oldData.length);
         }
     }
 }

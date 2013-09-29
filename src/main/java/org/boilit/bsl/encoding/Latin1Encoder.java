@@ -15,15 +15,14 @@ public final class Latin1Encoder extends AbstractEncoder {
     @Override
     public final void write(final OutputStream outputStream, final String string) throws IOException {
         final int n = string.length();
-        final FixedByteArray fb = this.getFixedByteArray();
-        fb.dilatation(n);
+        final ByteArrayBuffer fb = this.getFixedByteArray().clear();
         for (int i = 0; i < n; i++) {
             encode(fb, string.charAt(i));
         }
-        outputStream.write(fb.bytes(), 0, fb.size());
+        outputStream.write(fb.elements(), 0, fb.size());
     }
 
-    private final void encode(final FixedByteArray fb, final char c) {
+    private final void encode(final ByteArrayBuffer fb, final char c) {
         if (c < 0x100) {
             fb.append((byte) c);
         } else{
@@ -31,7 +30,7 @@ public final class Latin1Encoder extends AbstractEncoder {
         }
     }
     
-//    private void decode(FixedCharArray fc, byte[] bytes) {
+//    private void decode(CharArrayBuffer fc, byte[] bytes) {
 //        for(int i=0, n=bytes.length;i<n;i++) {
 //            fc.append((char) (bytes[i] & 0xff));
 //        }

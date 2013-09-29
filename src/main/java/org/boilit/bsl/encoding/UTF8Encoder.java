@@ -16,12 +16,11 @@ public final class UTF8Encoder extends AbstractEncoder {
     @Override
     public final void write(final OutputStream outputStream, final String string) throws IOException {
         final int n = string.length();
-        final FixedByteArray fb = this.getFixedByteArray();
-        fb.dilatation((n << 2) + (n<<1));
+        final ByteArrayBuffer fb = this.getFixedByteArray().clear();
         for (int i = 0; i < n; i++) {
             encode(fb, string.charAt(i));
         }
-        outputStream.write(fb.bytes(), 0, fb.size());
+        outputStream.write(fb.elements(), 0, fb.size());
     }
 
     /**
@@ -29,7 +28,7 @@ public final class UTF8Encoder extends AbstractEncoder {
      * @param fb
      * @param c
      */
-    private final void encode(final FixedByteArray fb, final char c) {
+    private final void encode(final ByteArrayBuffer fb, final char c) {
         if (c < 0x80) {
             fb.append((byte) c);
         } else if (c < 0x800) {
