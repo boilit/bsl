@@ -30,9 +30,7 @@ public final class UTF8Encoder extends AbstractEncoder {
      * @param c
      */
     private final void encode(final FixedByteArray fb, final char c) {
-        if(c < 0) {
-            fb.append((byte) 0x3f);
-        } else if (c < 0x80) {
+        if (c < 0x80) {
             fb.append((byte) c);
         } else if (c < 0x800) {
             fb.append((byte) (0xc0 | c >> 6));
