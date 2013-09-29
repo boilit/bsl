@@ -1,4 +1,4 @@
-package org.boilit.bsl.encoding;
+package org.boilit.bsl.xio;
 
 /**
  * @author Boilit
