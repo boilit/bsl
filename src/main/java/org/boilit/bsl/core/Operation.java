@@ -26,15 +26,15 @@ public final class Operation {
     }
 
     public static final String merge(final Object... os) {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuffer buffer = new StringBuffer();
         for (int i = 0, n = os.length; i < n; i++) {
-            builder.append(Operation.toString(os[i]));
+            buffer.append(Operation.toString(os[i]));
         }
-        return builder.toString();
+        return buffer.toString();
     }
 
     public static final String merge(final List<Object> os) {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuffer builder = new StringBuffer();
         for (int i = 0, n = os.size(); i < n; i++) {
             builder.append(Operation.toString(os.get(i)));
         }

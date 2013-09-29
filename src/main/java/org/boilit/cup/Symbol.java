@@ -96,13 +96,13 @@ public class Symbol {
     public Object value;
 
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("#sym=").append(sym);
-        builder.append(", parse_state=").append(parse_state);
-        builder.append(", used_by_parser=").append(used_by_parser);
-        builder.append(", line=").append(line);
-        builder.append(", column=").append(column);
-        builder.append(", value=").append(value);
-        return builder.toString();
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("#sym=").append(sym);
+        buffer.append(", parse_state=").append(parse_state);
+        buffer.append(", used_by_parser=").append(used_by_parser);
+        buffer.append(", line=").append(line);
+        buffer.append(", column=").append(column);
+        buffer.append(", value=").append(value);
+        return buffer.toString();
     }
 }

@@ -185,7 +185,7 @@ public final class Maker {
         }
         // 生成参数列表, 实例方法参数列表因1号位被实例占用需增加偏移量1
         final Class[] parameterTypes = method.getParameterTypes();
-        final StringBuilder buffer = new StringBuilder(128);
+        final StringBuffer buffer = new StringBuffer(128);
         // 循环构建参数列表，调出第一个临时变量遍历并强制转换
         buffer.append('(');
         for (int i = 0, n = parameterTypes.length; i < n; i++) {

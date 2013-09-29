@@ -24,12 +24,12 @@ public final class Merge extends AbstractOperator {
     @Override
     public Object execute(final ExecuteContext context) throws Exception {
         Object value;
-        final StringBuilder builder = new StringBuilder();
+        final StringBuffer buffer = new StringBuffer();
         for (int i = 0, n = expressions.length; i < n; i++) {
             value = expressions[i].execute(context);
-            builder.append(Operation.toString(value));
+            buffer.append(Operation.toString(value));
         }
-        return builder.toString();
+        return buffer.toString();
     }
 
     @Override

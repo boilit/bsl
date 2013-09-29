@@ -705,14 +705,14 @@ public abstract class lr_parser {
      * Do debug output for stack state. [CSA]
      */
     protected void debug_stack() {
-        StringBuilder sb = new StringBuilder("## STACK:");
+        StringBuffer sb = new StringBuffer("## STACK:");
         int size = stack.size();
         for (int i = 0; i < size; i++) {
             Symbol s = stack.peek(i);
             sb.append(" <state ").append(s.parse_state).append(", sym ").append(s.sym).append(">");
             if ((i % 3) == 2 || (i == (stack.size() - 1))) {
                 debug_message(sb.toString());
-                sb = new StringBuilder("         ");
+                sb = new StringBuffer("         ");
             }
         }
     }
@@ -1237,7 +1237,7 @@ public abstract class lr_parser {
      */
     protected static short[][] unpackFromStrings(String[] sa) {
         // Concatanate initialization strings.
-        StringBuilder sb = new StringBuilder(sa[0]);
+        StringBuffer sb = new StringBuffer(sa[0]);
         for (int i = 1; i < sa.length; i++) {
             sb.append(sa[i]);
         }
