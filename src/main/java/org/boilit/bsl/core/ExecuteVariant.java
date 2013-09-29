@@ -74,11 +74,11 @@ public final class ExecuteVariant {
         return this;
     }
 
-    public final Map<String, Object> toMap() {
+    public final Map<String, Object> toVariableMap() {
         final int n = size;
         final String[] keys = this.keys;
         final Object[] values = this.values;
-        final Map<String, Object> map = new HashMap<String, Object>(size);
+        final Map<String, Object> map = new HashMap<String, Object>(n);
         for (int i = 0; i < n; i++) {
             map.put(keys[i], values[i]);
         }

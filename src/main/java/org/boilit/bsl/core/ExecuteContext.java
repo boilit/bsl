@@ -110,13 +110,6 @@ public final class ExecuteContext {
         return elements[index - 1].add(key, value);
     }
 
-    public final Object addReturned(final String key, final Object value) {
-        if (index == 0) {
-            return null;
-        }
-        return elements[0].add(key, value);
-    }
-
     public final Object getVariable(final int index) {
         return elements[index >>> 16].get(index & 0xff);
     }
@@ -125,12 +118,35 @@ public final class ExecuteContext {
         return elements[index >>> 16].set(index & 0xff, value);
     }
 
-    public final Map<String, Object> toMap() {
+    public final int getReturnedIndex(final String key) {
+        return elements[0].getIndex(key);
+    }
+
+    public final Object addReturned(final String key, final Object value) {
+        if (index == 0) {
+            return null;
+        }
+        return elements[0].add(key, value);
+    }
+
+    public final Object getReturned(final int index) {
+        return elements[0].get(index);
+    }
+
+    public final Object setReturned(final int index, final Object value) {
+        return elements[0].set(index, value);
+    }
+
+    public final Map<String, Object> toReturnedMap() {
+        return elements[0].toVariableMap();
+    }
+
+    public final Map<String, Object> toVariantMap() {
         final int index = this.index;
         final ExecuteVariant[] elements = this.elements;
         Map<String, Object> map = new HashMap<String, Object>();
         for (int i = 0; i < index; i++) {
-            map.putAll(elements[i].toMap());
+            map.putAll(elements[i].toVariableMap());
         }
         return map;
     }

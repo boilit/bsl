@@ -2,7 +2,7 @@ package test;
 
 import org.boilit.bsl.Engine;
 import org.boilit.bsl.xio.FileResourceLoader;
-import org.boilit.bsl.xtc.EmptyCompressor;
+import org.boilit.bsl.xtp.DefaultTextProcessor;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class BslTest {
         engine.setSpecifiedEncoder(true);
         engine.setUseTemplateCache(true);
         engine.setResourceLoader(new FileResourceLoader(engine.getInputEncoding()));
-        engine.setTextCompressor(new EmptyCompressor());
+        engine.setTextProcessor(new DefaultTextProcessor());
 
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("date", new Date());

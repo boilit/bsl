@@ -40,10 +40,10 @@ parser code {:
 		return lexer != null ? lexer.getColumn() : 0;
 	}
 	
-	public IExecute parse(java.io.Reader in) throws Exception {
+	public IStatement parse(java.io.Reader in) throws Exception {
         this.lexer = new Lexer(in);
         try {
-            return ((Root) this.parse().value).optimize();
+            return ((IStatement) this.parse().value).optimize();
         } catch (Exception e) {
             throw e;
         } finally {
@@ -203,7 +203,7 @@ echo ::= ECHO:a PRN_LEFT expression:e PRN_RIGHT SEMI {: RESULT = new Echo($a.lin
 echo_format ::= ECHO:a PRN_LEFT expression:e COMMA CHARS:b PRN_RIGHT SEMI {: RESULT = new EchoFormat($a.line, $a.column, e, b, getTemplate()); :};
 
 inc ::= INCLUDE:a PRN_LEFT expression:e PRN_RIGHT {: RESULT=new Include($a.line,$a.column, e, null, getTemplate()); :}
-    | INCLUDE:a PRN_LEFT expression:e COMMA hash:h PRN_RIGHT {: RESULT=new Include($a.line, $a.column, e, h, getTemplate()); :};
+    | INCLUDE:a PRN_LEFT expression:e1 COMMA expression:e2 PRN_RIGHT {: RESULT=new Include($a.line, $a.column, e1, e2, getTemplate()); :};
 
 var ::= var:a COMMA assign:b {: RESULT=a.add(b); :}
     | VAR:a assign:b {: RESULT = new Var($a.line, $a.column).add(b); :};

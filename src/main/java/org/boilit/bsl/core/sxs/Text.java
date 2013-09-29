@@ -36,7 +36,7 @@ public final class Text extends AbstractStatement {
         if (value == null || (value).trim().length() == 0) {
             return null;
         }
-        value = template.getTextCompressor().doCompress(value);
+        value = template.getTextProcessor().process(value);
         if(value==null || (value).trim().length() == 0) {
             return null;
         }

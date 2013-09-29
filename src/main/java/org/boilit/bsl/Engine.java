@@ -4,10 +4,9 @@ import org.boilit.bsl.formatter.FormatterManager;
 import org.boilit.bsl.formatter.IFormatter;
 import org.boilit.bsl.xio.FileResourceLoader;
 import org.boilit.bsl.xio.IResourceLoader;
-import org.boilit.bsl.xtc.EmptyCompressor;
-import org.boilit.bsl.xtc.ITextCompressor;
+import org.boilit.bsl.xtp.DefaultTextProcessor;
+import org.boilit.bsl.xtp.ITextProcessor;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.Properties;
@@ -26,15 +25,15 @@ public final class Engine {
     private boolean useTemplateCache;
     private IResourceLoader resourceLoader;
     private ConcurrentMap<String, Template> templateCache;
-    private ITextCompressor textCompressor;
+    private ITextProcessor textProcessor;
     private final FormatterManager formatterManager;
 
     public Engine() {
         this.inputEncoding = System.getProperty("file.encoding");
         this.outputEncoding = "UTF-8";
-        this.specifiedEncoder = true;
+        this.specifiedEncoder = false;
         this.useTemplateCache = true;
-        this.textCompressor = new EmptyCompressor();
+        this.textProcessor = new DefaultTextProcessor();
         this.formatterManager = new FormatterManager();
         this.templateCache = new ConcurrentHashMap<String, Template>();
     }
@@ -77,9 +76,9 @@ public final class Engine {
             Constructor constructor = clazz.getConstructor(new Class[]{String.class});
             engine.setResourceLoader((IResourceLoader) constructor.newInstance(engine.getInputEncoding()));
         }
-        final String textCompressor = properties.getProperty("textCompressor");
-        if (textCompressor != null && textCompressor.trim().length() > 0) {
-            engine.setTextCompressor((ITextCompressor) classLoader.loadClass(textCompressor.trim()).newInstance());
+        final String textProcessor = properties.getProperty("textProcessor");
+        if (textProcessor != null && textProcessor.trim().length() > 0) {
+            engine.setTextProcessor((ITextProcessor) classLoader.loadClass(textProcessor.trim()).newInstance());
         }
         return engine;
     }
@@ -124,12 +123,12 @@ public final class Engine {
         this.resourceLoader = resourceLoader;
     }
 
-    public final ITextCompressor getTextCompressor() {
-        return textCompressor;
+    public final ITextProcessor getTextProcessor() {
+        return textProcessor;
     }
 
-    public final void setTextCompressor(final ITextCompressor textCompressor) {
-        this.textCompressor = textCompressor == null ? new EmptyCompressor() : textCompressor;
+    public final void setTextProcessor(final ITextProcessor textProcessor) {
+        this.textProcessor = textProcessor == null ? new DefaultTextProcessor() : textProcessor;
     }
 
     public final IFormatter registerFormatter(final Class clazz, final IFormatter formatter) {
@@ -140,7 +139,7 @@ public final class Engine {
         templateCache.clear();
     }
 
-    public final Template getTemplate(final String name) {
+    public final Template getTemplate(final String name) throws Exception {
         IResourceLoader resourceLoader = this.resourceLoader;
         if (resourceLoader == null) {
             resourceLoader = this.resourceLoader = new FileResourceLoader(this.getInputEncoding());

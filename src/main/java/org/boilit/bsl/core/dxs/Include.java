@@ -1,13 +1,8 @@
 package org.boilit.bsl.core.dxs;
 
 import org.boilit.bsl.Template;
-import org.boilit.bsl.core.AbstractDirective;
-import org.boilit.bsl.core.AbstractExpression;
-import org.boilit.bsl.core.ExecuteContext;
-import org.boilit.bsl.core.exs.Hash;
-import org.boilit.bsl.core.Operation;
+import org.boilit.bsl.core.*;
 
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -16,50 +11,43 @@ import java.util.Map;
  */
 @SuppressWarnings("unchecked")
 public final class Include extends AbstractDirective {
-    private AbstractExpression expression;
-    private Hash hash;
+    private AbstractExpression expression1;
+    private AbstractExpression expression2;
     private Template template;
 
-    public Include(final int line, final int column, final AbstractExpression expression, final Hash hash, final Template template) {
+    public Include(final int line, final int column,
+                   final AbstractExpression expression1,
+                   final AbstractExpression expression2,
+                   final Template template) {
         super(line, column);
-        this.expression = expression;
-        this.hash = hash;
+        this.expression1 = expression1;
+        this.expression2 = expression2;
         this.template = template;
     }
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
         final Template template = this.template;
-        final String name = this.relative(
-                template.getResource().getName(),
-                Operation.toString(expression.execute(context))
-        ).substring(1);
-        final Map<String, Object> model = context.toMap();
-        final Hash hash = this.hash;
-        if (hash != null) {
-            Map.Entry entry;
-            Iterator<Map.Entry> it = ((Map) hash.execute(context)).entrySet().iterator();
-            while (it.hasNext()) {
-                entry = it.next();
-                model.put(Operation.toString(entry.getKey()), entry.getValue());
-            }
-        }
-        template.getEngine().getTemplate(name).execute(new ExecuteContext(model, context.getPrinter()));
-        return null;
+        final Map parameters = this.expression2 == null? null :(Map) this.expression2.execute(context);
+        final ExecuteContext ec = new ExecuteContext(parameters, context.getPrinter());
+        final String location = Operation.toString(expression1.execute(context));
+        final String name = this.relative(template.getResource().getName(), location).substring(1);
+        template.getEngine().getTemplate(name).execute(ec);
+        return ec.toReturnedMap();
     }
 
     @Override
     public final Include optimize() throws Exception {
-        if ((expression = expression.optimize()) == null) {
+        if ((expression1 = expression1.optimize()) == null) {
             return null;
         }
-        if (hash != null) {
-            hash = hash.optimize();
+        if (expression2 != null) {
+            expression2 = expression2.optimize();
         }
         return this;
     }
 
-    private final String relative(String ref, String aim) {
+    private final String relative(final String ref, final String aim) {
         if (aim.charAt(0) == '/') {
             return aim;
         }

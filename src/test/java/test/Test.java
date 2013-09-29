@@ -3,7 +3,7 @@ package test;
 import org.boilit.bsl.Engine;
 import org.boilit.bsl.core.Operation;
 import org.boilit.bsl.xio.FileResourceLoader;
-import org.boilit.bsl.xtc.EmptyCompressor;
+import org.boilit.bsl.xtp.DefaultTextProcessor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -17,18 +17,13 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) throws Exception {
-        String file = "D:\\W04WorkSpace\\Maven001\\Bsl\\src\\test\\java\\test\\bsl1.html";
+        String file = "D:\\W04WorkSpace\\Maven001\\Bsl\\src\\test\\java\\test\\bsl.html";
 
         List<Stock> items = Stock.dummyItems();
 
-        Engine engine = new Engine();
-        engine.clearTemplateCache();
-        engine.setInputEncoding(System.getProperty("file.encoding"));
-        engine.setOutputEncoding("UTF-8");
+        Engine engine = Engine.getEngine();
         engine.setSpecifiedEncoder(true);
-        engine.setUseTemplateCache(true);
-        engine.setResourceLoader(new FileResourceLoader(engine.getInputEncoding()));
-        engine.setTextCompressor(new EmptyCompressor());
+        engine.clearTemplateCache();
 
         Map<String, Object> model;
 

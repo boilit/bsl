@@ -11,7 +11,7 @@ import org.boilit.bsl.xio.BytesPrinter;
 import org.boilit.bsl.xio.CharsPrinter;
 import org.boilit.bsl.xio.IPrinter;
 import org.boilit.bsl.xio.IResource;
-import org.boilit.bsl.xtc.ITextCompressor;
+import org.boilit.bsl.xtp.ITextProcessor;
 
 import java.io.OutputStream;
 import java.io.Reader;
@@ -28,7 +28,7 @@ public final class Template {
     private final IExecute executor;
     private final FormatterManager formatterManager;
 
-    protected Template(final Engine engine, final IResource resource, final FormatterManager formatterManager) {
+    protected Template(final Engine engine, final IResource resource, final FormatterManager formatterManager) throws Exception{
         this.engine = engine;
         this.resource = resource;
         this.formatterManager = formatterManager;
@@ -38,9 +38,9 @@ public final class Template {
         try {
             this.executor = parser.parse(reader = resource.openReader());
         } catch (ScriptException e) {
-            throw new RuntimeException(e.toScriptException());
+            throw e.toScriptException();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw e;
         } finally {
             if (reader != null) {
                 try {
@@ -71,8 +71,8 @@ public final class Template {
         return engine.isSpecifiedEncoder();
     }
 
-    public final ITextCompressor getTextCompressor() {
-        return engine.getTextCompressor();
+    public final ITextProcessor getTextProcessor() {
+        return engine.getTextProcessor();
     }
 
     public final FormatterManager getFormatterManager() {
