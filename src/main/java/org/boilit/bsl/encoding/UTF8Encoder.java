@@ -25,17 +25,54 @@ public final class UTF8Encoder extends AbstractEncoder {
     }
 
     private final void encode(final FixedByteArray fb, final char c) {
-        if (c < 0x80) {
+//        if (c < 0x80) {
+//            fb.append((byte) c);
+//        } else if (c < 0x800) {
+//            fb.append((byte) (0xc0 | c >> 6));
+//            fb.append((byte) (0x80 | c & 0x3f));
+//        } else if (c > 0xDFFF || c < 0xD800) {
+//            fb.append((byte) (0xe0 | c >> 12));
+//            fb.append((byte) (0x80 | c >> 6 & 0x3f));
+//            fb.append((byte) (0x80 | c & 0x3f));
+//        } else {
+//            fb.append((byte) 0x3F);
+//        }
+
+        if(c < 0) {
+            fb.append((byte) 0x3Ff);
+        } else if (c < 0x80) {
             fb.append((byte) c);
         } else if (c < 0x800) {
             fb.append((byte) (0xc0 | c >> 6));
             fb.append((byte) (0x80 | c & 0x3f));
-        } else if (c > 0xDFFF || c < 0xD800) {
+        } else if(c < 0xD800){
             fb.append((byte) (0xe0 | c >> 12));
             fb.append((byte) (0x80 | c >> 6 & 0x3f));
             fb.append((byte) (0x80 | c & 0x3f));
-        } else {
+        } else if(c < 0xE000){
             fb.append((byte) 0x3F);
+        } else if (c < 0x10000) {
+            fb.append((byte) (0xe0 | c >> 12));
+            fb.append((byte) (0x80 | c >> 6 & 0x3f));
+            fb.append((byte) (0x80 | c & 0x3f));
+        } else if (c < 0x200000) {
+            fb.append((byte) (0xf0 | c >> 18));
+            fb.append((byte) (0x80 | c >> 12));
+            fb.append((byte) (0x80 | c >> 6 & 0x3f));
+            fb.append((byte) (0x80 | c & 0x3f));
+        } else if (c < 0x4000000) {
+            fb.append((byte) (0xf8 | c >> 24));
+            fb.append((byte) (0x80 | c >> 18));
+            fb.append((byte) (0x80 | c >> 12));
+            fb.append((byte) (0x80 | c >> 6 & 0x3f));
+            fb.append((byte) (0x80 | c & 0x3f));
+        } else {
+            fb.append((byte) (0xfc | c >> 30));
+            fb.append((byte) (0x80 | c >> 24));
+            fb.append((byte) (0x80 | c >> 18));
+            fb.append((byte) (0x80 | c >> 12));
+            fb.append((byte) (0x80 | c >> 6 & 0x3f));
+            fb.append((byte) (0x80 | c & 0x3f));
         }
     }
 }
