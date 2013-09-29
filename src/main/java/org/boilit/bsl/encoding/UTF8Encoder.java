@@ -24,22 +24,14 @@ public final class UTF8Encoder extends AbstractEncoder {
         outputStream.write(fb.bytes(), 0, fb.size());
     }
 
+    /**
+     * encode result same as jdk String.getBytes("UTF-8")
+     * @param fb
+     * @param c
+     */
     private final void encode(final FixedByteArray fb, final char c) {
-//        if (c < 0x80) {
-//            fb.append((byte) c);
-//        } else if (c < 0x800) {
-//            fb.append((byte) (0xc0 | c >> 6));
-//            fb.append((byte) (0x80 | c & 0x3f));
-//        } else if (c > 0xDFFF || c < 0xD800) {
-//            fb.append((byte) (0xe0 | c >> 12));
-//            fb.append((byte) (0x80 | c >> 6 & 0x3f));
-//            fb.append((byte) (0x80 | c & 0x3f));
-//        } else {
-//            fb.append((byte) 0x3F);
-//        }
-
         if(c < 0) {
-            fb.append((byte) 0x3Ff);
+            fb.append((byte) 0x3f);
         } else if (c < 0x80) {
             fb.append((byte) c);
         } else if (c < 0x800) {
