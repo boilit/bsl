@@ -17,7 +17,7 @@ public final class UTF8Encoder extends AbstractEncoder {
     public final void write(final OutputStream outputStream, final String string) throws IOException {
         final int n = string.length();
         final FixedByteArray fb = this.getFixedByteArray();
-        fb.dilatation(n << 2);
+        fb.dilatation((n << 2) + (n<<1));
         for (int i = 0; i < n; i++) {
             encode(fb, string.charAt(i));
         }
