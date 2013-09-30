@@ -1,0 +1,91 @@
+﻿﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>BSL - 高性能Java模板引擎</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="BSL,Java,模板引擎,高性能,开源"/>
+    <meta name="description" content="BSL,Java,模板引擎,高性能,开源"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="../../themes/default.css">
+    <link rel="stylesheet" type="text/css" href="../../scripts/prettify/boilit.css">
+    <script type="text/javascript" src="../../scripts/prettify/prettify.js"></script>
+    <script type="text/javascript">
+        function resize() { document.getElementById('text').style.width = (parseInt(document.body.clientWidth) - 310) + 'px'; }
+    </script>
+</head>
+<body onload="resize(); prettyPrint();" onresize="resize();">
+<div>
+    <div class="head">
+        <div>
+            <a href="#" class="title">BSL - 高性能Java模板引擎</a>
+        </div>
+        <div>
+            <span style="float: left; width: 20px;">&nbsp;</span>
+            <a href="../index.html" class="menu">概述</a>
+            <a href="../example/tpl.html" class="menu">示例</a>
+            <a href="../syntax/hold.html" class="menu">语法</a>
+            <a href="../config/prop.html" class="menu">配置</a>
+            <a href="../integration/apin.html" class="menu">集成</a>
+            <a href="../ability/jdk7utf8.html" class="menu">性能</a>
+            <a href="#" class="menu">设计</a>
+            <!-- a href="#" class="menu">日志</a -->
+            <!-- a href="#" class="menu">帮助</a -->
+            <a href="../connect.html" class="menu">联系</a>
+            <a href="https://github.com/boilit/bsl/fork" class="menu">FORK</a>
+        </div>
+        <div>
+            <a href="#" class="site">English</a>
+        </div>
+    </div>
+    <div class="body">
+        <div id="right" class="right">
+            <div class="note">
+                当前版本：1.1.0<br/>
+                发布时间：2013-09-24<br/>
+                下载软件：<a href="../../releases/bsl-1.1.0.jar">JAR</a>
+                    <a href="../../releases/bsl-1.1.0-src.zip">SRC</a><br/>
+                历史版本：<a href="../history.html">点此进入</a><br/>
+                交流QQ群：109365467
+            </div>
+            <div class="location">当前位置：JDK1.7 GBK</div><div class="link">﻿<pre style="line-height: 20px;">
+<a href="jdk7utf8.html">&gt;&gt;&gt;JDK1.7 UTF-8</a>
+<a href="jdk7gbk.html">&gt;&gt;&gt;JDK1.7 GBK</a>
+<a href="jdk6utf8.html">&gt;&gt;&gt;JDK1.6 UTF-8</a>
+<a href="jdk6gbk.html">&gt;&gt;&gt;JDK1.6 GBK</a>
+</pre></div>
+            <div style="clear: both;">&nbsp;</div>
+        </div>
+        <div id="text" class="text" style="width: 100;"><div class="subject">示例代码：</div>
+<pre class="prettyprint language-html linenums">
+JDK1.7上GBK输出编码下各模板引擎性能测试结果
+===============================================================================
+OsName:Windows 7, OsVersion:6.1, OsArch:amd64, CpuCore:4
+JreVersion:1.7.0_40, MaxMem:1795M, FreeMem:119M, UsedMem:2M
+JvmMode:DEFAULT, OutputEncoding:GBK, OutputMode:BYTES
+Items:20, WarmCount:10, LoopCount:10000, Buffered:false
+===============================================================================
+Engine              Version             Time(ms)  Size(b)   Tps       Rate(%)
+StringBuilder       jdk1.7.0_40         1100      6731      9090      100.00
+Bsl                 1.1.0               815       6801      12269     134.97
+Httl                1.0.11              1225      6803      8163      89.80
+Webit               1.1.3               1009      7349      9910      109.02
+Beetl               1.25.01             1226      6805      8156      89.72
+Velocity            1.7                 2329      7496      4293      47.23
+FreeMarker          2.3.19              2785      6807      3590      39.50
+===============================================================================
+</pre>
+<div class="subject">测试说明：</div>
+<pre>
+    目前网络上的模板引擎测试基本上都是非独立JVM测试的，这样做后测试的引擎性能会较高，与实际性能相比有较大偏差，
+    因此本测试对每个引擎都使用独立JVM测试，保证了各个引擎间环境的公平性；
+    基准测试使用的方式是对每款引擎进行独立JVM测试，具体方式参考<a href="https://github.com/boilit/ebm">基准测试项目</a>；
+</pre>
+</div>
+        <div style="clear: both;">&nbsp;</div>
+    </div>
+    <div class="foot">
+        Copyright &copy; 2013 Boilit. All rights reserved
+    </div>
+</div>
+</body>
+</html>

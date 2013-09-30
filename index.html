@@ -1,152 +1,17 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Boilit Script Language</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <link rel="stylesheet" type="text/css" href="./themes/default/css.css">
-    <link rel="stylesheet" type="text/css" href="./scripts/easyui/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="./scripts/easyui/themes/default/easyui.css">
-
-    <script type="text/javascript" src="./scripts/jquery.js"></script>
-    <script type="text/javascript" src="./scripts/fonteffect.js"></script>
-    <script type="text/javascript" src="./scripts/easyui/easyui.js"></script>
-    <script type="text/javascript" src="./scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-
-    <style type="text/css">
-        <!--
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        #north, #west, #south, #topTabs {
-            background-color: #EAF7FF;
-        }
-
-        #baner {
-            font-family: "宋体";
-            color: #0066ff;
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        -->
-    </style>
-</head>
-<body class="easyui-layout">
-<div id="north" region="north" split="false" style="height:50px;overflow:hidden;">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" class="baner_bg">
-        <tr>
-            <td align="center">
-                <DIV id='baner'>Boilit Script Language Help Document</DIV>
-            </td>
-        </tr>
-    </table>
-</div>
-<div id="west" region="west" split="true" title="系统导航" style="width:200px;overflow:auto;">
-    <ul id="tree"></ul>
-</div>
-<div id="center" region="center" style="overflow:auto;">
-    <div id="topTabs" class="easyui-tabs" fit="true" border="false">
-        <div title="主页" style="overflow:hidden;">
-            <iframe src="overview/introduce.html" frameborder="0" scrolling="auto" style="width:100%; height:100%;"></iframe>
-        </div>
-    </div>
-</div>
-<div id="south" region="south" style="overflow:auto; height: 30px; padding: 5px; font-size: 10pt; text-align: center;">
-    Copyright &copy; 2013 Boilit. All rights reserved.
-</div>
-<script language="javascript">
-    function addFrameTab(_id, _title, _url) {
-        _url = _url + (_url.indexOf('?') == -1 ? '?' : '&') + ('srid=' + new Date().getTime());
-        if ($('#topTabs').tabs('exists', _title)) {
-            $('#SFT_' + _id).attr('src', _url);
-            $('#topTabs').tabs('select', _title);
+    <title>BSL</title>
+    <script type="text/javascript">
+        var locate = (window.navigator.userLanguage || window.navigator.language);
+        if(locate && locate.length > 2 && locate.substring(0,2) == 'zh') {
+            window.location.href = "zh/index.html";
         } else {
-            var _content = $('<iframe scrolling="auto" style="width:100%; height:100%;"></iframe>');
-            _content.attr('id', 'SFT_' + _id).attr('title', _title).attr('src', _url).attr('frameborder', '0');
-            $('#topTabs').tabs('add', { title: _title, content: _content[0], closable: true, closed: true });
-            $('div', '#topTabs').each(function () {
-                $(this).css('overflow', 'hidden');
-            })
+            window.location.href = "#";
         }
-    }
-
-    $(function () {
-        $('#baner').FontEffect({
-            shadow: true, outline: true, outlineColor1: "#ffffff", outlineColor2: "#ffffff",
-            gradient: true, gradientColor: "#0066ff", gradientPosition: 10, gradientLength: 10, gradientSteps: 10
-        });
-
-        var tree_data = [
-            {
-                "id": 1,
-                "text": "基本用法",
-                "children": [
-                    {
-                        "text": "创建引擎",
-                        "attributes": { "url": "ussage/engine.html"}
-                    }, {
-                        "text": "执行模板",
-                        "attributes": { "url": "ussage/execute.html"}
-                    }, {
-                        "text": "代码段与占位符",
-                        "attributes": { "url": "ussage/holder.html"}
-                    }, {
-                        "text": "代码注释",
-                        "attributes": { "url": "ussage/comment.html"}
-                    }, {
-                        "text": "关键字",
-                        "attributes": { "url": "ussage/keys.html"}
-                    },  {
-                        "text": "变量定义",
-                        "attributes": { "url": "ussage/vars.html"}
-                    }, {
-                        "text": "属性方法调用",
-                        "attributes": { "url": "ussage/access.html"}
-                    }, {
-                        "text": "表达式运算",
-                        "attributes": { "url": "ussage/expression.html"}
-                    }, {
-                        "text": "格式及安全输出",
-                        "attributes": { "url": "ussage/output.html"}
-                    }, {
-                        "text": "格式化扩展",
-                        "attributes": { "url": "ussage/formatter.html"}
-                    }, {
-                        "text": "循环迭代",
-                        "attributes": { "url": "ussage/loop.html"}
-                    }, {
-                        "text": "分支语句",
-                        "attributes": { "url": "ussage/branch.html"}
-                    }, {
-                        "text": "引入与布局",
-                        "attributes": { "url": "ussage/include.html"}
-                    }, {
-                        "text": "基准测试",
-                        "attributes": { "url": "ussage/benchmark.html"}
-                    },{
-                        "text": "示例程序",
-                        "attributes": { "url": "ussage/example.html"}
-                    }
-                ]
-            }
-        ];
-
-        $('#tree').tree({
-            lines: true,
-            onClick: function (node) {
-                var nas = node.attributes, url = nas.url;
-                if (typeof(url) == undefined || url == null || url == '') return;
-                addFrameTab(node.id, node.text, url);
-            }
-        }).tree('loadData', tree_data);
-    });
-</script>
+    </script>
+</head>
+<body>
+<a href="#">English</a> | <a href="zh/index.html">&#20013;&#25991;</a>
 </body>
 </html>

@@ -1,0 +1,112 @@
+﻿﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>BSL - 高性能Java模板引擎</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="BSL,Java,模板引擎,高性能,开源"/>
+    <meta name="description" content="BSL,Java,模板引擎,高性能,开源"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="../../themes/default.css">
+    <link rel="stylesheet" type="text/css" href="../../scripts/prettify/boilit.css">
+    <script type="text/javascript" src="../../scripts/prettify/prettify.js"></script>
+    <script type="text/javascript">
+        function resize() { document.getElementById('text').style.width = (parseInt(document.body.clientWidth) - 310) + 'px'; }
+    </script>
+</head>
+<body onload="resize(); prettyPrint();" onresize="resize();">
+<div>
+    <div class="head">
+        <div>
+            <a href="#" class="title">BSL - 高性能Java模板引擎</a>
+        </div>
+        <div>
+            <span style="float: left; width: 20px;">&nbsp;</span>
+            <a href="../index.html" class="menu">概述</a>
+            <a href="../example/tpl.html" class="menu">示例</a>
+            <a href="../syntax/hold.html" class="menu">语法</a>
+            <a href="../config/prop.html" class="menu">配置</a>
+            <a href="../integration/apin.html" class="menu">集成</a>
+            <a href="../ability/jdk7utf8.html" class="menu">性能</a>
+            <a href="#" class="menu">设计</a>
+            <!-- a href="#" class="menu">日志</a -->
+            <!-- a href="#" class="menu">帮助</a -->
+            <a href="../connect.html" class="menu">联系</a>
+            <a href="https://github.com/boilit/bsl/fork" class="menu">FORK</a>
+        </div>
+        <div>
+            <a href="#" class="site">English</a>
+        </div>
+    </div>
+    <div class="body">
+        <div id="right" class="right">
+            <div class="note">
+                当前版本：1.1.0<br/>
+                发布时间：2013-09-24<br/>
+                下载软件：<a href="../../releases/bsl-1.1.0.jar">JAR</a>
+                    <a href="../../releases/bsl-1.1.0-src.zip">SRC</a><br/>
+                历史版本：<a href="../history.html">点此进入</a><br/>
+                交流QQ群：109365467
+            </div>
+            <div class="location">当前位置：变量定义</div><div class="link">﻿<pre style="line-height: 20px;">
+<a href="hold.html">&gt;&gt;&gt;占位符及转义</a>
+<a href="keys.html">&gt;&gt;&gt;关键字及注释</a>
+<a href="vars.html">&gt;&gt;&gt;变量定义</a>
+<a href="exps.html">&gt;&gt;&gt;表达式运算</a>
+<a href="loop.html">&gt;&gt;&gt;循环及中断</a>
+<a href="branch.html">&gt;&gt;&gt;多路分支</a>
+<a href="access.html">&gt;&gt;&gt;属性及方法调用</a>
+<a href="output.html">&gt;&gt;&gt;格式及安全输出</a>
+<a href="format.html">&gt;&gt;&gt;输出格式化扩展</a>
+<a href="include.html">&gt;&gt;&gt;模板引入及布局</a>
+</pre></div>
+            <div style="clear: both;">&nbsp;</div>
+        </div>
+        <div id="text" class="text" style="width: 100;"><div class="subject">示例代码：</div>
+<pre class="prettyprint language-js linenums">
+&lt;!--[
+    /* 类似JavaScript的弱类型定义方式，也可以一次性定义多个 */
+    // 定义字节
+    var a=10b, b=10B;
+    // 定义短整型
+    var c=10s, d=10S;
+    // 定义整数
+    var e=10;
+    // 定义长整型
+    var f=10l, g=10L;
+    // 定义单精度浮点数
+    var h=10.5f, i=10.5F;
+    // 定义双精度浮点数
+    var j=10.5d, k=10.5D;
+    // 定义字符串
+    var l='test1', m="test2";
+    // 定义变长数组，类JSON定义方式
+    var n=['test1', 'test2', l, m];
+    // 定义哈希表，类JSON定义方式
+    var o={'k1': 'v1', "k2": "v2", l: m};
+    // 复合定义，支持使用已有变量运算后赋值
+    var p=a+b*10, q='value_'+c+d, r={'k1': 'v1', "k2": "v2", l: m, 'value': q};
+    // 不同作用域下的变量定义，可以定义同名的，但不能与外层作用域的变量冲突
+    if(a==10) {
+        var xs=100;
+    } else {
+        var xs=101;
+        // 下面的定义是错误的，因为变量a已在外层定义
+        var a=100;
+    }
+]--&gt;
+</pre>
+<div class="subject">注意事项：</div>
+<pre>
+    1、支持不同作用域下的变量定义，{ }各自持有自己的作用域，多路分支、循环都有作用域；
+       外层变量可以被内层变量使用，内层变量不可以被外层使用，与Java的变量作用域类似；
+    2、任何类型都可以进行逻辑运算（会转换成布尔类型）；
+       默认约定是布尔的true、false，数字非0即真，对象非空即真；
+</pre></div>
+        <div style="clear: both;">&nbsp;</div>
+    </div>
+    <div class="foot">
+        Copyright &copy; 2013 Boilit. All rights reserved
+    </div>
+</div>
+</body>
+</html>
