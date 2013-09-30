@@ -4,13 +4,12 @@ Boilit Script Language
 
 Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的脚本语言。
 
-软件作者：Boilit
-作者姓名：于景洋
+软件作者：Boilit(于景洋)
 所在单位：胜利油田胜利软件有限责任公司
 
 开发语言：Java
 目前版本：1.1.0
-类库大小：248K
+类库大小：241K
 引擎性能：超越目前主流及非主流模板引擎，速度一流，适合大中型项目应用，请查看在线文档或基准测试内的测试结果
 
 软件特性：请参考<a href="http://boilit.github.io/bsl">在线文档</a>
