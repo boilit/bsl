@@ -18,11 +18,11 @@ public final class NumNgt extends AbstractUnitaryOperator {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        return Operation.doNumNgt(this.getExpression().execute(context));
+        return Operation.doNumNgt(this, this.getExpression().execute(context));
     }
 
     @Override
     public final AbstractExpression optimizeConst() throws Exception {
-        return new Value(this.getLine(), this.getColumn(), Operation.doNumNgt(this.getExpression().execute(null)));
+        return new Value(this.getLine(), this.getColumn(), Operation.doNumNgt(this, this.getExpression().execute(null)));
     }
 }

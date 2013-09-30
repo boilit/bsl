@@ -18,7 +18,7 @@ public final class NumAdd extends AbstractBinaryOperator {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        return Operation.doNumAdd(
+        return Operation.doNumAdd(this,
                 this.getExpression1().execute(context),
                 this.getExpression2().execute(context)
         );
@@ -29,7 +29,7 @@ public final class NumAdd extends AbstractBinaryOperator {
         return new Value(
                 this.getLine(),
                 this.getColumn(),
-                Operation.doNumAdd(
+                Operation.doNumAdd(this,
                         this.getExpression1().execute(null),
                         this.getExpression2().execute(null)
                 )

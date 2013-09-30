@@ -15,6 +15,6 @@ public final class BitZrmAssign extends AbstractAssignOperator {
 
     @Override
     protected final Object executeFragment(final Object value1, final Object value2) throws Exception {
-        return Operation.doBitZrm(value1, value2);
+        return Operation.doBitZrm(this, value1, value2);
     }
 }

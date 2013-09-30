@@ -18,7 +18,7 @@ public final class NumPow extends AbstractBinaryOperator {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        return Operation.doNumPow(
+        return Operation.doNumPow(this,
                 this.getExpression1().execute(context),
                 this.getExpression2().execute(context)
         );
@@ -29,7 +29,7 @@ public final class NumPow extends AbstractBinaryOperator {
         return new Value(
                 this.getLine(),
                 this.getColumn(),
-                Operation.doNumPow(
+                Operation.doNumPow(this,
                         this.getExpression1().execute(null),
                         this.getExpression2().execute(null)
                 )

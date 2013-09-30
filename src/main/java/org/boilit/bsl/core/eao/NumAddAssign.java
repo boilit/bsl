@@ -15,6 +15,6 @@ public final class NumAddAssign extends AbstractAssignOperator {
 
     @Override
     protected final Object executeFragment(final Object value1, final Object value2) throws Exception {
-        return Operation.doNumAdd(value1, value2);
+        return Operation.doNumAdd(this, value1, value2);
     }
 }

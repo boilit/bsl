@@ -1,6 +1,5 @@
 package org.boilit.bsl.core;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -72,17 +71,6 @@ public final class ExecuteVariant {
             this.add(entry.getKey(), entry.getValue());
         }
         return this;
-    }
-
-    public final Map<String, Object> toVariableMap() {
-        final int n = size;
-        final String[] keys = this.keys;
-        final Object[] values = this.values;
-        final Map<String, Object> map = new HashMap<String, Object>(n);
-        for (int i = 0; i < n; i++) {
-            map.put(keys[i], values[i]);
-        }
-        return map;
     }
 
     private final void ensureCapacity(final int minCapacity) {

@@ -18,11 +18,11 @@ public final class BitNot extends AbstractUnitaryOperator {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        return Operation.doBitNot(this.getExpression().execute(context));
+        return Operation.doBitNot(this, this.getExpression().execute(context));
     }
 
     @Override
     public final AbstractExpression optimizeConst() throws Exception {
-        return new Value(this.getLine(), this.getColumn(), Operation.doBitNot(this.getExpression().execute(null)));
+        return new Value(this.getLine(), this.getColumn(), Operation.doBitNot(this, this.getExpression().execute(null)));
     }
 }

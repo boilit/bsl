@@ -15,6 +15,6 @@ public final class NumSubAssign extends AbstractAssignOperator {
 
     @Override
     protected final Object executeFragment(final Object value1, final Object value2) throws Exception {
-        return Operation.doNumSub(value1, value2);
+        return Operation.doNumSub(this, value1, value2);
     }
 }

@@ -18,7 +18,7 @@ public final class LgcTgt extends AbstractBinaryOperator {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        return Operation.doLgcTgt(
+        return Operation.doLgcTgt(this,
                 this.getExpression1().execute(context),
                 this.getExpression2().execute(context)
         );
@@ -29,7 +29,7 @@ public final class LgcTgt extends AbstractBinaryOperator {
         return new Value(
                 this.getLine(),
                 this.getColumn(),
-                Operation.doLgcTgt(
+                Operation.doLgcTgt(this,
                         this.getExpression1().execute(null),
                         this.getExpression2().execute(null)
                 )

@@ -33,7 +33,7 @@ public final class Include extends AbstractDirective {
         final String location = Operation.toString(expression1.execute(context));
         final String name = this.relative(template.getResource().getName(), location).substring(1);
         template.getEngine().getTemplate(name).execute(ec);
-        return ec.toReturnedMap();
+        return null;
     }
 
     @Override

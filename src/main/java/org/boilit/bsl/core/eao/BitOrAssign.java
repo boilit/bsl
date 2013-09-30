@@ -15,6 +15,6 @@ public final class BitOrAssign extends AbstractAssignOperator {
 
     @Override
     protected final Object executeFragment(final Object value1, final Object value2) throws Exception {
-        return Operation.doBitOr(value1, value2);
+        return Operation.doBitOr(this, value1, value2);
     }
 }

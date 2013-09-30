@@ -50,7 +50,5 @@ public class Test {
 
         System.out.println();
         System.out.println("times:"+(t2-t1)+"ms");
-
-        System.out.println(Operation.doBitLm(100, 1));
     }
 }

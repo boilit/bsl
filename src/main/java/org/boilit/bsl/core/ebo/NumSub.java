@@ -18,7 +18,7 @@ public final class NumSub extends AbstractBinaryOperator {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        return Operation.doNumSub(
+        return Operation.doNumSub(this,
                 this.getExpression1().execute(context),
                 this.getExpression2().execute(context)
         );
@@ -29,7 +29,7 @@ public final class NumSub extends AbstractBinaryOperator {
         return new Value(
                 this.getLine(),
                 this.getColumn(),
-                Operation.doNumSub(
+                Operation.doNumSub(this,
                         this.getExpression1().execute(null),
                         this.getExpression2().execute(null)
                 )

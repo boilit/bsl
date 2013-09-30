@@ -18,7 +18,7 @@ public final class NumMod extends AbstractBinaryOperator {
 
     @Override
     public final Object execute(final ExecuteContext context) throws Exception {
-        return Operation.doNumMod(
+        return Operation.doNumMod(this,
                 this.getExpression1().execute(context),
                 this.getExpression2().execute(context)
         );
@@ -29,7 +29,7 @@ public final class NumMod extends AbstractBinaryOperator {
         return new Value(
                 this.getLine(),
                 this.getColumn(),
-                Operation.doNumMod(
+                Operation.doNumMod(this,
                         this.getExpression1().execute(null),
                         this.getExpression2().execute(null)
                 )

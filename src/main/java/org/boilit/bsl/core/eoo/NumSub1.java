@@ -14,6 +14,6 @@ public final class NumSub1 extends AbstractOneselfOperator {
 
     @Override
     protected final Object executeFragment(final Object value) throws Exception {
-        return Operation.doNumSub1(value);
+        return Operation.doNumSub1(this, value);
     }
 }

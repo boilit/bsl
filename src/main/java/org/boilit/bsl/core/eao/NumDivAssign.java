@@ -15,6 +15,6 @@ public final class NumDivAssign extends AbstractAssignOperator {
 
     @Override
     protected final Object executeFragment(final Object value1, final Object value2) throws Exception {
-        return Operation.doNumDiv(value1, value2);
+        return Operation.doNumDiv(this, value1, value2);
     }
 }

@@ -15,6 +15,6 @@ public final class NumMulAssign extends AbstractAssignOperator {
 
     @Override
     protected final Object executeFragment(final Object value1, final Object value2) throws Exception {
-        return Operation.doNumMul(value1, value2);
+        return Operation.doNumMul(this, value1, value2);
     }
 }

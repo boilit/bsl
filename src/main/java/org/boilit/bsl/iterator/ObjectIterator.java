@@ -18,6 +18,8 @@ public final class ObjectIterator implements Iterator {
             this.iterator = ((List) object).iterator();
         } else if (object instanceof Map) {
             this.iterator = ((Map) object).entrySet().iterator();
+        } else if (object instanceof Object[]) {
+            this.iterator = new ArrayIterator((Object[]) object);
         } else if (object instanceof Boolean) {
             this.iterator = new BoolIterator((Boolean) object);
         } else if (object instanceof Number) {

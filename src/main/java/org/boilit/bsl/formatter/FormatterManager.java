@@ -72,10 +72,10 @@ public final class FormatterManager {
             newCapacity = newCapacity < minCapacity ? minCapacity : newCapacity;
             final Class[] oldKeys = classes;
             classes = new Class[newCapacity];
-            System.arraycopy(oldKeys, 0, classes, 0, size);
+            System.arraycopy(oldKeys, 0, classes, 0, oldKeys.length);
             final IFormatter[] oldValues = formatters;
             formatters = new IFormatter[newCapacity];
-            System.arraycopy(oldValues, 0, formatters, 0, size);
+            System.arraycopy(oldValues, 0, formatters, 0, oldValues.length);
         }
     }
 }
