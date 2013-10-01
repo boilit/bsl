@@ -1,20 +1,14 @@
 package org.boilit.bsl.xio;
 
+import java.io.File;
+
 /**
  * @author Boilit
  * @see
  */
 public abstract class AbstractResource implements IResource {
-    private final IResourceLoader loader;
-    private final String name;
-
-    public AbstractResource(final IResourceLoader loader, final String name) {
-        if (loader == null) {
-            throw new IllegalArgumentException("Argument[ILoader loader] is null!");
-        }
-        this.loader = loader;
-        this.name = name;
-    }
+    private IResourceLoader loader;
+    private String name;
 
     @Override
     public final IResourceLoader getLoader() {
@@ -22,12 +16,24 @@ public abstract class AbstractResource implements IResource {
     }
 
     @Override
-    public final String getEncoding() {
-        return loader.getEncoding();
+    public final IResource setLoader(IResourceLoader loader) {
+        this.loader = loader;
+        return this;
     }
 
     @Override
     public final String getName() {
         return name;
+    }
+
+    @Override
+    public final IResource setName(String name) {
+        this.name = name.replace(File.separatorChar, '/');
+        return this;
+    }
+
+    @Override
+    public final String getEncoding() {
+        return loader.getEncoding();
     }
 }

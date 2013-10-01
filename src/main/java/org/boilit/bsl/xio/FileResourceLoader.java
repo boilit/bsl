@@ -6,12 +6,11 @@ package org.boilit.bsl.xio;
  */
 public final class FileResourceLoader extends AbstractResourceLoader {
 
-    public FileResourceLoader(final String encoding) {
-        super(encoding);
-    }
-
     @Override
     public final IResource getResource(final String name) {
-        return new FileResource(this, name);
+        final IResource resource = new FileResource();
+        resource.setLoader(this);
+        resource.setName(name);
+        return resource;
     }
 }

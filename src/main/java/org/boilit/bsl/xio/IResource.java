@@ -10,9 +10,13 @@ public interface IResource {
 
     public IResourceLoader getLoader();
 
-    public String getEncoding();
+    public IResource setLoader(IResourceLoader loader);
 
     public String getName();
+
+    public IResource setName(String name);
+
+    public String getEncoding();
 
     public Reader openReader() throws Exception;
 }

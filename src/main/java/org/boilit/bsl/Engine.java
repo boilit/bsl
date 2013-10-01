@@ -29,7 +29,7 @@ public final class Engine {
     private final FormatterManager formatterManager;
 
     public Engine() {
-        this.inputEncoding = System.getProperty("file.encoding");
+        this.inputEncoding = null;
         this.outputEncoding = "UTF-8";
         this.specifiedEncoder = false;
         this.useTemplateCache = true;
@@ -56,7 +56,11 @@ public final class Engine {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         final String inputEncoding = properties.getProperty("inputEncoding");
         if (inputEncoding != null && inputEncoding.trim().length() > 0) {
-            engine.setInputEncoding(inputEncoding.trim());
+            if (inputEncoding.trim().equalsIgnoreCase("system")) {
+                engine.setInputEncoding(System.getProperty("file.encoding"));
+            } else {
+                engine.setInputEncoding(inputEncoding.trim());
+            }
         }
         final String outputEncoding = properties.getProperty("outputEncoding");
         if (outputEncoding != null && outputEncoding.trim().length() > 0) {
@@ -73,8 +77,9 @@ public final class Engine {
         final String resourceLoader = properties.getProperty("resourceLoader");
         if (resourceLoader != null && resourceLoader.trim().length() > 0) {
             Class clazz = classLoader.loadClass(resourceLoader.trim());
-            Constructor constructor = clazz.getConstructor(new Class[]{String.class});
-            engine.setResourceLoader((IResourceLoader) constructor.newInstance(engine.getInputEncoding()));
+            IResourceLoader loader = (IResourceLoader) clazz.newInstance();
+            loader.setEncoding(engine.getInputEncoding());
+            engine.setResourceLoader(loader);
         }
         final String textProcessor = properties.getProperty("textProcessor");
         if (textProcessor != null && textProcessor.trim().length() > 0) {
@@ -142,8 +147,9 @@ public final class Engine {
     public final Template getTemplate(final String name) throws Exception {
         IResourceLoader resourceLoader = this.resourceLoader;
         if (resourceLoader == null) {
-            resourceLoader = this.resourceLoader = new FileResourceLoader(this.getInputEncoding());
+            resourceLoader = this.resourceLoader = new FileResourceLoader();
         }
+        resourceLoader.setEncoding(this.getInputEncoding());
         if (!useTemplateCache) {
             return new Template(this, resourceLoader.getResource(name), formatterManager);
         }

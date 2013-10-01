@@ -6,12 +6,11 @@ package org.boilit.bsl.xio;
  */
 public final class ClassPathResourceLoader extends AbstractResourceLoader {
 
-    public ClassPathResourceLoader(final String encoding) {
-        super(encoding);
-    }
-
     @Override
     public final IResource getResource(final String name) {
-        return new ClassPathResource(this, name);
+        final IResource resource = new ClassPathResource();
+        resource.setLoader(this);
+        resource.setName(name);
+        return resource;
     }
 }

@@ -9,16 +9,11 @@ import java.net.URL;
  * @see
  */
 public final class UrlResource extends AbstractResource {
-
-    public UrlResource(final IResourceLoader loader, final String url) {
-        super(loader, url);
-        if (url == null) {
-            throw new IllegalArgumentException("Argument[String url] is null!");
-        }
-    }
-
     @Override
     public final Reader openReader() throws Exception {
+        if(this.getEncoding() == null || this.getEncoding().trim().length() == 0) {
+            return new InputStreamReader(new URL(this.getName()).openStream());
+        }
         return new InputStreamReader(new URL(this.getName()).openStream(), this.getEncoding());
     }
 }

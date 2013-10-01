@@ -10,17 +10,12 @@ import java.io.Reader;
  * @see
  */
 public final class FileResource extends AbstractResource {
-
-    public FileResource(final IResourceLoader loader, final String file) {
-        super(loader, file.replace(File.separatorChar, '/'));
-        if (file == null) {
-            throw new IllegalArgumentException("Argument[String file] is null!");
-        }
-    }
-
     @Override
     public final Reader openReader() throws Exception {
         final String file = this.getName().replace('/', File.separatorChar);
+        if(this.getEncoding() == null || this.getEncoding().trim().length() == 0) {
+            return new InputStreamReader(new FileInputStream(file));
+        }
         return new InputStreamReader(new FileInputStream(file), this.getEncoding());
     }
 }

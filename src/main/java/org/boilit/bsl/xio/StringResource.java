@@ -12,13 +12,6 @@ import java.util.Map;
 public final class StringResource extends AbstractResource {
     private Map<String, String> resources;
 
-    public StringResource(final IResourceLoader loader, final String string) {
-        super(loader, string);
-        if (string == null) {
-            throw new IllegalArgumentException("Argument[String string] is null!");
-        }
-    }
-
     @Override
     public final Reader openReader() throws Exception {
         if (resources == null) {

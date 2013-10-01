@@ -5,13 +5,11 @@ package org.boilit.bsl.xio;
  * @see
  */
 public final class StringResourceLoader extends AbstractResourceLoader {
-
-    public StringResourceLoader(final String encoding) {
-        super(encoding);
-    }
-
     @Override
     public final IResource getResource(final String name) {
-        return new StringResource(this, name);
+        final IResource resource = new StringResource();
+        resource.setLoader(this);
+        resource.setName(name);
+        return resource;
     }
 }
