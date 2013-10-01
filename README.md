@@ -32,8 +32,10 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
     移除Logger适配器接口，改为异常抛出；
     修订loop、next、break的检测机制；
     修改Include，参数可接收一个或两个表达式；
-    增强UTF-8专用编码器，由UCS-2支持扩展到UCS-4支持；
-    静态文本处理接口ITextCompressor更改为ITextProcessor，只提供缺省实现，一般场景用不到该功能；
+    增强UTF-8专用编码器，由UCS-2支持扩展到UCS-4支持
+    修改IResource、IResourceLoader接口及缺省实现；
+    增加StringResource、StringResourceLoader资源读取方式；
+    静态文本处理接口ITextCompressor更改为ITextProcessor，提供缺省实现，一般用不到该功能；
 1.0.2:
     更新字符缓冲实现，转义字符BUG修复；
 1.0.1：
