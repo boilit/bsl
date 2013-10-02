@@ -8,7 +8,7 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
 所在单位：胜利油田胜利软件有限责任公司
 
 开发语言：Java
-目前版本：1.1.0
+目前版本：1.2.0
 类库大小：241K
 引擎性能：超越目前主流及非主流模板引擎，速度一流，适合大中型项目应用，请查看在线文档或基准测试内的测试结果
 
@@ -18,7 +18,7 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
 
 基准测试：<a href="https://github.com/boilit/ebm">https://github.com/boilit/ebm</a>
 
-下载地址: <a href="http://boilit.github.io/bsl/releases/bsl-1.1.0.jar">bsl-1.1.0.jar</a>
+下载地址: <a href="http://boilit.github.io/bsl/releases/bsl-1.2.0.jar">bsl-1.2.0.jar</a>
     
 交流QQ群：109365467
 </pre>
@@ -26,6 +26,8 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
 版本更新
 ===
 <pre>
+1.2.0:
+    修改专用编码器多线程并发BUG（空指针异常）；
 1.1.0:
     修改运算单元算法；
     完善错误定位；
