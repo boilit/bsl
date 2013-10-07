@@ -1,9 +1,8 @@
 package org.boilit.bsl.core.exo;
 
-import org.boilit.bsl.core.AbstractExpression;
-import org.boilit.bsl.core.AbstractOperator;
-import org.boilit.bsl.core.ExecuteContext;
-import org.boilit.bsl.core.Operation;
+import org.boilit.bsl.Context;
+import org.boilit.bsl.ITemplate;
+import org.boilit.bsl.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +15,13 @@ public final class Merge extends AbstractOperator {
     private AbstractExpression[] expressions;
     private List<AbstractExpression> children;
 
-    public Merge(final int line, final int column) {
-        super(line, column);
+    public Merge(final int line, final int column, final ITemplate template) {
+        super(line, column, template);
         this.children = new ArrayList<AbstractExpression>();
     }
 
     @Override
-    public Object execute(final ExecuteContext context) throws Exception {
+    public final Object execute(final Context context) throws Exception {
         Object value;
         final StringBuffer buffer = new StringBuffer();
         for (int i = 0, n = expressions.length; i < n; i++) {
@@ -33,7 +32,7 @@ public final class Merge extends AbstractOperator {
     }
 
     @Override
-    public AbstractExpression optimize() throws Exception {
+    public final AbstractExpression optimize() throws Exception {
         expressions = new AbstractExpression[children.size()];
         children.toArray(expressions);
         children.clear();
@@ -41,7 +40,18 @@ public final class Merge extends AbstractOperator {
         return this;
     }
 
-    public Merge add(AbstractExpression expression) throws Exception {
+    @Override
+    public final AbstractExpression detect() throws Exception {
+        final AbstractExpression[] expressions = this.expressions;
+        for(int i=0, n=expressions.length; i<n; i++) {
+            if(expressions[i] != null) {
+                expressions[i].detect();
+            }
+        }
+        return this;
+    }
+
+    public final Merge add(AbstractExpression expression) throws Exception {
         if ((expression = expression.optimize()) == null) {
             return this;
         }

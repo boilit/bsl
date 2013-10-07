@@ -1,6 +1,7 @@
 package org.boilit.bsl.core;
 
-import org.boilit.bsl.core.exs.Value;
+import org.boilit.bsl.ITemplate;
+import org.boilit.bsl.core.exo.Value;
 
 /**
  * @author Boilit
@@ -10,8 +11,11 @@ public abstract class AbstractBinaryOperator extends AbstractOperator {
     private AbstractExpression expression1;
     private AbstractExpression expression2;
 
-    public AbstractBinaryOperator(final int line, final int column, final AbstractExpression expression1, final AbstractExpression expression2) {
-        super(line, column);
+    public AbstractBinaryOperator(final int line, final int column,
+                                  final AbstractExpression expression1,
+                                  final AbstractExpression expression2,
+                                  final ITemplate template) {
+        super(line, column, template);
         this.expression1 = expression1;
         this.expression2 = expression2;
     }
@@ -26,6 +30,17 @@ public abstract class AbstractBinaryOperator extends AbstractOperator {
         }
         if(expression1 instanceof Value && expression2 instanceof Value) {
             return this.optimizeConst();
+        }
+        return this;
+    }
+
+    @Override
+    public final AbstractExpression detect() throws Exception {
+        if(expression1 != null) {
+            expression1.detect();
+        }
+        if(expression2 != null) {
+            expression2.detect();
         }
         return this;
     }

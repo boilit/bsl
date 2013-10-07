@@ -1,7 +1,9 @@
 package org.boilit.bsl.core.dxs;
 
+import org.boilit.bsl.ITemplate;
 import org.boilit.bsl.core.AbstractDirective;
-import org.boilit.bsl.core.ExecuteContext;
+import org.boilit.bsl.Context;
+import org.boilit.bsl.core.IStatement;
 
 /**
  * @author Boilit
@@ -9,12 +11,22 @@ import org.boilit.bsl.core.ExecuteContext;
  */
 public final class Next extends AbstractDirective {
 
-    public Next(final int line, final int column) {
-        super(line, column);
+    public Next(final int line, final int column, final ITemplate template) {
+        super(line, column, template);
     }
 
     @Override
-    public final Object execute(final ExecuteContext context) throws Exception {
-        return context.setControl(ExecuteContext.CONTROL_NEXT);
+    public final Object execute(final Context context) throws Exception {
+        return context.setControl(Context.CONTROL_NEXT);
+    }
+
+    @Override
+    public final AbstractDirective optimize() throws Exception {
+        return this;
+    }
+
+    @Override
+    public final IStatement detect() throws Exception {
+        return this;
     }
 }

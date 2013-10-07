@@ -1,9 +1,7 @@
 package test;
 
+import org.boilit.bsl.IEngine;
 import org.boilit.bsl.Engine;
-import org.boilit.bsl.core.Operation;
-import org.boilit.bsl.xio.FileResourceLoader;
-import org.boilit.bsl.xtp.DefaultTextProcessor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -21,7 +19,7 @@ public class Test {
 
         List<Stock> items = Stock.dummyItems();
 
-        Engine engine = Engine.getEngine();
+        IEngine engine = Engine.getEngine();
         engine.setSpecifiedEncoder(true);
         engine.clearTemplateCache();
 

@@ -159,14 +159,18 @@ MatchHoldHead	= [\\]* {HoldHead}
 
 	"include" { return symbol(INCLUDE); }
 	"echo" { return symbol(ECHO); }
+	"arg" { return symbol(ARG); }
 	"var" { return symbol(VAR); }
 	"if" { return symbol(IF); }
 	"else" { return symbol(ELSE); }
 	"loop" { return symbol(LOOP); }
 	"next" { return symbol(NEXT); }
 	"break" { return symbol(BREAK); }
+	"bpw" { return symbol(BPW); }
 	"pow" { return symbol(NUM_POW); }
 	"merge" { return symbol(MERGE); }
+	"#" { return symbol(WELL); } // frag define
+	"@" { return symbol(AT); } // frag exec
 
 	"." { return symbol(DOT); }
 	":" { return symbol(COLON); }

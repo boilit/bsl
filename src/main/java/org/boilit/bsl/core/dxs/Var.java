@@ -1,9 +1,11 @@
 package org.boilit.bsl.core.dxs;
 
+import org.boilit.bsl.ITemplate;
 import org.boilit.bsl.core.AbstractDirective;
-import org.boilit.bsl.core.ExecuteContext;
+import org.boilit.bsl.Detection;
+import org.boilit.bsl.Context;
 import org.boilit.bsl.core.eao.NormalAssign;
-import org.boilit.bsl.exception.ExecuteException;
+import org.boilit.bsl.exception.DetectException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,44 +15,56 @@ import java.util.List;
  * @see
  */
 public final class Var extends AbstractDirective {
+    private int[] variableMarks;
     private NormalAssign[] assigns;
     private List<NormalAssign> children;
-    private int labelIndex = -1;
 
-    public Var(final int line, final int column) {
-        super(line, column);
+    public Var(final int line, final int column, final ITemplate template) {
+        super(line, column, template);
         this.children = new ArrayList<NormalAssign>();
     }
 
     @Override
-    public final Object execute(final ExecuteContext context) throws Exception {
+    public final Object execute(final Context context) throws Exception {
+        final int[] variableMarks = this.variableMarks;
         final NormalAssign[] assigns = this.assigns;
-        int labelIndex = this.labelIndex;
         final int n = assigns.length;
         for (int i = 0; i < n; i++) {
-            if(labelIndex == -1) {
-                labelIndex = context.getVariableIndex(assigns[i].getLabel());
-                if (labelIndex != -1) {
-                    throw new ExecuteException(this, "Label[" + assigns[i].getLabel() + "] duplicated defined!");
-                }
-            }
-            context.addVariable(assigns[i].getLabel(), null);
+            context.setVariable(assigns[i].getLabel(), variableMarks[i], null);
             assigns[i].execute(context);
         }
-        // terminate label validate
-        this.labelIndex = -2;
         return null;
     }
 
     @Override
     public final Var optimize() throws Exception {
-        if(children.size() == 0) {
+        if (children.size() == 0) {
             return null;
         }
+        variableMarks = new int[children.size()];
         assigns = new NormalAssign[children.size()];
         children.toArray(assigns);
         children.clear();
         children = null;
+        return this;
+    }
+
+    @Override
+    public final Var detect() throws Exception {
+        final Detection detection = this.getTemplate().getDetection();
+        final NormalAssign[] assigns = this.assigns;
+        for (int i = 0, n = assigns.length; i < n; i++) {
+            if (assigns[i] == null) {
+                continue;
+            }
+            variableMarks[i] = detection.getVarIndex(assigns[i].getLabel());
+            if(variableMarks[i] != -1) {
+                throw new DetectException(this, "Label[" + assigns[i].getLabel() + "] duplicated defined!");
+            }
+            detection.addVariable(assigns[i].getLabel());
+            variableMarks[i] = detection.getVarIndex(assigns[i].getLabel());
+            assigns[i].detect();
+        }
         return this;
     }
 

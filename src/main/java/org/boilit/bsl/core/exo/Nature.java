@@ -1,13 +1,12 @@
 package org.boilit.bsl.core.exo;
 
-import org.boilit.acp.ACP;
 import org.boilit.acp.Proxy;
+import org.boilit.bsl.ITemplate;
 import org.boilit.bsl.core.AbstractExpression;
 import org.boilit.bsl.core.AbstractOperator;
-import org.boilit.bsl.core.ExecuteContext;
+import org.boilit.bsl.Context;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,22 +14,24 @@ import java.util.List;
  * @see
  */
 public final class Nature extends AbstractOperator {
-    protected final boolean field;
-    protected final String label;
+    public static final int FIELD = 0;
+    public static final int METHOD = 1;
+    protected final int kind;
+    protected String label;
     protected Proxy proxy;
     protected boolean acting = false;
     protected AbstractExpression[] expressions;
     private List<AbstractExpression> children;
 
-    public Nature(final int line, final int column, final boolean field, final String label) {
-        super(line, column);
-        this.field = field;
+    public Nature(final int line, final int column, final int kind, final String label, final ITemplate template) {
+        super(line, column, template);
+        this.kind = kind;
         this.label = label;
         this.children = new ArrayList<AbstractExpression>();
     }
 
     @Override
-    public Object execute(final ExecuteContext context) throws Exception {
+    public final Object execute(final Context context) throws Exception {
         final int n=expressions.length;
         final Object[] values = new Object[n];
         for (int i=0; i<n; i++) {
@@ -40,7 +41,7 @@ public final class Nature extends AbstractOperator {
     }
 
     @Override
-    public Nature optimize() {
+    public final Nature optimize() throws Exception {
         expressions = new AbstractExpression[children.size()];
         children.toArray(expressions);
         children.clear();
@@ -48,7 +49,18 @@ public final class Nature extends AbstractOperator {
         return this;
     }
 
-    public Nature add(AbstractExpression expression) throws Exception {
+    @Override
+    public final AbstractExpression detect() throws Exception {
+        final AbstractExpression[] expressions = this.expressions;
+        for(int i=0, n=expressions.length; i<n; i++) {
+            if(expressions[i] != null) {
+                expressions[i].detect();
+            }
+        }
+        return this;
+    }
+
+    public final Nature add(AbstractExpression expression) throws Exception {
         if ((expression = expression.optimize()) == null) {
             return this;
         }
@@ -56,7 +68,7 @@ public final class Nature extends AbstractOperator {
         return this;
     }
 
-    public Nature add(List<AbstractExpression> expressions) throws Exception {
+    public final Nature add(List<AbstractExpression> expressions) throws Exception {
         for (AbstractExpression expression : expressions) {
             add(expression);
         }

@@ -1,6 +1,7 @@
 package org.boilit.bsl.core;
 
-import org.boilit.bsl.core.exs.Value;
+import org.boilit.bsl.ITemplate;
+import org.boilit.bsl.core.exo.Value;
 
 /**
  * @author Boilit
@@ -9,8 +10,10 @@ import org.boilit.bsl.core.exs.Value;
 public abstract class AbstractUnitaryOperator extends AbstractOperator {
     private AbstractExpression expression;
 
-    public AbstractUnitaryOperator(final int line, final int column, final AbstractExpression expression) {
-        super(line, column);
+    public AbstractUnitaryOperator(final int line, final int column,
+                                   final AbstractExpression expression,
+                                   final ITemplate template) {
+        super(line, column, template);
         this.expression = expression;
     }
 
@@ -21,6 +24,14 @@ public abstract class AbstractUnitaryOperator extends AbstractOperator {
         }
         if(expression instanceof Value) {
             return this.optimizeConst();
+        }
+        return this;
+    }
+
+    @Override
+    public final AbstractExpression detect() throws Exception {
+        if(expression != null) {
+            expression.detect();
         }
         return this;
     }

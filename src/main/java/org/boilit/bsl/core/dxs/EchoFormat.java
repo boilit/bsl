@@ -1,9 +1,8 @@
 package org.boilit.bsl.core.dxs;
 
-import org.boilit.bsl.Template;
-import org.boilit.bsl.core.AbstractDirective;
-import org.boilit.bsl.core.AbstractExpression;
-import org.boilit.bsl.core.ExecuteContext;
+import org.boilit.bsl.Context;
+import org.boilit.bsl.ITemplate;
+import org.boilit.bsl.core.*;
 import org.boilit.bsl.exception.ExecuteException;
 import org.boilit.bsl.formatter.FormatterManager;
 
@@ -17,15 +16,15 @@ public final class EchoFormat extends AbstractDirective {
     private int formatterIndex = -1;
     private final FormatterManager formatterManager;
 
-    public EchoFormat(final int line, final int column, final AbstractExpression expression, final String format, final Template template) {
-        super(line, column);
+    public EchoFormat(final int line, final int column, final AbstractExpression expression, final String format, final ITemplate template) {
+        super(line, column, template);
         this.expression = expression;
         this.format = format;
         this.formatterManager = template.getFormatterManager();
     }
 
     @Override
-    public final Object execute(final ExecuteContext context) throws Exception {
+    public final Object execute(final Context context) throws Exception {
         final Object value = expression.execute(context);
         if (value == null) {
             return null;
@@ -46,6 +45,14 @@ public final class EchoFormat extends AbstractDirective {
     public final AbstractDirective optimize() throws Exception {
         if ((expression = expression.optimize()) == null) {
             return null;
+        }
+        return this;
+    }
+
+    @Override
+    public final AbstractDirective detect() throws Exception {
+        if(expression != null) {
+            expression.detect();
         }
         return this;
     }

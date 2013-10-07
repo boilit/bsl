@@ -1,9 +1,8 @@
 package org.boilit.bsl.core.exo;
 
-import org.boilit.bsl.core.AbstractExpression;
-import org.boilit.bsl.core.AbstractOperator;
-import org.boilit.bsl.core.ExecuteContext;
-import org.boilit.bsl.core.Operation;
+import org.boilit.bsl.Context;
+import org.boilit.bsl.ITemplate;
+import org.boilit.bsl.core.*;
 
 /**
  * @author Boilit
@@ -13,25 +12,39 @@ public final class QuestionT extends AbstractOperator {
     protected AbstractExpression expression1;
     protected AbstractExpression expression2;
 
-    public QuestionT(final int line, final int column, final AbstractExpression exp1, final AbstractExpression exp2) {
-        super(line, column);
-        this.expression1 = exp1;
-        this.expression2 = exp2;
+    public QuestionT(final int line, final int column,
+                     final AbstractExpression expression1,
+                     final AbstractExpression expression2,
+                     final ITemplate template) {
+        super(line, column, template);
+        this.expression1 = expression1;
+        this.expression2 = expression2;
     }
 
     @Override
-    public Object execute(final ExecuteContext context) throws Exception {
+    public final Object execute(final Context context) throws Exception {
         final Object value = expression1.execute(context);
         return Operation.toBool(value) ? expression2.execute(context) : value;
     }
 
     @Override
-    public AbstractExpression optimize() throws Exception {
+    public final AbstractExpression optimize() throws Exception {
         if ((expression1 = expression1.optimize()) == null) {
             return null;
         }
         if (expression2 == null || (expression2 = expression2.optimize()) == null) {
             return null;
+        }
+        return this;
+    }
+
+    @Override
+    public final AbstractExpression detect() throws Exception {
+        if(expression1 != null) {
+            expression1.detect();
+        }
+        if(expression2 != null) {
+            expression2.detect();
         }
         return this;
     }

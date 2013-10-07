@@ -1,42 +1,31 @@
 package org.boilit.bsl;
 
-import org.boilit.bsl.core.ExecuteContext;
-import org.boilit.bsl.core.IExecute;
-import org.boilit.bsl.core.Parser;
-import org.boilit.bsl.encoding.EncoderFactory;
-import org.boilit.bsl.encoding.IEncoder;
+import org.boilit.bsl.core.*;
 import org.boilit.bsl.exception.ScriptException;
-import org.boilit.bsl.formatter.FormatterManager;
-import org.boilit.bsl.xio.BytesPrinter;
-import org.boilit.bsl.xio.CharsPrinter;
-import org.boilit.bsl.xio.IPrinter;
 import org.boilit.bsl.xio.IResource;
-import org.boilit.bsl.xtp.ITextProcessor;
 
-import java.io.OutputStream;
 import java.io.Reader;
-import java.io.Writer;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Boilit
  * @see
  */
-public final class Template {
-    private final Engine engine;
+public final class Template extends AbstractTemplate {
     private final IResource resource;
     private final IExecute executor;
-    private final FormatterManager formatterManager;
+    private final ConcurrentMap<String, Fragment> fragments;
 
-    protected Template(final Engine engine, final IResource resource, final FormatterManager formatterManager) throws Exception{
-        this.engine = engine;
+    protected Template(final IEngine engine, final IResource resource) throws Exception{
+        super(engine);
         this.resource = resource;
-        this.formatterManager = formatterManager;
+        this.fragments = new ConcurrentHashMap<String, Fragment>();
         final Parser parser = new Parser();
         parser.setTemplate(this);
         Reader reader = null;
         try {
-            this.executor = parser.parse(reader = resource.openReader());
+            this.executor = parser.parse(reader = resource.openReader()).detect();
         } catch (ScriptException e) {
             throw e.toScriptException();
         } catch (Exception e) {
@@ -51,54 +40,25 @@ public final class Template {
         }
     }
 
-    public final Engine getEngine() {
-        return engine;
+    public final ITemplate getTemplate() {
+        return this;
     }
 
     public final IResource getResource() {
         return resource;
     }
 
-    public final String getInputEncoding() {
-        return engine.getInputEncoding();
+    @Override
+    public final ConcurrentMap<String, Fragment> getFragments() {
+        return fragments;
     }
 
-    public final String getOutputEncoding() {
-        return engine.getOutputEncoding();
-    }
-
-    public final boolean isSpecifiedEncoder() {
-        return engine.isSpecifiedEncoder();
-    }
-
-    public final ITextProcessor getTextProcessor() {
-        return engine.getTextProcessor();
-    }
-
-    public final FormatterManager getFormatterManager() {
-        return formatterManager;
-    }
-
-    public final Object execute(final Map<String, Object> model, final OutputStream outputStream) throws Exception  {
-        final IEncoder encoder = EncoderFactory.getEncoder(this.getOutputEncoding(), this.isSpecifiedEncoder());
-        return this.execute(model, new BytesPrinter(outputStream, encoder));
-    }
-
-    public final Object execute(final Map<String, Object> model, final Writer writer) throws Exception  {
-        final IEncoder encoder = EncoderFactory.getEncoder(this.getOutputEncoding(), this.isSpecifiedEncoder());
-        return this.execute(model, new CharsPrinter(writer, encoder));
-    }
-
-    public final Object execute(final Map<String, Object> model, final IPrinter printer) throws Exception {
-        return this.execute(new ExecuteContext(model, printer));
-    }
-
-    public final Object execute(final ExecuteContext context) throws Exception {
+    public final Object execute(final Context context) throws Exception {
         Object value = null;
         try{
             this.executor.execute(context);
             context.getPrinter().flush();
-            context.clear();
+            context.destroy();
         } catch (ScriptException e) {
             throw e.toScriptException();
         }

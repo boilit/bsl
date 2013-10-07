@@ -39,7 +39,7 @@
 
 <body>
 
-<h1>Stock Prices - Bsl</h1>
+<h1>Stock Prices - Bsl测试</h1>
 <table>
     <thead>
     <tr>
@@ -52,7 +52,7 @@
     </tr>
     </thead>
     <tbody>
-    <!--[ loop(item : items){ ]-->
+    <!--[ arg items;loop(item : items){ ]-->
     <tr class="${item_index%2==0?'odd':'even'}">
         <td style="text-align: center">${item_index + 1}</td>
         <td>
@@ -78,3 +78,14 @@
 
 </body>
 </html>
+<!--[
+@ frg2({'value':'abc'});
+@ frg1();
+# frg1 {
+    echo('frg1');
+}
+# frg2 {
+    arg value;
+    echo('frg2_'+value);
+}
+]-->

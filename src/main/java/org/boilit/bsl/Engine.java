@@ -1,58 +1,36 @@
 package org.boilit.bsl;
 
-import org.boilit.bsl.formatter.FormatterManager;
-import org.boilit.bsl.formatter.IFormatter;
-import org.boilit.bsl.xio.FileResourceLoader;
 import org.boilit.bsl.xio.IResourceLoader;
-import org.boilit.bsl.xtp.DefaultTextProcessor;
-import org.boilit.bsl.xtp.ITextProcessor;
 
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Boilit
  * @see
  */
-public final class Engine {
+public final class Engine extends AbstractEngine {
     public static final String PROPERTIES_BSL = "bsl.properties";
-    private String inputEncoding;
-    private String outputEncoding;
-    private boolean specifiedEncoder;
-    private boolean useTemplateCache;
-    private IResourceLoader resourceLoader;
-    private ConcurrentMap<String, Template> templateCache;
-    private ITextProcessor textProcessor;
-    private final FormatterManager formatterManager;
 
     public Engine() {
-        this.inputEncoding = null;
-        this.outputEncoding = "UTF-8";
-        this.specifiedEncoder = false;
-        this.useTemplateCache = true;
-        this.textProcessor = new DefaultTextProcessor();
-        this.formatterManager = new FormatterManager();
-        this.templateCache = new ConcurrentHashMap<String, Template>();
+        super();
     }
 
-    public static final Engine getEngine() throws Exception {
+    public static final IEngine getEngine() throws Exception {
         return getEngine(Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES_BSL));
     }
 
-    public static final Engine getEngine(InputStream inputStream) throws Exception {
+    public static final IEngine getEngine(InputStream inputStream) throws Exception {
         Properties properties = new Properties();
         properties.load(inputStream);
         return getEngine(properties);
     }
 
-    public static final Engine getEngine(Properties properties) throws Exception {
+    public static final IEngine getEngine(Properties properties) throws Exception {
         if (properties == null) {
             return new Engine();
         }
-        Engine engine = new Engine();
+        IEngine engine = new Engine();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         final String inputEncoding = properties.getProperty("inputEncoding");
         if (inputEncoding != null && inputEncoding.trim().length() > 0) {
@@ -85,78 +63,10 @@ public final class Engine {
         if (textProcessor != null && textProcessor.trim().length() > 0) {
             engine.setTextProcessor((ITextProcessor) classLoader.loadClass(textProcessor.trim()).newInstance());
         }
+        final String breakPointer = properties.getProperty("breakPointer");
+        if (breakPointer != null && breakPointer.trim().length() > 0) {
+            engine.setBreakPointer((IBreakPointer) classLoader.loadClass(breakPointer.trim()).newInstance());
+        }
         return engine;
-    }
-
-    public final String getInputEncoding() {
-        return inputEncoding;
-    }
-
-    public final void setInputEncoding(final String inputEncoding) {
-        this.inputEncoding = inputEncoding;
-    }
-
-    public final String getOutputEncoding() {
-        return outputEncoding;
-    }
-
-    public final void setOutputEncoding(final String outputEncoding) {
-        this.outputEncoding = outputEncoding;
-    }
-
-    public final boolean isSpecifiedEncoder() {
-        return specifiedEncoder;
-    }
-
-    public final void setSpecifiedEncoder(final boolean specifiedEncoder) {
-        this.specifiedEncoder = specifiedEncoder;
-    }
-
-    public final boolean isUseTemplateCache() {
-        return useTemplateCache;
-    }
-
-    public final void setUseTemplateCache(final boolean useTemplateCache) {
-        this.useTemplateCache = useTemplateCache;
-    }
-
-    public final IResourceLoader getResourceLoader() {
-        return resourceLoader;
-    }
-
-    public final void setResourceLoader(final IResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
-
-    public final ITextProcessor getTextProcessor() {
-        return textProcessor;
-    }
-
-    public final void setTextProcessor(final ITextProcessor textProcessor) {
-        this.textProcessor = textProcessor == null ? new DefaultTextProcessor() : textProcessor;
-    }
-
-    public final IFormatter registerFormatter(final Class clazz, final IFormatter formatter) {
-        return formatterManager.add(clazz, formatter);
-    }
-
-    public final void clearTemplateCache() {
-        templateCache.clear();
-    }
-
-    public final Template getTemplate(final String name) throws Exception {
-        IResourceLoader resourceLoader = this.resourceLoader;
-        if (resourceLoader == null) {
-            resourceLoader = this.resourceLoader = new FileResourceLoader();
-        }
-        resourceLoader.setEncoding(this.getInputEncoding());
-        if (!useTemplateCache) {
-            return new Template(this, resourceLoader.getResource(name), formatterManager);
-        }
-        Template template = templateCache.get(name);
-        if (template == null) {
-            templateCache.put(name, template = new Template(this, resourceLoader.getResource(name), formatterManager));
-        }
-        return template;
     }
 }

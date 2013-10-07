@@ -11,4 +11,6 @@ public interface IStatement extends IExecute {
     public int getColumn();
 
     public IStatement optimize() throws Exception;
+
+    public IStatement detect() throws Exception;
 }

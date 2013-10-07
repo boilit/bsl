@@ -2,17 +2,16 @@
 
 package org.boilit.bsl.core;
 
+import java.io.Reader;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.boilit.bsl.Template;
+import org.boilit.bsl.ITemplate;
+import org.boilit.bsl.Fragment;
 import org.boilit.bsl.core.dxs.*;
 import org.boilit.bsl.core.eao.*;
-import org.boilit.bsl.core.ebo.*;
 import org.boilit.bsl.core.eoo.*;
-import org.boilit.bsl.core.euo.*;
 import org.boilit.bsl.core.exo.*;
-import org.boilit.bsl.core.exs.*;
 import org.boilit.bsl.core.sxs.*;
 import org.boilit.bsl.exception.*;
 import org.boilit.cup.*;
@@ -22,13 +21,13 @@ scan with {: return lexer.next_token(); :};
 
 parser code {:
 	private Lexer lexer;
-	private Template template;
+	private ITemplate template;
 
-	public Template getTemplate() {
+	public final ITemplate getTemplate() {
 	    return this.template;
 	}
 
-	public void setTemplate(Template template) {
+	public final void setTemplate(final ITemplate template) {
 	    this.template = template;
 	}
 
@@ -40,7 +39,7 @@ parser code {:
 		return lexer != null ? lexer.getColumn() : 0;
 	}
 	
-	public IStatement parse(java.io.Reader in) throws Exception {
+	public final IStatement parse(final Reader in) throws Exception {
         this.lexer = new Lexer(in);
         try {
             return ((IStatement) this.parse().value).optimize();
@@ -53,20 +52,19 @@ parser code {:
             }
         }
 	}
-	
-	//TODO:
+
 	@Override
-	protected void report_fatal_error(String message, Object info) throws ParseException {
+	protected final void report_fatal_error(final String message, final Object info) throws ParseException {
 		done_parsing();
 		throw new ParseException("Parse Error[line:" + getLine() + ", column:" + getColumn() + "]! " + message +","+info);
 	}
 
 	@Override
-	protected void syntax_error(Symbol cur_token){
+	protected final void syntax_error(final Symbol cur_token){
 	}
 
 	@Override
-	protected void unrecovered_syntax_error(Symbol cur_token) {
+	protected final void unrecovered_syntax_error(final Symbol cur_token) {
 		try{
             report_fatal_error("Syntax Error, Failed to recover!", cur_token);
         } catch (Exception e) {
@@ -75,25 +73,41 @@ parser code {:
 	}
     
 	@Override
-	protected void report_error(String message, Object info) {
+	protected final void report_error(final String message, final Object info) {
 		System.err.println("Parse Error[line:" + getLine() + ", column:" + getColumn() + "]! " + message +","+info);
 	}
 
-	//TODO:
 	@Override
-	protected void debug_message(String message) {
+	protected final void debug_message(final String message) {
 		System.err.println(message);
 	}
 :};
 
 action code {:
-	public Template getTemplate() {
+    private ITemplate mainTemplate;
+	public final ITemplate getTemplate() {
 	    return this.parser.getTemplate();
+	}
+
+	public final void setTemplate(final ITemplate template) {
+	    this.parser.setTemplate(template);
+	}
+
+	public final Fragment setTemplateToFrag() {
+	    this.mainTemplate = this.getTemplate();
+	    final Fragment fragment = new Fragment(this.mainTemplate);
+	    this.setTemplate(fragment);
+	    return fragment;
+	}
+
+	public final ITemplate setTemplateToMain() {
+	    this.setTemplate(this.mainTemplate);
+	    return this.mainTemplate;
 	}
 :};
 
 /* terminals */
-terminal Integer INCLUDE, ECHO, VAR, IF, ELSE, LOOP, NEXT, BREAK, NUM_POW, MERGE;
+terminal Integer INCLUDE, ARG, VAR, ECHO, IF, ELSE, LOOP, NEXT, BREAK, BPW, WELL, AT, NUM_POW, MERGE;
 
 terminal Integer DOT, COLON, COMMA, SEMI,// . : , ;
     QUESTION, QUESTION_COLON, // ? ?:
@@ -117,14 +131,17 @@ terminal Double DOUBLE;
 terminal String CHARS, LABEL, TEXT;
 
 /* non terminal */
-non terminal Root ast;
-non terminal IStatement statement;
+non terminal AstRoot ast;
+non terminal IStatement statement, directive;
+non terminal FragDefine frag_define, frag_define_item;
+non terminal FragExec frag_exec;
 non terminal Text text;
 non terminal Hold hold;
 non terminal HoldFormat hold_format;
 non terminal Echo echo;
 non terminal EchoFormat echo_format;
 non terminal Include inc;
+non terminal Arg arg;
 non terminal Var var;
 non terminal Branch branch, branch_item;
 non terminal Loop loop;
@@ -155,7 +172,7 @@ non terminal Merge merge, merge_item;
 
 /* precedence */
 precedence left  SEMI; // ;
-precedence left  INCLUDE, ECHO, VAR, IF, ELSE, LOOP, NEXT, BREAK;// keywords
+precedence left  ARG, INCLUDE, ECHO, VAR, IF, ELSE, LOOP, NEXT, BREAK, BPW, WELL, AT;// keywords
 precedence right HOLD_TAIL;
 precedence left  COMMA; // ,
 precedence right ASSIGN, NUM_ADD_ASSIGN, NUM_SUB_ASSIGN, // = += -=
@@ -178,48 +195,68 @@ precedence left  DOT, BRK_LEFT, BRK_RIGHT, PRN_LEFT, PRN_RIGHT, BRC_LEFT, BRC_RI
 
 /* statements */
 ast ::= ast:a statement:b {: RESULT = a.add(b); :}
-	| {: RESULT = new Root(this.parser.getLine(), this.parser.getColumn()); :};
+	| {: RESULT = new AstRoot(this.parser.getLine(), this.parser.getColumn(), getTemplate()); :};
 
-statement ::= text:a {: RESULT=a; :}
+statement ::= directive:a {: RESULT=a; :}
+    | frag_define:a {: RESULT=a; :};
+
+directive ::= text:a {: RESULT=a; :}
     | hold:a {: RESULT=a; :}
     | hold_format:a {: RESULT=a; :}
 	| echo:a {: RESULT=a; :}
 	| echo_format:a {: RESULT=a; :}
 	| inc:a SEMI {: RESULT=a; :}
+	| arg:a SEMI {: RESULT=a; :}
 	| var:a SEMI {: RESULT=a; :}
     | call:a SEMI {: RESULT=a; :}
 	| assigns:a SEMI {: RESULT=a; :}
 	| branch:a {: RESULT=a; :}
 	| loop:a {: RESULT=a; :}
-	| NEXT:a SEMI {: RESULT=new Next($a.line, $a.column); :}
-	| BREAK:a SEMI {: RESULT=new Break($a.line, $a.column); :};
+	| frag_exec:a SEMI {: RESULT=a; :}
+	| NEXT:a SEMI {: RESULT=new Next($a.line, $a.column, getTemplate()); :}
+	| BREAK:a SEMI {: RESULT=new Break($a.line, $a.column, getTemplate()); :}
+	| BPW:a SEMI {: RESULT=new BreakPoint($a.line, $a.column, getTemplate()); :};
 
 text ::= TEXT:a {: RESULT = new Text($a.line, $a.column, a, getTemplate()); :};
 
-hold ::= expression:e HOLD_TAIL {: RESULT=new Hold($e.line, $e.column, e); :};
+hold ::= expression:e HOLD_TAIL {: RESULT=new Hold($e.line, $e.column, e, getTemplate()); :};
 hold_format ::= expression:e COMMA CHARS:b HOLD_TAIL {: RESULT = new HoldFormat($e.line, $e.column, e, b, getTemplate()); :};
 
-echo ::= ECHO:a PRN_LEFT expression:e PRN_RIGHT SEMI {: RESULT = new Echo($a.line, $a.column, e); :};
+echo ::= ECHO:a PRN_LEFT expression:e PRN_RIGHT SEMI {: RESULT = new Echo($a.line, $a.column, e, getTemplate()); :};
 echo_format ::= ECHO:a PRN_LEFT expression:e COMMA CHARS:b PRN_RIGHT SEMI {: RESULT = new EchoFormat($a.line, $a.column, e, b, getTemplate()); :};
+
+frag_define ::= frag_define_item:a BRC_RIGHT {: setTemplateToMain(); RESULT=a; :};
+
+frag_define_item ::= WELL:a LABEL:l BRC_LEFT {:
+        Fragment fragment = setTemplateToFrag();
+        fragment.setFragDefine(RESULT=new FragDefine($a.line, $a.column, l, getTemplate()));
+        fragment.appendToTemplate();
+    :} | frag_define_item:a directive:b {: RESULT=a.add(b); :};
+
+frag_exec ::= AT:a LABEL:l PRN_LEFT PRN_RIGHT {: RESULT=new FragExec($a.line, $a.column, l, null, getTemplate()); :}
+    | AT:a LABEL:l PRN_LEFT expression:e PRN_RIGHT {: RESULT=new FragExec($a.line, $a.column, l, e, getTemplate()); :};
 
 inc ::= INCLUDE:a PRN_LEFT expression:e PRN_RIGHT {: RESULT=new Include($a.line,$a.column, e, null, getTemplate()); :}
     | INCLUDE:a PRN_LEFT expression:e1 COMMA expression:e2 PRN_RIGHT {: RESULT=new Include($a.line, $a.column, e1, e2, getTemplate()); :};
 
+arg ::= arg:a COMMA LABEL:b {: RESULT=a.add(b); :}
+    | ARG:a LABEL:b {: RESULT = new Arg($a.line, $a.column, getTemplate()).add(b); :};
+
 var ::= var:a COMMA assign:b {: RESULT=a.add(b); :}
-    | VAR:a assign:b {: RESULT = new Var($a.line, $a.column).add(b); :};
+    | VAR:a assign:b {: RESULT = new Var($a.line, $a.column, getTemplate()).add(b); :};
 
 branch ::= branch_item:a {: RESULT=a; :}
     | branch_item:a ELSE block:b {: RESULT= a.addElse(b); :};
 
-branch_item ::= IF:a PRN_LEFT expression:e PRN_RIGHT block:b {: RESULT= new Branch($a.line, $a.column).add(e, b); :}
+branch_item ::= IF:a PRN_LEFT expression:e PRN_RIGHT block:b {: RESULT= new Branch($a.line, $a.column, getTemplate()).add(e, b); :}
     | branch_item:a ELSE IF PRN_LEFT expression:e PRN_RIGHT block:b {: RESULT= a.add(e, b); :};
 
-loop ::= LOOP:p PRN_LEFT LABEL:k COLON expression:e PRN_RIGHT block:b {: RESULT=new Loop($p.line, $p.column, k, e, b); :};
+loop ::= LOOP:p PRN_LEFT LABEL:k COLON expression:e PRN_RIGHT block:b {: RESULT=new Loop($p.line, $p.column, k, e, b, getTemplate()); :};
 
 block ::= block_item:a BRC_RIGHT {: RESULT=a; :};
 
-block_item ::= BRC_LEFT:a {: RESULT=new Block($a.line, $a.column); :}
-    | block_item:a statement:b {: RESULT=a.add(b); :};
+block_item ::= BRC_LEFT:a {: RESULT=new Block($a.line, $a.column, getTemplate()); :}
+    | block_item:a directive:b {: RESULT=a.add(b); :};
 
 expression ::= assign:a {: RESULT=a; :}
     | assigns:a {: RESULT=a; :}
@@ -234,16 +271,16 @@ expression ::= assign:a {: RESULT=a; :}
 
 prior_expression ::= PRN_LEFT:a expression:e PRN_RIGHT {: RESULT=e; :};
 
-questionT ::= expression:e1 QUESTION:p expression:e2 {: RESULT=new QuestionT($p.line, $p.column, e1, e2); :};
-questionF ::= expression:e1 QUESTION_COLON:p expression:e2 {: RESULT=new QuestionF($p.line, $p.column, e1, e2); :};
-question ::= expression:e1 QUESTION:p expression:e2 COLON expression:e3 {: RESULT=new Question($p.line, $p.column, e1, e2, e3); :};
+questionT ::= expression:e1 QUESTION:p expression:e2 {: RESULT=new QuestionT($p.line, $p.column, e1, e2, getTemplate()); :};
+questionF ::= expression:e1 QUESTION_COLON:p expression:e2 {: RESULT=new QuestionF($p.line, $p.column, e1, e2, getTemplate()); :};
+question ::= expression:e1 QUESTION:p expression:e2 COLON expression:e3 {: RESULT=new Question($p.line, $p.column, e1, e2, e3, getTemplate()); :};
 
-call ::= expression:e DOT nature:n {: RESULT=new Invoke($e.line, $e.column, e).add(n); :}
+call ::= expression:e DOT nature:n {: RESULT=new Invoke($e.line, $e.column, e, getTemplate()).add(n); :}
     | call:c DOT nature:n {: RESULT=c.add(n); :};
 
-nature ::= LABEL:a {: RESULT=new Nature($a.line, $a.column, true, a); :}
-    | LABEL:a PRN_LEFT PRN_RIGHT {: RESULT=new Nature($a.line, $a.column, false, a); :}
-    | LABEL:a PRN_LEFT params:ps PRN_RIGHT {: RESULT=new Nature($a.line, $a.column, false, a).add(ps); :};
+nature ::= LABEL:a {: RESULT=new Nature($a.line, $a.column, Nature.FIELD, a, getTemplate()); :}
+    | LABEL:a PRN_LEFT PRN_RIGHT {: RESULT=new Nature($a.line, $a.column, Nature.METHOD, a, getTemplate()); :}
+    | LABEL:a PRN_LEFT params:ps PRN_RIGHT {: RESULT=new Nature($a.line, $a.column, Nature.METHOD, a, getTemplate()).add(ps); :};
 
 params ::= expression:e {: List<AbstractExpression> ps=new ArrayList<AbstractExpression>(); ps.add(e); RESULT=ps; :}
     | params:ps COMMA expression:e {: ps.add(e); RESULT=ps; :};
@@ -275,41 +312,41 @@ figures ::= or:a {: RESULT=a; :}
     | pow:a {: RESULT=a; :}
     | merge:a {: RESULT=a; :};
 
-and ::= expression:e1 LGC_AND:p expression:e2 {: RESULT = new LgcAnd($p.line, $p.column, e1, e2); :};
-or ::= expression:e1 LGC_OR:p expression:e2 {: RESULT = new LgcOr($p.line, $p.column, e1, e2); :};
-not ::= LGC_NOT:p expression:e {: RESULT = new LgcNot($p.line, $p.column, e); :};
+and ::= expression:e1 LGC_AND:p expression:e2 {: RESULT = new LgcAnd($p.line, $p.column, e1, e2, getTemplate()); :};
+or ::= expression:e1 LGC_OR:p expression:e2 {: RESULT = new LgcOr($p.line, $p.column, e1, e2, getTemplate()); :};
+not ::= LGC_NOT:p expression:e {: RESULT = new LgcNot($p.line, $p.column, e, getTemplate()); :};
 
-clt ::= expression:e1 LGC_CLT:p expression:e2 {: RESULT = new LgcTlt($p.line, $p.column, e1, e2); :};
-cgt ::= expression:e1 LGC_CGT:p expression:e2 {: RESULT = new LgcTgt($p.line, $p.column, e1, e2); :};
-cle ::= expression:e1 LGC_CLE:p expression:e2 {: RESULT = new LgcTle($p.line, $p.column, e1, e2); :};
-cge ::= expression:e1 LGC_CGE:p expression:e2 {: RESULT = new LgcTge($p.line, $p.column, e1, e2); :};
-cee ::= expression:e1 LGC_CEE:p expression:e2 {: RESULT = new LgcTee($p.line, $p.column, e1, e2); :};
-cne ::= expression:e1 LGC_CNE:p expression:e2 {: RESULT = new LgcTne($p.line, $p.column, e1, e2); :};
+clt ::= expression:e1 LGC_CLT:p expression:e2 {: RESULT = new LgcTlt($p.line, $p.column, e1, e2, getTemplate()); :};
+cgt ::= expression:e1 LGC_CGT:p expression:e2 {: RESULT = new LgcTgt($p.line, $p.column, e1, e2, getTemplate()); :};
+cle ::= expression:e1 LGC_CLE:p expression:e2 {: RESULT = new LgcTle($p.line, $p.column, e1, e2, getTemplate()); :};
+cge ::= expression:e1 LGC_CGE:p expression:e2 {: RESULT = new LgcTge($p.line, $p.column, e1, e2, getTemplate()); :};
+cee ::= expression:e1 LGC_CEE:p expression:e2 {: RESULT = new LgcTee($p.line, $p.column, e1, e2, getTemplate()); :};
+cne ::= expression:e1 LGC_CNE:p expression:e2 {: RESULT = new LgcTne($p.line, $p.column, e1, e2, getTemplate()); :};
 
-add ::= expression:e1 NUM_ADD:p expression:e2 {: RESULT = new NumAdd($p.line, $p.column, e1, e2); :};
-sub ::= expression:e1 NUM_SUB:p expression:e2 {: RESULT = new NumSub($p.line, $p.column, e1, e2); :};
-mul ::= expression:e1 NUM_MUL:p expression:e2 {: RESULT = new NumMul($p.line, $p.column, e1, e2); :};
-div ::= expression:e1 NUM_DIV:p expression:e2 {: RESULT = new NumDiv($p.line, $p.column, e1, e2); :};
-mod ::= expression:e1 NUM_MOD:p expression:e2 {: RESULT = new NumMod($p.line, $p.column, e1, e2); :};
-ngt ::= NUM_SUB:p expression:e {: RESULT = new NumNgt($p.line, $p.column, e); :} %prec NUM_NGT;
-pow ::= NUM_POW:p PRN_LEFT expression:e1 COMMA expression:e2 PRN_RIGHT {: RESULT = new NumPow($p.line, $p.column, e1, e2); :};
+add ::= expression:e1 NUM_ADD:p expression:e2 {: RESULT = new NumAdd($p.line, $p.column, e1, e2, getTemplate()); :};
+sub ::= expression:e1 NUM_SUB:p expression:e2 {: RESULT = new NumSub($p.line, $p.column, e1, e2, getTemplate()); :};
+mul ::= expression:e1 NUM_MUL:p expression:e2 {: RESULT = new NumMul($p.line, $p.column, e1, e2, getTemplate()); :};
+div ::= expression:e1 NUM_DIV:p expression:e2 {: RESULT = new NumDiv($p.line, $p.column, e1, e2, getTemplate()); :};
+mod ::= expression:e1 NUM_MOD:p expression:e2 {: RESULT = new NumMod($p.line, $p.column, e1, e2, getTemplate()); :};
+ngt ::= NUM_SUB:p expression:e {: RESULT = new NumNgt($p.line, $p.column, e, getTemplate()); :} %prec NUM_NGT;
+pow ::= NUM_POW:p PRN_LEFT expression:e1 COMMA expression:e2 PRN_RIGHT {: RESULT = new NumPow($p.line, $p.column, e1, e2, getTemplate()); :};
 
-bit_and ::= expression:e1 BIT_AND:p expression:e2 {: RESULT = new BitAnd($p.line, $p.column, e1, e2); :};
-bit_or ::= expression:e1 BIT_OR:p expression:e2 {: RESULT = new BitOr($p.line, $p.column, e1, e2); :};
-bit_xor ::= expression:e1 BIT_XOR:p expression:e2 {: RESULT = new BitXor($p.line, $p.column, e1, e2); :};
-bit_lm ::= expression:e1 BIT_LM:p expression:e2 {: RESULT = new BitLm($p.line, $p.column, e1, e2); :};
-bit_rm ::= expression:e1 BIT_RM:p expression:e2 {: RESULT = new BitRm($p.line, $p.column, e1, e2); :};
-bit_zrm ::= expression:e1 BIT_ZRM:p expression:e2 {: RESULT = new BitZrm($p.line, $p.column, e1, e2); :};
-bit_not ::= BIT_NOT:p expression:e {: RESULT = new BitNot($p.line, $p.column, e); :};
+bit_and ::= expression:e1 BIT_AND:p expression:e2 {: RESULT = new BitAnd($p.line, $p.column, e1, e2, getTemplate()); :};
+bit_or ::= expression:e1 BIT_OR:p expression:e2 {: RESULT = new BitOr($p.line, $p.column, e1, e2, getTemplate()); :};
+bit_xor ::= expression:e1 BIT_XOR:p expression:e2 {: RESULT = new BitXor($p.line, $p.column, e1, e2, getTemplate()); :};
+bit_lm ::= expression:e1 BIT_LM:p expression:e2 {: RESULT = new BitLm($p.line, $p.column, e1, e2, getTemplate()); :};
+bit_rm ::= expression:e1 BIT_RM:p expression:e2 {: RESULT = new BitRm($p.line, $p.column, e1, e2, getTemplate()); :};
+bit_zrm ::= expression:e1 BIT_ZRM:p expression:e2 {: RESULT = new BitZrm($p.line, $p.column, e1, e2, getTemplate()); :};
+bit_not ::= BIT_NOT:p expression:e {: RESULT = new BitNot($p.line, $p.column, e, getTemplate()); :};
 
-add1 ::= NUM_ADD1:p LABEL:v {: RESULT = new NumAdd1($p.line, $p.column, v, true); :}
-    | LABEL:v NUM_ADD1:p {: RESULT = new NumAdd1($p.line, $p.column, v, false); :};
-sub1 ::= NUM_SUB1:p LABEL:v {: RESULT = new NumSub1($p.line, $p.column, v, true); :}
-    | LABEL:v NUM_SUB1:p {: RESULT = new NumSub1($p.line, $p.column, v, false); :};
+add1 ::= NUM_ADD1:p LABEL:v {: RESULT = new NumAdd1($p.line, $p.column, v, true, getTemplate()); :}
+    | LABEL:v NUM_ADD1:p {: RESULT = new NumAdd1($p.line, $p.column, v, false, getTemplate()); :};
+sub1 ::= NUM_SUB1:p LABEL:v {: RESULT = new NumSub1($p.line, $p.column, v, true, getTemplate()); :}
+    | LABEL:v NUM_SUB1:p {: RESULT = new NumSub1($p.line, $p.column, v, false, getTemplate()); :};
 
 merge ::= merge_item:a PRN_RIGHT{: RESULT = a; :};
 merge_item ::= merge_item:a COMMA expression:e {: RESULT = a.add(e); :}
-    | MERGE:p PRN_LEFT expression:e {: RESULT=new Merge($p.line, $p.column).add(e); :};
+    | MERGE:p PRN_LEFT expression:e {: RESULT=new Merge($p.line, $p.column, getTemplate()).add(e); :};
 
 assigns ::= and_assign:a {: RESULT=a; :}
     | or_assign:a {: RESULT=a; :}
@@ -325,45 +362,45 @@ assigns ::= and_assign:a {: RESULT=a; :}
     | bit_rm_assign:a {: RESULT=a; :}
     | bit_zrm_assign:a {: RESULT=a; :};
 
-assign ::= LABEL:v ASSIGN:p expression:e {: RESULT = new NormalAssign($p.line, $p.column, v, e); :};
+assign ::= LABEL:v ASSIGN:p expression:e {: RESULT = new NormalAssign($p.line, $p.column, v, e, getTemplate()); :};
 
-and_assign ::= LABEL:v LGC_AND_ASSIGN:p expression:e {: RESULT = new LgcAndAssign($p.line, $p.column, v, e); :};
-or_assign ::= LABEL:v LGC_OR_ASSIGN:p expression:e {: RESULT = new LgcOrAssign($p.line, $p.column, v, e); :};
+and_assign ::= LABEL:v LGC_AND_ASSIGN:p expression:e {: RESULT = new LgcAndAssign($p.line, $p.column, v, e, getTemplate()); :};
+or_assign ::= LABEL:v LGC_OR_ASSIGN:p expression:e {: RESULT = new LgcOrAssign($p.line, $p.column, v, e, getTemplate()); :};
 
-add_assign ::= LABEL:v NUM_ADD_ASSIGN:p expression:e {: RESULT = new NumAddAssign($p.line, $p.column, v, e); :};
-sub_assign ::= LABEL:v NUM_SUB_ASSIGN:p expression:e {: RESULT = new NumSubAssign($p.line, $p.column, v, e); :};
-mul_assign ::= LABEL:v NUM_MUL_ASSIGN:p expression:e {: RESULT = new NumMulAssign($p.line, $p.column, v, e); :};
-div_assign ::= LABEL:v NUM_DIV_ASSIGN:p expression:e {: RESULT = new NumDivAssign($p.line, $p.column, v, e); :};
-mod_assign ::= LABEL:v NUM_MOD_ASSIGN:p expression:e {: RESULT = new NumModAssign($p.line, $p.column, v, e); :};
+add_assign ::= LABEL:v NUM_ADD_ASSIGN:p expression:e {: RESULT = new NumAddAssign($p.line, $p.column, v, e, getTemplate()); :};
+sub_assign ::= LABEL:v NUM_SUB_ASSIGN:p expression:e {: RESULT = new NumSubAssign($p.line, $p.column, v, e, getTemplate()); :};
+mul_assign ::= LABEL:v NUM_MUL_ASSIGN:p expression:e {: RESULT = new NumMulAssign($p.line, $p.column, v, e, getTemplate()); :};
+div_assign ::= LABEL:v NUM_DIV_ASSIGN:p expression:e {: RESULT = new NumDivAssign($p.line, $p.column, v, e, getTemplate()); :};
+mod_assign ::= LABEL:v NUM_MOD_ASSIGN:p expression:e {: RESULT = new NumModAssign($p.line, $p.column, v, e, getTemplate()); :};
 
-bit_and_assign ::= LABEL:v BIT_AND_ASSIGN:p expression:e {: RESULT = new BitAndAssign($p.line, $p.column, v, e); :};
-bit_or_assign ::= LABEL:v BIT_OR_ASSIGN:p expression:e {: RESULT = new BitOrAssign($p.line, $p.column, v, e); :};
-bit_xor_assign ::= LABEL:v BIT_XOR_ASSIGN:p expression:e {: RESULT = new BitXorAssign($p.line, $p.column, v, e); :};
-bit_lm_assign ::= LABEL:v BIT_LM_ASSIGN:p expression:e {: RESULT = new BitLmAssign($p.line, $p.column, v, e); :};
-bit_rm_assign ::= LABEL:v BIT_RM_ASSIGN:p expression:e {: RESULT = new BitRmAssign($p.line, $p.column, v, e); :};
-bit_zrm_assign ::= LABEL:v BIT_ZRM_ASSIGN:p expression:e {: RESULT = new BitZrmAssign($p.line, $p.column, v, e); :};
+bit_and_assign ::= LABEL:v BIT_AND_ASSIGN:p expression:e {: RESULT = new BitAndAssign($p.line, $p.column, v, e, getTemplate()); :};
+bit_or_assign ::= LABEL:v BIT_OR_ASSIGN:p expression:e {: RESULT = new BitOrAssign($p.line, $p.column, v, e, getTemplate()); :};
+bit_xor_assign ::= LABEL:v BIT_XOR_ASSIGN:p expression:e {: RESULT = new BitXorAssign($p.line, $p.column, v, e, getTemplate()); :};
+bit_lm_assign ::= LABEL:v BIT_LM_ASSIGN:p expression:e {: RESULT = new BitLmAssign($p.line, $p.column, v, e, getTemplate()); :};
+bit_rm_assign ::= LABEL:v BIT_RM_ASSIGN:p expression:e {: RESULT = new BitRmAssign($p.line, $p.column, v, e, getTemplate()); :};
+bit_zrm_assign ::= LABEL:v BIT_ZRM_ASSIGN:p expression:e {: RESULT = new BitZrmAssign($p.line, $p.column, v, e, getTemplate()); :};
 
-structures ::= NULL:a {: RESULT = new Value($a.line, $a.column, null); :}
-	| BOOL:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| BYTE:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| SHORT:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| INTEGER:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| LONG:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| FLOAT:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| DOUBLE:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| CHARS:a {: RESULT = new Value($a.line, $a.column, a); :}
-	| LABEL:a {: RESULT = new Label($a.line, $a.column, a); :}
+structures ::= NULL:a {: RESULT = new Value($a.line, $a.column, null, getTemplate()); :}
+	| BOOL:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| BYTE:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| SHORT:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| INTEGER:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| LONG:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| FLOAT:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| DOUBLE:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| CHARS:a {: RESULT = new Value($a.line, $a.column, a, getTemplate()); :}
+	| LABEL:a {: RESULT = new Label($a.line, $a.column, a, getTemplate()); :}
 	| rank:a {: RESULT = a; :}
 	| hash:a {: RESULT = a; :};
 
 rank ::= rank_item:a BRK_RIGHT {: RESULT=a; :}
-    | BRK_LEFT:a BRK_RIGHT {: RESULT=new Rank($a.line, $a.column); :};
+    | BRK_LEFT:a BRK_RIGHT {: RESULT=new Rank($a.line, $a.column, getTemplate()); :};
 
-rank_item ::= BRK_LEFT:a expression:b {: RESULT=new Rank($a.line, $a.column).add(b); :}
+rank_item ::= BRK_LEFT:a expression:b {: RESULT=new Rank($a.line, $a.column, getTemplate()).add(b); :}
     | rank_item:a COMMA expression:b {: RESULT=a.add(b); :};
 
 hash ::= hash_item:a BRC_RIGHT {: RESULT=a; :}
-    | BRC_LEFT:a BRC_RIGHT {: RESULT=new Hash($a.line, $a.column); :};
+    | BRC_LEFT:a BRC_RIGHT {: RESULT=new Hash($a.line, $a.column, getTemplate()); :};
 
-hash_item ::= BRC_LEFT:a expression:b COLON expression:c {: RESULT=new Hash($a.line, $a.column).add(b,c); :}
+hash_item ::= BRC_LEFT:a expression:b COLON expression:c {: RESULT=new Hash($a.line, $a.column, getTemplate()).add(b,c); :}
     | hash_item:a COMMA expression:b COLON expression:c {: RESULT=a.add(b,c); :};

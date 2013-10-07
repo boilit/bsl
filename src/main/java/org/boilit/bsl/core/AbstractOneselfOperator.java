@@ -1,6 +1,9 @@
 package org.boilit.bsl.core;
 
-import org.boilit.bsl.exception.ExecuteException;
+import org.boilit.bsl.Context;
+import org.boilit.bsl.Detection;
+import org.boilit.bsl.ITemplate;
+import org.boilit.bsl.exception.DetectException;
 
 /**
  * @author Boilit
@@ -9,30 +12,34 @@ import org.boilit.bsl.exception.ExecuteException;
 public abstract class AbstractOneselfOperator extends AbstractOperator {
     private final String label;
     private final boolean previous;
-    private int labelIndex = -1;
+    private int labelMark = -1;
 
-    public AbstractOneselfOperator(final int line, final int column, final String label, final boolean previous) {
-        super(line, column);
+    public AbstractOneselfOperator(final int line, final int column, final String label,
+                                   final boolean previous, final ITemplate template) {
+        super(line, column, template);
         this.label = label;
         this.previous = previous;
     }
 
     @Override
-    public final Object execute(final ExecuteContext context) throws Exception {
-        int labelIndex = this.labelIndex;
-        if (labelIndex == -1) {
-            labelIndex = context.getVariableIndex(label);
-            if (labelIndex == -1) {
-                throw new ExecuteException(this, "Label[" + label + "] hasn't defined!");
-            }
-            this.labelIndex = labelIndex;
+    public final AbstractOneselfOperator detect() throws Exception {
+        final Detection detection = this.getTemplate().getDetection();
+        labelMark = detection.getVarIndex(label);
+        if(labelMark == -1) {
+            throw new DetectException(this, "Label[" + label + "] hasn't defined!");
         }
+        return this;
+    }
+
+    @Override
+    public final Object execute(final Context context) throws Exception {
         final boolean previous = this.previous;
+        final int labelMark = this.labelMark;
         if (previous) {
-            return context.setVariable(labelIndex, this.executeFragment(context.getVariable(labelIndex)));
+            return context.setVariable(label, labelMark, this.executeFragment(context.getVariable(labelMark)));
         } else {
-            final Object value = context.getVariable(labelIndex);
-            context.setVariable(labelIndex, this.executeFragment(value));
+            final Object value = context.getVariable(labelMark);
+            context.setVariable(label, labelMark, this.executeFragment(value));
             return value;
         }
     }

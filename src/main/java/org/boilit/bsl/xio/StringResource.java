@@ -3,6 +3,7 @@ package org.boilit.bsl.xio;
 import org.boilit.bsl.exception.ScriptException;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Map;
  * @see
  */
 public final class StringResource extends AbstractResource {
-    private Map<String, String> resources;
+    private Map<String, String> resources = new HashMap<String, String>();
 
     @Override
     public final Reader openReader() throws Exception {
@@ -26,9 +27,5 @@ public final class StringResource extends AbstractResource {
 
     public final Map<String, String> getResources() {
         return resources;
-    }
-
-    public final void setResources(Map<String, String> resources) {
-        this.resources = resources;
     }
 }
