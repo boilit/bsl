@@ -1,8 +1,9 @@
-﻿<!DOCTYPE HTML>
+﻿
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>BSL - 高性能Java模板引擎</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="keywords" content="BSL,Java,模板引擎,高性能,开源"/>
     <meta name="description" content="BSL,Java,模板引擎,高性能,开源"/>
     <link rel="shortcut icon" href="favicon.ico"/>
@@ -40,16 +41,20 @@
     <div class="body">
         <div id="right" class="right">
             <div class="note">
-                当前版本：1.2.0<br/>
-                发布时间：2013-10-02<br/>
-                下载软件：<a href="../../releases/bsl-1.2.0.jar">JAR</a>
-                    <a href="../../releases/bsl-1.2.0-src.zip">SRC</a><br/>
+                开发语言：Java<br/>
+                软件大小：259K<br/>
+                授权协议：MIT<br/>
+                当前版本：2.0.0<br/>
+                发布时间：2013-10-08<br/>
+                下载软件：<a href="../../releases/bsl-2.0.0.jar">JAR</a>
+                    <a href="../../releases/bsl-2.0.0-src.zip">SRC</a><br/>
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
             <div class="location">当前位置：模板引入及布局</div><div class="link">﻿<pre style="line-height: 20px;">
 <a href="hold.html">&gt;&gt;&gt;占位符及转义</a>
 <a href="keys.html">&gt;&gt;&gt;关键字及注释</a>
+<a href="args.html">&gt;&gt;&gt;参数声明</a>
 <a href="vars.html">&gt;&gt;&gt;变量定义</a>
 <a href="exps.html">&gt;&gt;&gt;表达式运算</a>
 <a href="loop.html">&gt;&gt;&gt;循环及中断</a>
@@ -57,31 +62,45 @@
 <a href="access.html">&gt;&gt;&gt;属性及方法调用</a>
 <a href="output.html">&gt;&gt;&gt;格式及安全输出</a>
 <a href="format.html">&gt;&gt;&gt;输出格式化扩展</a>
+<a href="frgs.html">&gt;&gt;&gt;片段定义及调用</a>
 <a href="include.html">&gt;&gt;&gt;模板引入及布局</a>
 </pre></div>
             <div style="clear: both;">&nbsp;</div>
         </div>
-        <div id="text" class="text" style="width: 100;"><div class="subject">示例代码：</div>
+        <div id="text" class="text" style="width: 100;">
+<div class="subject">示例代码：</div>
 <pre class="prettyprint language-js linenums">
 &lt;!--[
     // 一参数include，参数为表达式，直接指定了模板，可以是相对路径，被include模板无参数传入
     include("../xxx.html");
-
     include(表达式结果作为路径);
 
     // 两参数include，参数为表达式，结果为要引入的模板路径，可以是相对路径，
     // 参数二是附加的表达式格式的参数，如果表达式运算结果不是Map类型则抛出异常；
     include(expression, {'a':'value'});
-
     include(expression, 运算结果为Map类型的表达式作为被引入模板的参数);
+
+    /*
+    通过include关键字来调用其它模板定义的片段，规则同上，下方是使用的字符串，当然也可以是表达式运算的结果；
+    引用其它模板的片段时，第一个参数是被引用的模板路径（同上方一样），后拼接#、模板片段名称，合起来作为片段路径；
+    而第二个参数则作为向该模板片段传递的参数；
+    */
+    // 调用xxxx.html模板内名称为fragment的模板片段，无参数
+    include('xxxx.html#fragment');
+    // 调用xxxx.html模板内名称为fragment的模板片段并直接传参
+    include('xxxx.html#fragment', {'value':'value'});
+    // 调用xxxx.html模板内名称为fragment的模板片段并使用表达式作为模板片段参数，表达式结果需是map类型
+    var param={'value': 'value'};
+    include('xxxx.html#fragment', param);
 ]--&gt;
 </pre>
 <div class="subject">注意事项：</div>
 <pre>
     1、引入模板时可以使用一参数或二参数的include指令，被引入模板的参数由include指定的第二个参数指定；
-    2、使用引入模板可以完成复杂的布局，即将需要制作的布局切割成小的模板文件，通过include进行整合；
+    2、使用引入模板可以完成复杂的布局，即将需要制作的布局切割成小的模板文件或模板片段，通过include进行整合；
     3、支持include嵌套，即include的模板里可以继续include其它模板；
-    4、利用强大的include指令可以构建出许多富有创造性的组件，例如我们可以构建Web组件库；
+    4、使用include及模板片段可以模拟出模板继承的功能；
+    5、利用强大的include指令可以构建出许多富有创造性的组件，例如我们可以构建Web组件库；
 </pre></div>
         <div style="clear: both;">&nbsp;</div>
     </div>

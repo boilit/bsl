@@ -51,39 +51,55 @@
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
-            <div class="location">当前位置：JDK1.6 GBK</div><div class="link">﻿<pre style="line-height: 20px;">
-<a href="jdk7utf8.html">&gt;&gt;&gt;JDK1.7 UTF-8</a>
-<a href="jdk7gbk.html">&gt;&gt;&gt;JDK1.7 GBK</a>
-<a href="jdk6utf8.html">&gt;&gt;&gt;JDK1.6 UTF-8</a>
-<a href="jdk6gbk.html">&gt;&gt;&gt;JDK1.6 GBK</a>
+            <div class="location">当前位置：参数声明</div><div class="link">﻿<pre style="line-height: 20px;">
+<a href="hold.html">&gt;&gt;&gt;占位符及转义</a>
+<a href="keys.html">&gt;&gt;&gt;关键字及注释</a>
+<a href="args.html">&gt;&gt;&gt;参数声明</a>
+<a href="vars.html">&gt;&gt;&gt;变量定义</a>
+<a href="exps.html">&gt;&gt;&gt;表达式运算</a>
+<a href="loop.html">&gt;&gt;&gt;循环及中断</a>
+<a href="branch.html">&gt;&gt;&gt;多路分支</a>
+<a href="access.html">&gt;&gt;&gt;属性及方法调用</a>
+<a href="output.html">&gt;&gt;&gt;格式及安全输出</a>
+<a href="format.html">&gt;&gt;&gt;输出格式化扩展</a>
+<a href="frgs.html">&gt;&gt;&gt;片段定义及调用</a>
+<a href="include.html">&gt;&gt;&gt;模板引入及布局</a>
 </pre></div>
             <div style="clear: both;">&nbsp;</div>
         </div>
         <div id="text" class="text" style="width: 100;">
 <div class="subject">示例代码：</div>
-<pre class="prettyprint language-html linenums">
-JDK1.6上GBK输出编码下各模板引擎性能测试结果
-===============================================================================
-OsName:Windows 7, OsVersion:6.1, OsArch:amd64, CpuCore:4
-JreVersion:1.6.0_45, MaxMem:1795M, FreeMem:119M, UsedMem:1M
-JvmMode:DEFAULT, OutputEncoding:GBK, OutputMode:BYTES
-Items:20, WarmCount:10, LoopCount:10000, Buffered:false
-===============================================================================
-Engine              Version             Time(ms)  Size(b)   Tps       Rate(%)
-StringBuilder       jdk1.6.0_45         981       6731      10193     100.00
-Bsl                 1.1.0               783       6801      12771     125.29
-Httl                1.0.11              1175      6803      8510      83.49
-Webit               1.1.3               1005      7349      9950      97.61
-Beetl               1.25.01             1166      6805      8576      84.13
-Velocity            1.7                 2312      7496      4325      42.43
-FreeMarker          2.3.19              2870      6807      3484      34.18
-===============================================================================
+<pre class="prettyprint language-js linenums">
+&lt;!--[
+    /* 类似JavaScript的弱类型声明方式，也可以一次性声明义多个 */
+
+    // 声明一个名称为name模板参数
+    arg name;
+
+    // 声明一个名称为key、一个名称为value模板参数
+    arg key, value;
+]--&gt;
+&lt;!--[
+    // 定义一个名称为fragment的模板片段
+    #fragment {
+        /* 类似JavaScript的弱类型声明方式，也可以一次性声明义多个 */
+
+        // 声明一个名称为name片段参数
+        arg name;
+
+        // 声明一个名称为key、一个名称为value片段参数
+        arg key, value;
+        // 其它语句......
+    }
+]--&gt;
 </pre>
-<div class="subject">测试说明：</div>
+<div class="subject">注意事项：</div>
 <pre>
-    目前网络上的模板引擎测试基本上都是非独立JVM测试的，这样做后测试的引擎性能会较高，与实际性能相比有较大偏差，
-    因此本测试对每个引擎都使用独立JVM测试，保证了各个引擎间环境的公平性；
-    基准测试使用的方式是对每款引擎进行独立JVM测试，具体方式参考<a href="https://github.com/boilit/ebm">基准测试项目</a>；
+    1、支持模板参数和模板片段参数的声明；
+       如果模板或模板片段需要外部数据模型中的数据，则必须使用arg指令声明参数，这样才能传入外部数据；
+    2、默认arg指令可以在任何地方使用，但请尽量在模板或模板片段开始处使用，这样声明的参数一目了然；
+    3、使用arg指令是强制的编码规范，强制进行变量声明，这样可以使后来接手该程序的程序员非常清晰地了解参数情况，
+       如此可以增强代码的易读性，可传承性以及编码规范性；
 </pre></div>
         <div style="clear: both;">&nbsp;</div>
     </div>

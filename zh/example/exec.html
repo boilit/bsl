@@ -1,8 +1,9 @@
-﻿<!DOCTYPE HTML>
+﻿
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>BSL - 高性能Java模板引擎</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="keywords" content="BSL,Java,模板引擎,高性能,开源"/>
     <meta name="description" content="BSL,Java,模板引擎,高性能,开源"/>
     <link rel="shortcut icon" href="favicon.ico"/>
@@ -40,10 +41,13 @@
     <div class="body">
         <div id="right" class="right">
             <div class="note">
-                当前版本：1.2.0<br/>
-                发布时间：2013-10-02<br/>
-                下载软件：<a href="../../releases/bsl-1.2.0.jar">JAR</a>
-                    <a href="../../releases/bsl-1.2.0-src.zip">SRC</a><br/>
+                开发语言：Java<br/>
+                软件大小：259K<br/>
+                授权协议：MIT<br/>
+                当前版本：2.0.0<br/>
+                发布时间：2013-10-08<br/>
+                下载软件：<a href="../../releases/bsl-2.0.0.jar">JAR</a>
+                    <a href="../../releases/bsl-2.0.0-src.zip">SRC</a><br/>
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
@@ -54,11 +58,13 @@
 </pre></div>
             <div style="clear: both;">&nbsp;</div>
         </div>
-        <div id="text" class="text" style="width: 100;"><div class="subject">示例代码：</div>
+        <div id="text" class="text" style="width: 100;">
+<div class="subject">示例代码：</div>
 <pre class="prettyprint language-java linenums">
 package test;
 
 import org.boilit.bsl.Engine;
+import org.boilit.bsl.IEngine;
 import org.boilit.bsl.xio.FileResourceLoader;
 import org.boilit.bsl.xtc.EmptyCompressor;
 import org.boilit.logger.DefaultLogger;
@@ -73,10 +79,10 @@ public class BslTest {
 
         List&lt;Stock&gt; items = Stock.dummyItems();
 
-        Engine engine = Engine.getEngine();
-        // Engine engine = new Engine();
-        // Engine engine = Engine.getEngine(inputStream);
-        // Engine engine = Engine.getEngine(properties);
+        IEngine engine = Engine.getEngine();
+        // IEngine engine = new Engine();
+        // IEngine engine = Engine.getEngine(inputStream);
+        // IEngine engine = Engine.getEngine(properties);
 
         // engine.setInputEncoding(null);
         // engine.setInputEncoding(System.getProperty("file.encoding"));
@@ -86,7 +92,8 @@ public class BslTest {
         engine.setSpecifiedEncoder(true);
         engine.setUseTemplateCache(true);
         engine.setResourceLoader(new FileResourceLoader());
-        engine.setTextProcessor(new DefaultTextProcessor());
+        engine.setTextProcessor(null);
+        engine.setBreakPointer(null);
         */
 
         Map&lt;String, Object&gt; model = new HashMap&lt;String, Object&gt;();
