@@ -7,6 +7,7 @@ import org.boilit.bsl.core.AbstractStatement;
 import org.boilit.bsl.core.IStatement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public final class FragDefine extends AbstractStatement {
     private final String label;
     private IStatement[] statements;
     private List<IStatement> children;
+
     public FragDefine(final int line, final int column, final String label, final ITemplate template) {
         super(line, column, template);
         this.label = label;
@@ -30,9 +32,10 @@ public final class FragDefine extends AbstractStatement {
 
     @Override
     public final FragDefine optimize() throws Exception {
-        if(children.size() == 0) {
+        if (children.size() == 0) {
             return null;
         }
+        Collections.reverse(children);
         statements = new IStatement[children.size()];
         children.toArray(statements);
         children.clear();
@@ -45,8 +48,8 @@ public final class FragDefine extends AbstractStatement {
         final Detection detection = this.getTemplate().getDetection();
         detection.occupy();
         final IStatement[] statements = this.statements;
-        for(int i=0, n=statements.length;i<n;i++) {
-            if(statements[i] != null) {
+        for (int i = statements.length - 1; i >= 0; i--) {
+            if (statements[i] != null) {
                 statements[i].detect();
             }
         }

@@ -7,6 +7,7 @@ import org.boilit.bsl.core.AbstractOperator;
 import org.boilit.bsl.Context;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,9 +33,9 @@ public final class Nature extends AbstractOperator {
 
     @Override
     public final Object execute(final Context context) throws Exception {
-        final int n=expressions.length;
-        final Object[] values = new Object[n];
-        for (int i=0; i<n; i++) {
+        final AbstractExpression[] expressions = this.expressions;
+        final Object[] values = new Object[expressions.length];
+        for (int i = expressions.length - 1; i >= 0; i--) {
             values[i] = expressions[i].execute(context);
         }
         return values;
@@ -42,6 +43,7 @@ public final class Nature extends AbstractOperator {
 
     @Override
     public final Nature optimize() throws Exception {
+        Collections.reverse(children);
         expressions = new AbstractExpression[children.size()];
         children.toArray(expressions);
         children.clear();
@@ -52,8 +54,8 @@ public final class Nature extends AbstractOperator {
     @Override
     public final AbstractExpression detect() throws Exception {
         final AbstractExpression[] expressions = this.expressions;
-        for(int i=0, n=expressions.length; i<n; i++) {
-            if(expressions[i] != null) {
+        for (int i = expressions.length - 1; i >= 0; i--) {
+            if (expressions[i] != null) {
                 expressions[i].detect();
             }
         }

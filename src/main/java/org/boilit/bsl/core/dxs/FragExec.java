@@ -29,14 +29,13 @@ public final class FragExec extends AbstractStatement {
     @Override
     public final Object execute(final Context context) throws Exception {
         final Fragment fragment = this.getTemplate().getTemplate().getFragments().get(label);
-        if(fragment == null) {
-            throw new ExecuteException(this, "Fragment["+label+"] was not existed!");
+        if (fragment == null) {
+            throw new ExecuteException(this, "Fragment[" + label + "] was not existed!");
         }
-        final Map arguments = expression==null?null:(Map) expression.execute(context);
+        final Map arguments = expression == null ? null : (Map) expression.execute(context);
         final Context fragContext = new Context(fragment.getDetection(), context.getPrinter(), arguments);
         final IStatement[] statements = fragment.getFragDefine().getStatements();
-        final int n = statements.length;
-        for (int i = 0; i < n; i++) {
+        for (int i = statements.length - 1; i >= 0; i--) {
             statements[i].execute(fragContext);
         }
         return null;
@@ -44,7 +43,7 @@ public final class FragExec extends AbstractStatement {
 
     @Override
     public final FragExec optimize() throws Exception {
-        if(expression != null) {
+        if (expression != null) {
             expression = expression.optimize();
         }
         return this;

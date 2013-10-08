@@ -9,9 +9,9 @@ import org.boilit.bsl.core.*;
  * @see
  */
 public final class Question extends AbstractOperator {
-    protected AbstractExpression expression1;
-    protected AbstractExpression expression2;
-    protected AbstractExpression expression3;
+    private AbstractExpression expression1;
+    private AbstractExpression expression2;
+    private AbstractExpression expression3;
 
     public Question(final int line, final int column,
                     final AbstractExpression expression1,

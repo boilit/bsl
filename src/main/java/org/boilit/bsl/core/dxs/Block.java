@@ -7,6 +7,7 @@ import org.boilit.bsl.Context;
 import org.boilit.bsl.core.IStatement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,8 +26,7 @@ public final class Block extends AbstractDirective {
     @Override
     public final Object execute(final Context context) throws Exception {
         final IStatement[] statements = this.statements;
-        final int n = statements.length;
-        for (int i = 0; i < n && context.isBlockGoon(); i++) {
+        for (int i = statements.length - 1; i >= 0 && context.isBlockGoon(); i--) {
             statements[i].execute(context);
         }
         return null;
@@ -34,9 +34,10 @@ public final class Block extends AbstractDirective {
 
     @Override
     public final Block optimize() throws Exception {
-        if(children.size() == 0) {
+        if (children.size() == 0) {
             return null;
         }
+        Collections.reverse(children);
         statements = new IStatement[children.size()];
         children.toArray(statements);
         children.clear();
@@ -49,8 +50,8 @@ public final class Block extends AbstractDirective {
         final Detection detection = this.getTemplate().getDetection();
         detection.occupy();
         final IStatement[] statements = this.statements;
-        for(int i=0, n=statements.length;i<n;i++) {
-            if(statements[i] != null) {
+        for (int i = statements.length - 1; i >= 0; i--) {
+            if (statements[i] != null) {
                 statements[i].detect();
             }
         }

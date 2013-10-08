@@ -16,7 +16,8 @@ public final class Break extends AbstractDirective {
 
     @Override
     public final Object execute(final Context context) throws Exception {
-        return context.setControl(Context.CONTROL_BREAK);
+        context.setControl(Context.CONTROL_BREAK);
+        return null;
     }
 
     @Override

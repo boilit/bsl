@@ -6,6 +6,7 @@ import org.boilit.bsl.Context;
 import org.boilit.bsl.Detection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +32,7 @@ public final class Arg extends AbstractDirective {
         if (children.size() == 0) {
             return null;
         }
+        Collections.reverse(children);
         labels = new String[children.size()];
         children.toArray(labels);
         children.clear();
@@ -42,7 +44,7 @@ public final class Arg extends AbstractDirective {
     public final Arg detect() throws Exception {
         final Detection detection = this.getTemplate().getDetection();
         final String[] labels = this.labels;
-        for (int i = 0, n = labels.length; i < n; i++) {
+        for (int i = labels.length - 1; i >= 0; i--) {
             detection.addArgument(labels[i]);
         }
         return this;

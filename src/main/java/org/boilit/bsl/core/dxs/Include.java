@@ -55,8 +55,7 @@ public final class Include extends AbstractDirective {
             }
             final Context fragContext = new Context(fragment.getDetection(), context.getPrinter(), arguments);
             final IStatement[] statements = fragment.getFragDefine().getStatements();
-            final int n = statements.length;
-            for (int i = 0; i < n; i++) {
+            for (int i = statements.length - 1; i >= 0; i--) {
                 statements[i].execute(fragContext);
             }
         }

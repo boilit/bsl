@@ -103,7 +103,7 @@ Float           = [0-9]+ ("." [0-9]+)? ([eE] [\+-]? [0-9]+)? [fF]
 Double          = [0-9]+ ("." [0-9]+)? ([eE] [\+-]? [0-9]+)? [dD]
 Label			= [$_a-zA-Z] [$_0-9a-zA-Z]*
 Blank	 		= {Line} | [ \t\f]
-Notes			= "/*" .* "*/" | "//" [^\r\n]* \r? \n
+Notes			= ("/*" [^*] ~"*/" | "/*" "*"+ "/") | ("//" [^\r\n]* \r? \n)
 
 CodeHead 		= "<!--["
 CodeTail 		= "]-->"
@@ -241,7 +241,7 @@ MatchHoldHead	= [\\]* {HoldHead}
 	    yybegin(STRING);
 	    reset();
 	}
-	
+
 	{Notes} { /* ignore */ }
  	{Blank} { /* ignore */ }
 

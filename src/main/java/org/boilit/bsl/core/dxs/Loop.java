@@ -40,6 +40,7 @@ public final class Loop extends AbstractDirective {
         final int labelMark = this.labelMark;
         final int indexMark = this.indexMark;
         while (iterator.hasNext() && context.isLoopGoon()) {
+            context.setControl(Context.CONTROL_GOON);
             context.setVariable(label, labelMark, iterator.next());
             context.setVariable(index, indexMark, count++);
             block.execute(context);

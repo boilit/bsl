@@ -39,7 +39,7 @@ public final class Context {
         String label;
         final int[] argIndexes = detection.getArgIndexes();
         final String[] arguments = detection.getArguments();
-        for (int i = 0; i < argSize; i++) {
+        for (int i = argSize - 1; i >= 0; i--) {
             label = arguments[i];
             if (!model.containsKey(label)) {
                 throw new ScriptException("Arg[" + label + "] was not exist in context model!");
@@ -49,9 +49,9 @@ public final class Context {
     }
 
     private final Object arrayDetect(final Object value) {
-        if(value == null) {
+        if (value == null) {
             return null;
-        } else if(value.getClass().isArray()) {
+        } else if (value.getClass().isArray()) {
             return ArrayWrapper.wrap((Object[]) value);
         } else {
             return value;
@@ -70,21 +70,25 @@ public final class Context {
         return control;
     }
 
-    public final int setControl(final int control) {
+    public final void setControl(final int control) {
+        this.control = control;
         switch (control) {
-            case CONTROL_NEXT:
+            case CONTROL_NEXT: {
                 loopGoon = true;
                 blockGoon = false;
                 break;
-            case CONTROL_BREAK:
+            }
+            case CONTROL_BREAK: {
                 loopGoon = false;
                 blockGoon = false;
                 break;
-            default:
+            }
+            case CONTROL_GOON: {
                 loopGoon = true;
                 blockGoon = true;
+                break;
+            }
         }
-        return this.control = control;
     }
 
     public final IPrinter getPrinter() {

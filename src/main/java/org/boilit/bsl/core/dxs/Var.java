@@ -8,6 +8,7 @@ import org.boilit.bsl.core.eao.NormalAssign;
 import org.boilit.bsl.exception.DetectException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,8 +29,7 @@ public final class Var extends AbstractDirective {
     public final Object execute(final Context context) throws Exception {
         final int[] variableMarks = this.variableMarks;
         final NormalAssign[] assigns = this.assigns;
-        final int n = assigns.length;
-        for (int i = 0; i < n; i++) {
+        for (int i = assigns.length - 1; i >= 0; i--) {
             context.setVariable(assigns[i].getLabel(), variableMarks[i], null);
             assigns[i].execute(context);
         }
@@ -41,6 +41,7 @@ public final class Var extends AbstractDirective {
         if (children.size() == 0) {
             return null;
         }
+        Collections.reverse(children);
         variableMarks = new int[children.size()];
         assigns = new NormalAssign[children.size()];
         children.toArray(assigns);
@@ -53,12 +54,12 @@ public final class Var extends AbstractDirective {
     public final Var detect() throws Exception {
         final Detection detection = this.getTemplate().getDetection();
         final NormalAssign[] assigns = this.assigns;
-        for (int i = 0, n = assigns.length; i < n; i++) {
+        for (int i = assigns.length - 1; i >= 0; i--) {
             if (assigns[i] == null) {
                 continue;
             }
             variableMarks[i] = detection.getVarIndex(assigns[i].getLabel());
-            if(variableMarks[i] != -1) {
+            if (variableMarks[i] != -1) {
                 throw new DetectException(this, "Label[" + assigns[i].getLabel() + "] duplicated defined!");
             }
             detection.addVariable(assigns[i].getLabel());

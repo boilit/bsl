@@ -27,6 +27,7 @@ public class HolderTest {
         loader.getResources().put("test/holder2.html", "<!--[ arg value; echo(value); ]-->");
         loader.getResources().put("test/holder3.html", "\\<!--[ ]--> \\${a} <!--[ echo('\\\\]-->'); ]-->");
         loader.getResources().put("test/holder4.html", "<!--[arg date, value; echo(date, 'yyyy-MM-dd HH:mm:ss'); echo('\n'); include('holder1.html', {'value': value.substring(1)});]-->");
+        loader.getResources().put("test/holder5.html", "<!--[ var a=10; loop(i:a){ loop(j:a){ echo('a='+i+'_'+j+';');if(i>5) {break;} if(j%2==0) {next;} echo(i+'_'+j); }}]-->");
 
         engine.getTemplate("test/holder0.html").execute(null, System.out);
         System.out.println();
@@ -45,5 +46,8 @@ public class HolderTest {
 
         model.put("date", new Date());
         engine.getTemplate("test/holder4.html").execute(model, System.out);
+        System.out.println();
+        System.out.println();
+        engine.getTemplate("test/holder5.html").execute(model, System.out);
     }
 }

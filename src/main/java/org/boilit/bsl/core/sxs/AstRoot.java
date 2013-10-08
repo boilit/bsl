@@ -7,6 +7,7 @@ import org.boilit.bsl.core.AbstractStatement;
 import org.boilit.bsl.core.IStatement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
 public final class AstRoot extends AbstractStatement {
     private IStatement[] statements;
     private List<IStatement> children;
+
     public AstRoot(final int line, final int column, final ITemplate template) {
         super(line, column, template);
         this.children = new ArrayList<IStatement>();
@@ -24,8 +26,7 @@ public final class AstRoot extends AbstractStatement {
     @Override
     public final Object execute(final Context context) throws Exception {
         final IStatement[] statements = this.statements;
-        final int n = statements.length;
-        for (int i = 0; i < n; i++) {
+        for (int i = statements.length - 1; i >= 0; i--) {
             statements[i].execute(context);
         }
         return null;
@@ -33,6 +34,7 @@ public final class AstRoot extends AbstractStatement {
 
     @Override
     public final AstRoot optimize() throws Exception {
+        Collections.reverse(children);
         statements = new IStatement[children.size()];
         children.toArray(statements);
         children.clear();
@@ -45,7 +47,7 @@ public final class AstRoot extends AbstractStatement {
         final Detection detection = this.getTemplate().getDetection();
         detection.occupy();
         final IStatement[] statements = this.statements;
-        for(int i=0, n=statements.length;i<n;i++) {
+        for (int i = statements.length - 1; i >= 0; i--) {
             statements[i].detect();
         }
         detection.revert();

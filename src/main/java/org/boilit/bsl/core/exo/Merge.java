@@ -5,6 +5,7 @@ import org.boilit.bsl.ITemplate;
 import org.boilit.bsl.core.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,8 +24,9 @@ public final class Merge extends AbstractOperator {
     @Override
     public final Object execute(final Context context) throws Exception {
         Object value;
+        final AbstractExpression[] expressions = this.expressions;
         final StringBuffer buffer = new StringBuffer();
-        for (int i = 0, n = expressions.length; i < n; i++) {
+        for (int i = expressions.length - 1; i >= 0; i--) {
             value = expressions[i].execute(context);
             buffer.append(Operation.toString(value));
         }
@@ -33,6 +35,7 @@ public final class Merge extends AbstractOperator {
 
     @Override
     public final AbstractExpression optimize() throws Exception {
+        Collections.reverse(children);
         expressions = new AbstractExpression[children.size()];
         children.toArray(expressions);
         children.clear();
@@ -43,8 +46,8 @@ public final class Merge extends AbstractOperator {
     @Override
     public final AbstractExpression detect() throws Exception {
         final AbstractExpression[] expressions = this.expressions;
-        for(int i=0, n=expressions.length; i<n; i++) {
-            if(expressions[i] != null) {
+        for (int i = expressions.length - 1; i >= 0; i--) {
+            if (expressions[i] != null) {
                 expressions[i].detect();
             }
         }

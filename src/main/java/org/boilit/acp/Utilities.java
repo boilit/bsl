@@ -127,7 +127,7 @@ public final class Utilities {
         }
         Class[] parameterTypes = null;
         final Method[] methods = clazz.getMethods();
-        for (int i = 0, m = methods.length; i < m; i++) {
+        for (int i = methods.length - 1; i >= 0; i--) {
             if (!methodName.equals(methods[i].getName())) {
                 continue;
             }
@@ -136,7 +136,7 @@ public final class Utilities {
                 continue;
             }
             boolean classMatch = true;
-            for (int j = 0, n = parameterTypes.length; j < n; j++) {
+            for (int j = parameterTypes.length - 1; j >= 0; j--) {
                 if (!classMatch(parameterTypes[j], parameters[j])) {
                     classMatch = false;
                     break;
@@ -161,7 +161,7 @@ public final class Utilities {
             return new Class[0];
         }
         final Class[] parameterTypes = new Class[parameters.length];
-        for (int i = 0, n = parameters.length; i < n; i++) {
+        for (int i = parameters.length - 1; i >= 0; i--) {
             if (parameters[i] == null) {
                 parameterTypes[i] = null;
             } else {

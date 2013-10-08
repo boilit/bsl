@@ -78,7 +78,7 @@ public final class Detection {
     public final int getVarIndex(final String variable) {
         final String[] variables = this.variables;
         for (int i = varSize - 1; i >= 0; i--) {
-            if (variables[i].equals(variable)) {
+            if (variable.equals(variables[i])) {
                 return i;
             }
         }

@@ -17,7 +17,8 @@ public final class Next extends AbstractDirective {
 
     @Override
     public final Object execute(final Context context) throws Exception {
-        return context.setControl(Context.CONTROL_NEXT);
+        context.setControl(Context.CONTROL_NEXT);
+        return null;
     }
 
     @Override

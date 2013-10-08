@@ -7,6 +7,7 @@ import org.boilit.bsl.core.*;
 import org.boilit.bsl.exception.ParseException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,16 +26,15 @@ public final class Branch extends AbstractDirective {
     @Override
     public final Object execute(final Context context) throws Exception {
         final IStatement[][] statements = this.statements;
-        final int n = statements.length - 1;
-        for (int i = 0; i < n; i++) {
+        for (int i = statements.length - 1; i > 0; i--) {
             if (Operation.toBool(statements[i][0].execute(context))) {
                 statements[i][1].execute(context);
                 return null;
             }
         }
         // else or last else if
-        if (statements[n][0] == null || Operation.toBool(statements[n][0].execute(context))) {
-            statements[n][1].execute(context);
+        if (statements[0][0] == null || Operation.toBool(statements[0][0].execute(context))) {
+            statements[0][1].execute(context);
         }
         return null;
     }
@@ -45,10 +45,11 @@ public final class Branch extends AbstractDirective {
             return null;
         } else if (children.size() == 1) {
             // if not exist but else is first
-            if(children.get(0)[0] == null) {
+            if (children.get(0)[0] == null) {
                 return null;
             }
         }
+        Collections.reverse(children);
         statements = new IStatement[children.size()][2];
         children.toArray(statements);
         children.clear();
@@ -60,11 +61,11 @@ public final class Branch extends AbstractDirective {
     public final AbstractDirective detect() throws Exception {
         final Detection detection = this.getTemplate().getDetection();
         final IStatement[][] statements = this.statements;
-        for(int i=0, n=statements.length;i<n;i++) {
-            if(statements[i][0] != null) {
+        for (int i = statements.length - 1; i >= 0; i--) {
+            if (statements[i][0] != null) {
                 statements[i][0].detect();
             }
-            if(statements[i][1] != null) {
+            if (statements[i][1] != null) {
                 detection.occupy();
                 statements[i][1].detect();
                 detection.revert();
