@@ -51,7 +51,7 @@
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
-            <div class="location">当前位置：占位符及转义</div><div class="link">﻿<pre style="line-height: 20px;">
+            <div class="location">当前位置：模板断点调试</div><div class="link">﻿<pre style="line-height: 20px;">
 <a href="hold.html">&gt;&gt;&gt;占位符及转义</a>
 <a href="keys.html">&gt;&gt;&gt;关键字及注释</a>
 <a href="args.html">&gt;&gt;&gt;参数声明</a>
@@ -71,37 +71,23 @@
         <div id="text" class="text" style="width: 100;">
 <div class="subject">示例代码：</div>
 <pre class="prettyprint language-js linenums">
-/* 占位符及转义 */
-
-// 使用 &lt;!--[ 作为代码段起始占位符
 &lt;!--[
-    // 语句 ...
-    echo(2+3*4);
-// 使用 ]--&gt; 作为代码段终止占位符
+    /* 在需要加入断点的地方加入bpw;指令，如下： */
+
+    loop(i:10){
+        bpw;
+        echo(i);
+    }
 ]--&gt;
-
-// 使用 ${ 作为文本段起始占位符
-// 使用 } 作为文本段结束占位符
-${item.price}
-
-/* 使用 \ 进行转义，奇数个 \ 字符将输出n/2个 \ 字符后并将后续字符转义，示例如下：*/
-
-// 单独输出需转义
-\&lt;!--[
-
-// 前面存在 &lt;!--[ 时输出 ]--&gt; 需转义
-\]--&gt;
-
-// 单独输出需转义
-\${
-
-// 前面存在 ${ 时输出 } 需转义
-\}
 </pre>
 <div class="subject">注意事项：</div>
 <pre>
-    1、合理使用代码段和文本段提高代码可读性；
-    2、合理使用转义字符转义需要输出的特殊字符；
+    1、实现IBreakPointer接口，可以空实现，在实现内加入IDE断点；将实现类配置到配置文件或通过API设置给引擎；
+    2、按上述代码在模板中需要设置断点的部分加入bpw;指令；
+    3、运行模板，当运行到bpw;指令时会切换到IBreakPointer实现类中设置的IDE断点处等待下一步操作；
+    4、上述三步可以完成断点的加入及监测，bpw;是代码级别的，比行级别调试更细致；
+    5、在IBreakPointer实现类中可以监视到Engine，Template，Context的所有运行时属性；
+    6、Engine包含了Engine的所有的配置情况等；Template包含了模板的语句片段等；Context包含了上下文变量等；
 </pre></div>
         <div style="clear: both;">&nbsp;</div>
     </div>
