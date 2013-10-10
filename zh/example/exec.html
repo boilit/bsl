@@ -42,12 +42,12 @@
         <div id="right" class="right">
             <div class="note">
                 开发语言：Java<br/>
-                软件大小：259K<br/>
+                软件大小：260K<br/>
                 授权协议：MIT<br/>
-                当前版本：2.0.0<br/>
-                发布时间：2013-10-08<br/>
-                下载软件：<a href="../../releases/bsl-2.0.0.jar">JAR</a>
-                    <a href="../../releases/bsl-2.0.0-src.zip">SRC</a><br/>
+                当前版本：2.0.1<br/>
+                发布时间：2013-10-10<br/>
+                下载软件：<a href="../../releases/bsl-2.0.1.jar">JAR</a>
+                    <a href="../../releases/bsl-2.0.1-src.zip">SRC</a><br/>
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
@@ -64,7 +64,6 @@
 package test;
 
 import org.boilit.bsl.Engine;
-import org.boilit.bsl.IEngine;
 import org.boilit.bsl.xio.FileResourceLoader;
 import org.boilit.bsl.xtc.EmptyCompressor;
 import org.boilit.logger.DefaultLogger;
@@ -79,10 +78,11 @@ public class BslTest {
 
         List&lt;Stock&gt; items = Stock.dummyItems();
 
-        IEngine engine = Engine.getEngine();
-        // IEngine engine = new Engine();
-        // IEngine engine = Engine.getEngine(inputStream);
-        // IEngine engine = Engine.getEngine(properties);
+        Engine engine = Engine.getEngine();
+        // Engine engine = new Engine();
+        // Engine engine = new Engine(classLoader);
+        // Engine engine = Engine.getEngine(classLoader, inputStream);
+        // Engine engine = Engine.getEngine(classLoader, properties);
 
         // engine.setInputEncoding(null);
         // engine.setInputEncoding(System.getProperty("file.encoding"));

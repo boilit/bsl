@@ -42,12 +42,12 @@
         <div id="right" class="right">
             <div class="note">
                 开发语言：Java<br/>
-                软件大小：259K<br/>
+                软件大小：260K<br/>
                 授权协议：MIT<br/>
-                当前版本：2.0.0<br/>
-                发布时间：2013-10-08<br/>
-                下载软件：<a href="../../releases/bsl-2.0.0.jar">JAR</a>
-                    <a href="../../releases/bsl-2.0.0-src.zip">SRC</a><br/>
+                当前版本：2.0.1<br/>
+                发布时间：2013-10-10<br/>
+                下载软件：<a href="../../releases/bsl-2.0.1.jar">JAR</a>
+                    <a href="../../releases/bsl-2.0.1-src.zip">SRC</a><br/>
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
@@ -62,11 +62,12 @@
 <div class="subject">示例代码：</div>
 <pre class="prettyprint language-java linenums">
     // 创建引擎实例
-    IEngine engine = Engine.getEngine();
+    Engine engine = Engine.getEngine();
     // 以下是其它实例化引擎的方法；
-    // IEngine engine = Engine.getEngine(inputStream);
-    // IEngine engine = Engine.getEngine(properties);
-    // IEngine engine = new Engine();
+    // Engine engine = Engine.getEngine(classLoader);
+    // Engine engine = Engine.getEngine(classLoader, inputStream);
+    // Engine engine = Engine.getEngine(classLoader, properties);
+    // Engine engine = new Engine();
     // 以下是修改各个参数的示例，下列参数使用的都是缺省值，所以在此注释掉了；
     // 设置模板输入编码，不指定则使用缺省值，缺省值为null
     // engine.setInputEncoding(null);
@@ -88,7 +89,7 @@
 <div class="subject">注意事项：</div>
 <pre>
     1、模板缓存一般在开发期可将该值设置为false，项目发布时改为true，开启缓存后模板只读取一次；
-       如在项目发布后需要使更改后的模板生效，则将缓存清理即可，需调用engine.clearTemplateCache方法；
+       如在项目发布后需要使更改后的模板生效，则将缓存清理即可，需调用engine.getTemplateCache().clear()方法；
     2、指定资源加载器，默认值为FileResourceLoader，更改需调用engine.setResourceLoader方法；
        资源加载器是用来加载模板资源的，目前支持File、ClassPath、URL等方式的资源加载，可扩展；
     3、指定静态文本处理器，DefaultTextProcessor，更改需调用engine.setTextProcessor方法；
