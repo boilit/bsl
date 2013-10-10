@@ -31,7 +31,7 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
 软件特性：请参考<a href="http://boilit.github.io/bsl">在线文档</a>
 在线文档：<a href="http://boilit.github.io/bsl">http://boilit.github.io/bsl</a>
 基准测试：<a href="https://github.com/boilit/ebm">https://github.com/boilit/ebm</a>
-下载地址: <a href="http://boilit.github.io/bsl/releases/bsl-2.0.0.jar">bsl-2.0.0.jar</a>
+下载地址: <a href="http://boilit.github.io/bsl/releases/bsl-2.0.1.jar">bsl-2.0.1.jar</a>
 交流QQ群：109365467
 
 软件作者：Boilit(于景洋)
