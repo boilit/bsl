@@ -1,6 +1,5 @@
 package test;
 
-import org.boilit.bsl.IEngine;
 import org.boilit.bsl.Engine;
 
 import java.io.ByteArrayOutputStream;

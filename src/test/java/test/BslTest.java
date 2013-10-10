@@ -1,7 +1,7 @@
 package test;
 
-import org.boilit.bsl.IEngine;
 import org.boilit.bsl.Engine;
+import org.boilit.bsl.xio.FileResourceLoader;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,14 +18,14 @@ public class BslTest {
 
         List<Stock> items = Stock.dummyItems();
 
-        IEngine engine = Engine.getEngine();
-//        engine.clearTemplateCache();
-//        engine.setInputEncoding(System.getProperty("file.encoding"));
-//        engine.setOutputEncoding("UTF-8");
-//        engine.setSpecifiedEncoder(true);
-//        engine.setUseTemplateCache(true);
-//        engine.setResourceLoader(new FileResourceLoader().setEncoding(engine.getInputEncoding()));
-//        engine.setTextProcessor(new DefaultTextProcessor());
+        Engine engine = Engine.getEngine();
+        engine.getTemplateCache().clear();
+        engine.setInputEncoding(System.getProperty("file.encoding"));
+        engine.setOutputEncoding("UTF-8");
+        engine.setSpecifiedEncoder(true);
+        engine.setUseTemplateCache(true);
+        engine.setResourceLoader(new FileResourceLoader().setEncoding(engine.getInputEncoding()));
+        engine.setTextProcessor(null);
         String[][] values = new String[][]{new String[]{"abcd"}, new String[]{"efgh"}};
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("date", new Date());
