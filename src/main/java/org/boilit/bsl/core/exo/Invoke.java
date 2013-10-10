@@ -35,25 +35,25 @@ public final class Invoke extends AbstractOperator {
                 return null;
             }
             if (value.getClass().isArray()) {
-                value = ArrayWrapper.wrap((Object[]) value);
+                value = new ArrayWrapper((Object[]) value);
             }
             if (!natures[i].acting) {
                 switch (natures[i].kind) {
                     case Nature.FIELD: {
-                        natures[i].proxy = ACP.proxyField(value.getClass(), natures[i].label);
+                        natures[i].proxy = ACP.proxyField(getTemplate().getClassLoader(),value.getClass(), natures[i].label);
                         break;
                     }
                     case Nature.METHOD: {
                         Object[] parameters = (Object[]) natures[i].execute(context);
-                        natures[i].proxy = ACP.proxyMethod(value.getClass(), natures[i].label, parameters);
+                        natures[i].proxy = ACP.proxyMethod(getTemplate().getClassLoader(),value.getClass(), natures[i].label, parameters);
                         break;
                     }
                 }
                 natures[i].acting = true;
             }
-            if (natures[i].proxy == null) {
-                throw new ExecuteException(natures[i], "Can't proxy[" + natures[i].label + "]!");
-            }
+//            if (natures[i].proxy == null) {
+//                throw new ExecuteException(natures[i], "Can't proxy[" + natures[i].label + "]!");
+//            }
             switch (natures[i].kind) {
                 case Nature.FIELD: {
                     value = natures[i].proxy.invoke(value, null);
@@ -69,7 +69,7 @@ public final class Invoke extends AbstractOperator {
             return null;
         }
         if (value.getClass().isArray()) {
-            value = ArrayWrapper.wrap((Object[]) value);
+            value = new ArrayWrapper((Object[]) value);
         }
         return value;
     }

@@ -21,10 +21,18 @@ import java.util.concurrent.ConcurrentMap;
 public abstract class AbstractTemplate implements ITemplate {
     private final IEngine engine;
     private final Detection detection;
+    private final ClassLoader classLoader;
 
     public AbstractTemplate(final IEngine engine) {
         this.engine = engine;
         this.detection = new Detection();
+        this.classLoader = new ClassLoader(engine.getClassLoader()) {
+        };
+    }
+
+    @Override
+    public ClassLoader getClassLoader() {
+        return classLoader;
     }
 
     @Override
@@ -62,12 +70,12 @@ public abstract class AbstractTemplate implements ITemplate {
         return detection;
     }
 
-    public final Object execute(final Map<String, Object> model, final OutputStream outputStream) throws Exception  {
+    public final Object execute(final Map<String, Object> model, final OutputStream outputStream) throws Exception {
         final IEncoder encoder = EncoderFactory.getEncoder(this.getOutputEncoding(), this.isSpecifiedEncoder());
         return this.execute(model, new BytesPrinter(outputStream, encoder));
     }
 
-    public final Object execute(final Map<String, Object> model, final Writer writer) throws Exception  {
+    public final Object execute(final Map<String, Object> model, final Writer writer) throws Exception {
         final IEncoder encoder = EncoderFactory.getEncoder(this.getOutputEncoding(), this.isSpecifiedEncoder());
         return this.execute(model, new CharsPrinter(writer, encoder));
     }

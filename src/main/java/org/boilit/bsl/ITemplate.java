@@ -40,6 +40,8 @@ public interface ITemplate {
 
     public ConcurrentMap<String, Fragment> getFragments();
 
+    public ClassLoader getClassLoader();
+
     public Object execute(Map<String, Object> model, OutputStream outputStream) throws Exception;
 
     public Object execute(Map<String, Object> model, Writer writer) throws Exception;

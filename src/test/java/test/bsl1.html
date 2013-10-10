@@ -1,11 +1,12 @@
-<!--[ include('./bsl.html#frg2', {'value': 'aaa'}); ]-->
-<!--[ arg values; echo(values.get(1).get(0)); ]-->
-<!--[ @abc({'value':'haha'}); ]-->
-<!--[ #abc{ arg value; include('bsl.html#frg2', {'value': value});} ]-->
-<!--[ var sfiled='bzname'; ]-->
-<input type="radio" name="filed" id="radio"
-<!--[ if(sfiled=='bzname') { ]--> checked="checked"<!--[ } ]-->
-value="bzname"/>
-<input type="radio" name="filed" id="radio1" ${sfiled=='bzname'?'checked="checked"':''} value="bzname"/>
+<!--[ arg name, value, values; ]-->
+<!--[ bpw;echo(values.get(1).get(0)); ]-->
 
-<input type="radio" name="filed" id="radio2" checked="${sfiled=='bzname'?'checked':''}" value="bzname"/>
+<!--[ bpw;echo(values.get(1).get(0)); ]-->
+<!--[ var m={'value': value};@abc(m); ]-->
+<!--[
+#abc{ arg value;
+]-->
+AAA,${value}.
+<!--[
+}
+]-->

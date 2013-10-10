@@ -11,7 +11,7 @@ public class LoopTest {
     public static void main(String[] args) throws Exception {
         String file = "D:\\W04WorkSpace\\Maven001\\Bsl\\src\\test\\java\\test\\loop.html";
 
-        IEngine engine = Engine.getEngine();
+        Engine engine = Engine.getEngine();
         engine.setUseTemplateCache(false);
 
         engine.getTemplate(file).execute(null, System.out);

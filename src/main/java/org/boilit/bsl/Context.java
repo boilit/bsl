@@ -30,21 +30,13 @@ public final class Context {
 
     public Context(final Detection detection, final IPrinter printer, final Map<String, Object> model) throws Exception {
         final int argSize = detection.getArgSize();
-        if (model == null && argSize > 0) {
-            throw new ScriptException("Context model can't be null!");
-        }
         this.printer = printer;
         this.labels = new String[detection.getMaxSize()];
         this.elements = new Object[detection.getMaxSize()];
-        String label;
         final int[] argIndexes = detection.getArgIndexes();
         final String[] arguments = detection.getArguments();
         for (int i = argSize - 1; i >= 0; i--) {
-            label = arguments[i];
-            if (!model.containsKey(label)) {
-                throw new ScriptException("Arg[" + label + "] was not exist in context model!");
-            }
-            this.setVariable(label, argIndexes[i], arrayDetect(model.get(label)));
+            this.setVariable(arguments[i], argIndexes[i], model == null ? null : arrayDetect(model.get(arguments[i])));
         }
     }
 
@@ -52,7 +44,7 @@ public final class Context {
         if (value == null) {
             return null;
         } else if (value.getClass().isArray()) {
-            return ArrayWrapper.wrap((Object[]) value);
+            return new ArrayWrapper((Object[]) value);
         } else {
             return value;
         }

@@ -51,6 +51,9 @@ public final class FragExec extends AbstractStatement {
 
     @Override
     public final FragExec detect() throws Exception {
+        if (expression != null) {
+            expression.detect();
+        }
         return this;
     }
 

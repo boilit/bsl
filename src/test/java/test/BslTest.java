@@ -30,6 +30,8 @@ public class BslTest {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("date", new Date());
         model.put("items", items);
+        model.put("name", "MyName");
+        model.put("value", "MyValue");
         model.put("values", values);
         engine.getTemplate(file).execute(model, System.out);
     }

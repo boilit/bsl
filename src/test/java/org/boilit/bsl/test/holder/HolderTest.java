@@ -16,7 +16,7 @@ import java.util.Map;
 public class HolderTest {
     public static void main(String[] args) throws Exception {
         StringResourceLoader loader = new StringResourceLoader();
-        IEngine engine = Engine.getEngine();
+        Engine engine = Engine.getEngine();
         engine.setUseTemplateCache(false);
         engine.setResourceLoader(loader);
         engine.registerFormatter(Date.class, new DateFormatter("yyyy-MM-dd"));

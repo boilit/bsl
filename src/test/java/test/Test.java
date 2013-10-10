@@ -19,9 +19,8 @@ public class Test {
 
         List<Stock> items = Stock.dummyItems();
 
-        IEngine engine = Engine.getEngine();
+        Engine engine = Engine.getEngine();
         engine.setSpecifiedEncoder(true);
-        engine.clearTemplateCache();
 
         Map<String, Object> model;
 

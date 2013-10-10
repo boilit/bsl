@@ -5,6 +5,7 @@ import org.boilit.bsl.formatter.IFormatter;
 import org.boilit.bsl.xio.FileResourceLoader;
 import org.boilit.bsl.xio.IResourceLoader;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
  * @see
  */
 public abstract class AbstractEngine implements IEngine {
+    private final ClassLoader classLoader;
     private String inputEncoding;
     private String outputEncoding;
     private boolean specifiedEncoder;
@@ -23,7 +25,8 @@ public abstract class AbstractEngine implements IEngine {
     private final FormatterManager formatterManager;
     private final ConcurrentMap<String, ITemplate> templateCache;
 
-    public AbstractEngine() {
+    public AbstractEngine(final ClassLoader classLoader) {
+        this.classLoader = classLoader;
         this.inputEncoding = null;
         this.outputEncoding = "UTF-8";
         this.specifiedEncoder = false;
@@ -32,6 +35,12 @@ public abstract class AbstractEngine implements IEngine {
         this.templateCache = new ConcurrentHashMap<String, ITemplate>();
     }
 
+    @Override
+    public final ClassLoader getClassLoader() {
+        return classLoader;
+    }
+
+    @Override
     public final String getInputEncoding() {
         return inputEncoding;
     }
@@ -40,6 +49,7 @@ public abstract class AbstractEngine implements IEngine {
         this.inputEncoding = inputEncoding;
     }
 
+    @Override
     public final String getOutputEncoding() {
         return outputEncoding;
     }
@@ -48,6 +58,7 @@ public abstract class AbstractEngine implements IEngine {
         this.outputEncoding = outputEncoding;
     }
 
+    @Override
     public final boolean isSpecifiedEncoder() {
         return specifiedEncoder;
     }
@@ -56,6 +67,7 @@ public abstract class AbstractEngine implements IEngine {
         this.specifiedEncoder = specifiedEncoder;
     }
 
+    @Override
     public final boolean isUseTemplateCache() {
         return useTemplateCache;
     }
@@ -64,6 +76,7 @@ public abstract class AbstractEngine implements IEngine {
         this.useTemplateCache = useTemplateCache;
     }
 
+    @Override
     public final IResourceLoader getResourceLoader() {
         return resourceLoader;
     }
@@ -72,6 +85,7 @@ public abstract class AbstractEngine implements IEngine {
         this.resourceLoader = resourceLoader;
     }
 
+    @Override
     public final ITextProcessor getTextProcessor() {
         return textProcessor;
     }
@@ -80,6 +94,7 @@ public abstract class AbstractEngine implements IEngine {
         this.textProcessor = textProcessor;
     }
 
+    @Override
     public final IBreakPointer getBreakPointer() {
         return breakPointer;
     }
@@ -88,6 +103,7 @@ public abstract class AbstractEngine implements IEngine {
         this.breakPointer = breakPointer;
     }
 
+    @Override
     public final FormatterManager getFormatterManager() {
         return formatterManager;
     }
@@ -96,20 +112,19 @@ public abstract class AbstractEngine implements IEngine {
         return formatterManager.add(clazz, formatter);
     }
 
-    public final void removeTemplateFromCache(final String name) {
-        templateCache.remove(name);
+    @Override
+    public final Map<String, ITemplate> getTemplateCache(){
+        return templateCache;
     }
 
-    public final void clearTemplateCache() {
-        templateCache.clear();
-    }
-
+    @Override
     public final ITemplate getTemplate(final String name) throws Exception {
         IResourceLoader resourceLoader = this.resourceLoader;
         if (resourceLoader == null) {
             resourceLoader = this.resourceLoader = new FileResourceLoader();
+            resourceLoader.setEngine(this);
+            resourceLoader.setEncoding(this.getInputEncoding());
         }
-        resourceLoader.setEncoding(this.getInputEncoding());
         if (!useTemplateCache) {
             return new Template(this, resourceLoader.getResource(name));
         }

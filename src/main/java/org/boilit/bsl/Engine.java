@@ -13,25 +13,33 @@ public final class Engine extends AbstractEngine {
     public static final String PROPERTIES_BSL = "bsl.properties";
 
     public Engine() {
-        super();
+        super(Thread.currentThread().getContextClassLoader());
     }
 
-    public static final IEngine getEngine() throws Exception {
-        return getEngine(Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES_BSL));
+    public Engine(final ClassLoader classLoader) {
+        super(classLoader);
     }
 
-    public static final IEngine getEngine(InputStream inputStream) throws Exception {
+    public static final Engine getEngine() throws Exception {
+        final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        return getEngine(classLoader, classLoader.getResourceAsStream(PROPERTIES_BSL));
+    }
+
+    public static final Engine getEngine(ClassLoader classLoader) throws Exception {
+        return getEngine(classLoader, classLoader.getResourceAsStream(PROPERTIES_BSL));
+    }
+
+    public static final Engine getEngine(ClassLoader classLoader, InputStream inputStream) throws Exception {
         Properties properties = new Properties();
         properties.load(inputStream);
-        return getEngine(properties);
+        return getEngine(classLoader, properties);
     }
 
-    public static final IEngine getEngine(Properties properties) throws Exception {
+    public static final Engine getEngine(ClassLoader classLoader, Properties properties) throws Exception {
         if (properties == null) {
-            return new Engine();
+            return new Engine(classLoader);
         }
-        IEngine engine = new Engine();
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Engine engine = new Engine(classLoader);
         final String inputEncoding = properties.getProperty("inputEncoding");
         if (inputEncoding != null && inputEncoding.trim().length() > 0) {
             if (inputEncoding.trim().equalsIgnoreCase("system")) {
@@ -56,6 +64,7 @@ public final class Engine extends AbstractEngine {
         if (resourceLoader != null && resourceLoader.trim().length() > 0) {
             Class clazz = classLoader.loadClass(resourceLoader.trim());
             IResourceLoader loader = (IResourceLoader) clazz.newInstance();
+            loader.setEngine(engine);
             loader.setEncoding(engine.getInputEncoding());
             engine.setResourceLoader(loader);
         }

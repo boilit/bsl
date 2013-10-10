@@ -10,7 +10,7 @@ import java.io.Reader;
 public final class ClassPathResource extends AbstractResource {
     @Override
     public final Reader openReader() throws Exception {
-        final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        final ClassLoader classLoader = this.getLoader().getEngine().getClassLoader();
         if(this.getEncoding() == null || this.getEncoding().trim().length() == 0) {
             return new InputStreamReader(classLoader.getResourceAsStream(this.getName()));
         }
