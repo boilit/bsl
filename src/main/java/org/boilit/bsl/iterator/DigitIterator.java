@@ -8,9 +8,9 @@ import java.util.Iterator;
  */
 public final class DigitIterator implements Iterator {
     private int index = 0;
-    private int digit = 0;
+    private final int digit;
 
-    public DigitIterator(double digit) {
+    public DigitIterator(final double digit) {
         this.digit = (int) digit;
     }
 

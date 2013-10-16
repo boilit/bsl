@@ -25,13 +25,13 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
     9、支持通过API编程、配置文件等方式启动引擎；
 
 开发语言：Java
-目前版本：2.0.1
+目前版本：2.0.2
 类库大小：260K
 引擎性能：超越目前主流及非主流模板引擎，速度一流，适合大中型项目应用，请查看在线文档或基准测试内的测试结果;
 软件特性：请参考<a href="http://boilit.github.io/bsl">在线文档</a>
 在线文档：<a href="http://boilit.github.io/bsl">http://boilit.github.io/bsl</a>
 基准测试：<a href="https://github.com/boilit/ebm">https://github.com/boilit/ebm</a>
-下载地址: <a href="http://boilit.github.io/bsl/releases/bsl-2.0.1.jar">bsl-2.0.1.jar</a>
+下载地址: <a href="http://boilit.github.io/bsl/releases/bsl-2.0.2.jar">bsl-2.0.2.jar</a>
 交流QQ群：109365467
 
 软件作者：Boilit(于景洋)
@@ -41,10 +41,12 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
 版本更新
 ===
 <pre>
+2.0.2版本更新：
+    1、修复Array在Wrapper下Iterator的问题；
+    2、更新专用GBKEncoder，改倒序时手误导致的越界异常；
 2.0.1版本更新：
     1、修复模板片段参数定位问题；
     2、增加引擎ClassLoader实例化方法；
-
 2.0.0版本更新：
     1、增加arg关键字，用于声明模板或片段需要的参数，显示地规范编码；
        这样做修复了之前版本因Map类型的Model可能因迭代顺序不定造成的隐藏BUG，同时也提升了模板渲染速度；

@@ -1,5 +1,7 @@
 package org.boilit.bsl.iterator;
 
+import org.boilit.bsl.core.ArrayWrapper;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ public final class ObjectIterator implements Iterator {
             this.iterator = ((List) object).iterator();
         } else if (object instanceof Map) {
             this.iterator = ((Map) object).entrySet().iterator();
+        } else if (object instanceof ArrayWrapper) {
+            this.iterator = new ArrayIterator(((ArrayWrapper) object).getArray());
         } else if (object instanceof Object[]) {
             this.iterator = new ArrayIterator((Object[]) object);
         } else if (object instanceof Boolean) {

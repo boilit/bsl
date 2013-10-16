@@ -8,9 +8,9 @@ import java.util.Iterator;
  */
 public final class ArrayIterator<E> implements Iterator<E> {
     private int index = 0;
-    private E[] elements;
+    private final E[] elements;
 
-    public ArrayIterator(E[] elements) {
+    public ArrayIterator(final E[] elements) {
         this.elements = elements;
     }
 

@@ -7,9 +7,9 @@ import java.util.Iterator;
  * @see
  */
 public final class BoolIterator implements Iterator {
-    private boolean bool;
+    private final boolean bool;
 
-    public BoolIterator(boolean bool) {
+    public BoolIterator(final boolean bool) {
         this.bool = bool;
     }
 

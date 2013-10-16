@@ -19,7 +19,7 @@ public final class GBKEncoder extends AbstractEncoder {
             return;
         }
         TABLE_GBK = new byte[Character.MAX_VALUE + 1][];
-        for (int i =TABLE_GBK.length; i>=0; i--) {
+        for (int i = Character.MAX_VALUE; i>=0; i--) {
             try {
                 TABLE_GBK[i] = String.valueOf((char) i).getBytes("GBK");
             } catch (UnsupportedEncodingException e) {

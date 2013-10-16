@@ -5,10 +5,12 @@ package org.boilit.bsl.core;
  * @see
  */
 public final class ArrayWrapper {
-    private Object[] array;
+    private final int length;
+    private final Object[] array;
 
     public ArrayWrapper(final Object[] array) {
         this.array = array;
+        this.length = array.length;
     }
 
     public final Object get(final int index) {
@@ -17,6 +19,10 @@ public final class ArrayWrapper {
 
     public final void set(final int index, Object value) {
         array[index] = value;
+    }
+
+    public final int getLength() {
+        return length;
     }
 
     public final Object[] getArray() {
