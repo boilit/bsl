@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -44,14 +44,14 @@
                 开发语言：Java<br/>
                 软件大小：260K<br/>
                 授权协议：MIT<br/>
-                当前版本：2.0.1<br/>
-                发布时间：2013-10-10<br/>
-                下载软件：<a href="../../releases/bsl-2.0.1.jar">JAR</a>
-                    <a href="../../releases/bsl-2.0.1-src.zip">SRC</a><br/>
+                当前版本：2.0.2<br/>
+                发布时间：2013-10-16<br/>
+                下载软件：<a href="../../releases/bsl-2.0.2.jar">JAR</a>
+                    <a href="../../releases/bsl-2.0.2-src.zip">SRC</a><br/>
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
-            <div class="location">当前位置：配置及实例化</div><div class="link">﻿<pre style="line-height: 20px;">
+            <div class="location">当前位置：配置及实例化</div><div class="link"><pre style="line-height: 20px;">
 <a href="prop.html">&gt;&gt;&gt;配置及实例化</a>
 <a href="apin.html">&gt;&gt;&gt;使用API实例化</a>
 <a href="exec.html">&gt;&gt;&gt;获取并运行模板</a>
@@ -79,10 +79,11 @@ breakPointer=
 <div class="subject">注意事项：</div>
 <pre>
     1、上述配置是默认的bsl.properties配置文件，可自行编写bsl.properties配置文件；
-    2、实例化引擎方法一：获取该配置文件的输入流使用Engine.getEngine(inputStream)实例化引擎；
-    3、实例化引擎方法二：获取该配置文件的Properties对象，使用Engine.getEngine(properties)实例化引擎；
-    4、实例化引擎方法三：直接new Engine()实例化引擎并修改设置,参考API实例化；
-    5、不提供引擎单例，使用者需自己实现单例模式及设置引擎属性；
+    2、实例化引擎方法一：使用Engine.getEngine()实例化引擎，默认读取类路径下的bsl.properties配置文件；
+    3、实例化引擎方法二：获取该配置文件的输入流使用Engine.getEngine(classLoader, inputStream)实例化引擎；
+    4、实例化引擎方法三：获取该配置文件的Properties对象，使用Engine.getEngine(classLoader, properties)实例化引擎；
+    5、实例化引擎方法四：直接new Engine()实例化引擎并修改设置,参考API实例化；
+    6、不提供引擎单例，使用者需自己实现单例模式及设置引擎属性；
 </pre></div>
         <div style="clear: both;">&nbsp;</div>
     </div>

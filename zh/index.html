@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -44,10 +44,10 @@
                 开发语言：Java<br/>
                 软件大小：260K<br/>
                 授权协议：MIT<br/>
-                当前版本：2.0.1<br/>
-                发布时间：2013-10-10<br/>
-                下载软件：<a href="../releases/bsl-2.0.1.jar">JAR</a>
-                    <a href="../releases/bsl-2.0.1-src.zip">SRC</a><br/>
+                当前版本：2.0.2<br/>
+                发布时间：2013-10-16<br/>
+                下载软件：<a href="../releases/bsl-2.0.2.jar">JAR</a>
+                    <a href="../releases/bsl-2.0.2-src.zip">SRC</a><br/>
                 历史版本：<a href="./history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
@@ -78,7 +78,95 @@
     7、支持多种模板资源加载方式（File、ClassPath、URL、String等）；
     8、支持独立进行单元测试、模板错误行列定位；
     9、支持通过API编程、配置文件等方式启动引擎，支持断点调试；
-</pre></div>
+</pre>
+<hr/>
+<div style="text-align: center;">
+    <style type="text/css">
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+        a {
+            white-space:nowrap;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        a:active {
+            color: #0000ff;
+        }
+        a:hover {
+            color: #ff0000;
+        }
+        a.engine {
+            margin-right: 120px;
+            text-align: right;
+        }
+        div.baner {
+            padding: 4px;
+            text-align: center;
+            color: #ff0000;
+            font-size: 11pt;
+            font-weight: 600;
+        }
+        div.title {
+            text-align: center;
+            color: #0000ff;
+            font-size: 11pt;
+            font-weight: 600;
+        }
+        div.canvas {
+            width: 70%;
+            height: 216px;
+            margin: 4px auto;
+        }
+    </style>
+    <div class="baner">以下测试结果由<a href="https://github.com/boilit/ebm">Engine Benchmark 2.0.0</a>生成， 测试日期：2013-10-16</div>
+    <hr/>
+    <div class="title">每秒钟渲染模板次数：越大越好</div>
+    <div id="tps" class="canvas"></div>
+    <!--[if IE]>
+    <script type="text/javascript" src="../scripts/flotr2/flotr2.ie.min.js"></script>
+    <script type="text/javascript">
+        alert('建议使用Chrome、Firefox等浏览器，IE浏览器下引擎名称会换行！');
+    </script>
+    <![endif]-->
+    <script type="text/javascript" src="../scripts/flotr2/flotr2.min.js"></script>
+    <script type="text/javascript">
+        function bars(container, data, yAxis) {
+            Flotr.draw(
+                    container, [data], {
+                        bars: { show: true, horizontal: true, shadowSize: 0.2, barWidth:0.8 },
+                        mouse: { track: true, relative: true },
+                        xaxis: { min: 0, showLabels: true},
+                        yaxis: { ticks: yAxis, min:0 }
+                    }
+            );
+        }
+        (function basic_bars(container, horizontal) {
+            var tps = [], time=[], size=[], yAxis = [];
+            tps.push([4205, 1]);
+            yAxis.push([1, '<a href="http://freemarker.org" class="engine">FreeMarker-2.3.19</a>']);
+            tps.push([5561, 2]);
+            yAxis.push([2, '<a href="http://velocity.apache.org" class="engine">Velocity-1.7</a>']);
+            tps.push([6265, 3]);
+            yAxis.push([3, '<a href="http://rythmengine.org" class="engine">Rythm-1.0.0-b10-SNAPSHOT</a>']);
+            tps.push([10384, 4]);
+            yAxis.push([4, '<a href="http://ibeetl.com/wordpress" class="engine">BeeTL-1.25.01</a>']);
+            tps.push([10526, 5]);
+            yAxis.push([5, '<a href="http://httl.github.io" class="engine">HTTL-1.0.11</a>']);
+            tps.push([13850, 6]);
+            yAxis.push([6, '<a href="#" class="engine">JdkStringBuilder-1.7.0_40</a>']);
+            tps.push([16501, 7]);
+            yAxis.push([7, '<a href="#" class="engine">JdkStringBuffer-1.7.0_40</a>']);
+            tps.push([16891, 8]);
+            yAxis.push([8, '<a href="https://github.com/zqq90/webit-script" class="engine">webit-script-1.1.5</a>']);
+            tps.push([18248, 9]);
+            yAxis.push([9, '<a href="http://boilit.github.io/bsl" class="engine">BSL-2.0.2</a>']);
+            bars(document.getElementById("tps"), tps, yAxis);
+        })();
+    </script>
+</div>
+<hr/></div>
         <div style="clear: both;">&nbsp;</div>
     </div>
     <div class="foot">

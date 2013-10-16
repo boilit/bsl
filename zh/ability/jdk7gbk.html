@@ -44,14 +44,14 @@
                 开发语言：Java<br/>
                 软件大小：260K<br/>
                 授权协议：MIT<br/>
-                当前版本：2.0.1<br/>
-                发布时间：2013-10-10<br/>
-                下载软件：<a href="../../releases/bsl-2.0.1.jar">JAR</a>
-                    <a href="../../releases/bsl-2.0.1-src.zip">SRC</a><br/>
+                当前版本：2.0.2<br/>
+                发布时间：2013-10-16<br/>
+                下载软件：<a href="../../releases/bsl-2.0.2.jar">JAR</a>
+                    <a href="../../releases/bsl-2.0.2-src.zip">SRC</a><br/>
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
-            <div class="location">当前位置：JDK1.7 GBK</div><div class="link">﻿<pre style="line-height: 20px;">
+            <div class="location">当前位置：JDK1.7 GBK</div><div class="link"><pre style="line-height: 20px;">
 <a href="jdk7utf8.html">&gt;&gt;&gt;JDK1.7 UTF-8</a>
 <a href="jdk7gbk.html">&gt;&gt;&gt;JDK1.7 GBK</a>
 <a href="jdk6utf8.html">&gt;&gt;&gt;JDK1.6 UTF-8</a>
@@ -60,31 +60,125 @@
             <div style="clear: both;">&nbsp;</div>
         </div>
         <div id="text" class="text" style="width: 100;">
-<div class="subject">示例代码：</div>
-<pre class="prettyprint language-html linenums">
-JDK1.7上GBK输出编码下各模板引擎性能测试结果
-===============================================================================
-OsName:Windows 7, OsVersion:6.1, OsArch:amd64, CpuCore:4
-JreVersion:1.7.0_40, MaxMem:1795M, FreeMem:119M, UsedMem:2M
-JvmMode:DEFAULT, OutputEncoding:GBK, OutputMode:BYTES
-Items:20, WarmCount:10, LoopCount:10000, Buffered:false
-===============================================================================
-Engine              Version             Time(ms)  Size(b)   Tps       Rate(%)
-StringBuilder       jdk1.7.0_40         1100      6731      9090      100.00
-Bsl                 1.1.0               815       6801      12269     134.97
-Httl                1.0.11              1225      6803      8163      89.80
-Webit               1.1.3               1009      7349      9910      109.02
-Beetl               1.25.01             1226      6805      8156      89.72
-Velocity            1.7                 2329      7496      4293      47.23
-FreeMarker          2.3.19              2785      6807      3590      39.50
-===============================================================================
-</pre>
 <div class="subject">测试说明：</div>
 <pre>
     目前网络上的模板引擎测试基本上都是非独立JVM测试的，这样做后测试的引擎性能会较高，与实际性能相比有较大偏差，
     因此本测试对每个引擎都使用独立JVM测试，保证了各个引擎间环境的公平性；
     基准测试使用的方式是对每款引擎进行独立JVM测试，具体方式参考<a href="https://github.com/boilit/ebm">基准测试项目</a>；
-</pre></div>
+
+    以下是在JDK7上输出GBK编码时的测试结果：
+</pre>
+<hr/>
+<div style="text-align: center;">
+    <style type="text/css">
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+        a {
+            white-space:nowrap;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        a:active {
+            color: #0000ff;
+        }
+        a:hover {
+            color: #ff0000;
+        }
+        a.engine {
+            margin-right: 120px;
+            text-align: right;
+        }
+        div.baner {
+            padding: 4px;
+            text-align: center;
+            color: #ff0000;
+            font-size: 11pt;
+            font-weight: 600;
+        }
+        div.title {
+            text-align: center;
+            color: #0000ff;
+            font-size: 11pt;
+            font-weight: 600;
+        }
+        div.canvas {
+            width: 70%;
+            height: 216px;
+            margin: 4px auto;
+        }
+    </style>
+    <div class="baner">以下测试结果由<a href="https://github.com/boilit/ebm">Engine Benchmark 2.0.0</a>生成， 测试日期：2013-10-16</div>
+    <hr/>
+    <div class="title">每秒钟渲染模板次数：越大越好</div>
+    <div id="tps" class="canvas"></div>
+    <div class="title">渲染10000次耗时(ms)：越小越好</div>
+    <div id="time" class="canvas"></div>
+    <div class="title">单次渲染输出字节数：大小与排版的取舍?</div>
+    <div id="size" class="canvas"></div>
+    <!--[if IE]>
+    <script type="text/javascript" src="../../scripts/flotr2/flotr2.ie.min.js"></script>
+    <script type="text/javascript">
+        alert('建议使用Chrome、Firefox等浏览器，IE浏览器下引擎名称会换行！');
+    </script>
+    <![endif]-->
+    <script type="text/javascript" src="../../scripts/flotr2/flotr2.min.js"></script>
+    <script type="text/javascript">
+        function bars(container, data, yAxis) {
+            Flotr.draw(
+                    container, [data], {
+                        bars: { show: true, horizontal: true, shadowSize: 0.2, barWidth:0.8 },
+                        mouse: { track: true, relative: true },
+                        xaxis: { min: 0, showLabels: true},
+                        yaxis: { ticks: yAxis, min:0 }
+                    }
+            );
+        }
+        (function basic_bars(container, horizontal) {
+            var tps = [], time=[], size=[], yAxis = [];
+            tps.push([3773, 1]);
+            time.push([2650, 1]);
+            size.push([6806, 1]);
+            yAxis.push([1, '<a href="http://freemarker.org" class="engine">FreeMarker-2.3.19</a>']);
+            tps.push([4644, 2]);
+            time.push([2153, 2]);
+            size.push([7495, 2]);
+            yAxis.push([2, '<a href="http://velocity.apache.org" class="engine">Velocity-1.7</a>']);
+            tps.push([6246, 3]);
+            time.push([1601, 3]);
+            size.push([4866, 3]);
+            yAxis.push([3, '<a href="http://rythmengine.org" class="engine">Rythm-1.0.0-b10-SNAPSHOT</a>']);
+            tps.push([8710, 4]);
+            time.push([1148, 4]);
+            size.push([6805, 4]);
+            yAxis.push([4, '<a href="http://ibeetl.com/wordpress" class="engine">BeeTL-1.25.01</a>']);
+            tps.push([9090, 5]);
+            time.push([1100, 5]);
+            size.push([6803, 5]);
+            yAxis.push([5, '<a href="http://httl.github.io" class="engine">HTTL-1.0.11</a>']);
+            tps.push([10515, 6]);
+            time.push([951, 6]);
+            size.push([6730, 6]);
+            yAxis.push([6, '<a href="#" class="engine">JdkStringBuffer-1.7.0_40</a>']);
+            tps.push([10626, 7]);
+            time.push([941, 7]);
+            size.push([6730, 7]);
+            yAxis.push([7, '<a href="#" class="engine">JdkStringBuilder-1.7.0_40</a>']);
+            tps.push([16474, 8]);
+            time.push([607, 8]);
+            size.push([6803, 8]);
+            yAxis.push([8, '<a href="http://boilit.github.io/bsl" class="engine">BSL-2.0.2</a>']);
+            tps.push([16806, 9]);
+            time.push([595, 9]);
+            size.push([6823, 9]);
+            yAxis.push([9, '<a href="https://github.com/zqq90/webit-script" class="engine">webit-script-1.1.5</a>']);
+            bars(document.getElementById("tps"), tps, yAxis);
+            bars(document.getElementById("time"), time, yAxis);
+            bars(document.getElementById("size"), size, yAxis);
+        })();
+    </script>
+</div></div>
         <div style="clear: both;">&nbsp;</div>
     </div>
     <div class="foot">

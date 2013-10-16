@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -44,10 +44,10 @@
                 开发语言：Java<br/>
                 软件大小：260K<br/>
                 授权协议：MIT<br/>
-                当前版本：2.0.1<br/>
-                发布时间：2013-10-10<br/>
-                下载软件：<a href="../../releases/bsl-2.0.1.jar">JAR</a>
-                    <a href="../../releases/bsl-2.0.1-src.zip">SRC</a><br/>
+                当前版本：2.0.2<br/>
+                发布时间：2013-10-16<br/>
+                下载软件：<a href="../../releases/bsl-2.0.2.jar">JAR</a>
+                    <a href="../../releases/bsl-2.0.2-src.zip">SRC</a><br/>
                 历史版本：<a href="../history/history.html">点此进入</a><br/>
                 交流QQ群：109365467
             </div>
@@ -57,10 +57,12 @@
         <div id="text" class="text" style="width: 100;">
 <div>
 <pre style="line-height: 20px;">
+2.0.2版本更新：
+    1、修复Array在Wrapper下Iterator的问题；
+    2、更新专用GBKEncoder，改倒序时手误导致的越界异常；
 2.0.1版本更新：
     1、修复模板片段参数定位问题；
     2、增加引擎ClassLoader实例化方法；
-
 2.0.0版本更新：
     1、增加arg关键字，用于声明模板或片段需要的参数，显示地规范编码；
        这样做修复了之前版本因Map类型的Model可能因迭代顺序不定造成的隐藏BUG，同时也提升了模板渲染速度；
