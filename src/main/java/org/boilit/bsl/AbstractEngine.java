@@ -83,6 +83,7 @@ public abstract class AbstractEngine implements IEngine {
 
     public final void setResourceLoader(final IResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
+        this.resourceLoader.setEngine(this);
     }
 
     @Override
@@ -123,7 +124,6 @@ public abstract class AbstractEngine implements IEngine {
         if (resourceLoader == null) {
             resourceLoader = this.resourceLoader = new FileResourceLoader();
             resourceLoader.setEngine(this);
-            resourceLoader.setEncoding(this.getInputEncoding());
         }
         if (!useTemplateCache) {
             return new Template(this, resourceLoader.getResource(name));

@@ -63,26 +63,36 @@ public final class Loop extends AbstractDirective {
     @Override
     public final AbstractDirective detect() throws Exception {
         final Detection detection = this.getTemplate().getDetection();
+        detection.occupy();
         final String label = this.label;
         labelMark = detection.getVarIndex(label);
-        if (labelMark != -1) {
-            throw new DetectException(this, "Label[" + label + "] duplicated defined!");
+//        if (labelMark != -1) {.
+//            throw new DetectException(this, "Label[" + label + "] duplicated defined!");
+//        }
+//        detection.addVariable(label);
+//        labelMark = detection.getVarIndex(label);
+        if(labelMark == -1) {
+            detection.addVariable(label);
+            labelMark = detection.getVarIndex(label);
         }
-        detection.addVariable(label);
-        labelMark = detection.getVarIndex(label);
         final String index = this.index;
         indexMark = detection.getVarIndex(index);
-        if (indexMark != -1) {
-            throw new DetectException(this, "Label[" + index + "] duplicated defined!");
+//        if (indexMark != -1) {
+//            throw new DetectException(this, "Label[" + index + "] duplicated defined!");
+//        }
+//        detection.addVariable(index);
+//        indexMark = detection.getVarIndex(index);
+        if(indexMark == -1) {
+            detection.addVariable(index);
+            indexMark = detection.getVarIndex(index);
         }
-        detection.addVariable(index);
-        indexMark = detection.getVarIndex(index);
         if (expression != null) {
             expression.detect();
         }
         if (block != null) {
             block.detect();
         }
+        detection.revert();
         return this;
     }
 }

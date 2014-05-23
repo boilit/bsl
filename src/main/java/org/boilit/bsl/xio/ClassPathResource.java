@@ -14,6 +14,6 @@ public final class ClassPathResource extends AbstractResource {
         if(this.getEncoding() == null || this.getEncoding().trim().length() == 0) {
             return new InputStreamReader(classLoader.getResourceAsStream(this.getName()));
         }
-        return new InputStreamReader(classLoader.getResourceAsStream(this.getName()), this.getEncoding());
+        return new InputStreamReader(classLoader.getResource(this.getName()).openStream(), this.getEncoding());
     }
 }

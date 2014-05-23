@@ -22,10 +22,10 @@ public final class LgcAnd extends AbstractBinaryOperator {
 
     @Override
     public final Object execute(final Context context) throws Exception {
-        return Operation.doLgcAnd(
-                this.getExpression1().execute(context),
-                this.getExpression2().execute(context)
-        );
+        if(!Operation.toBool(this.getExpression1().execute(context))) {
+            return false;
+        }
+        return Operation.toBool(this.getExpression2().execute(context));
     }
 
     @Override

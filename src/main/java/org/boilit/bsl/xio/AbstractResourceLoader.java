@@ -8,7 +8,6 @@ import org.boilit.bsl.IEngine;
  */
 public abstract class AbstractResourceLoader implements IResourceLoader {
     private IEngine engine;
-    private String encoding;
 
     @Override
     public final IEngine getEngine() {
@@ -23,12 +22,6 @@ public abstract class AbstractResourceLoader implements IResourceLoader {
 
     @Override
     public final String getEncoding() {
-        return encoding;
-    }
-
-    @Override
-    public final IResourceLoader setEncoding(String encoding) {
-        this.encoding = encoding;
-        return this;
+        return engine.getInputEncoding();
     }
 }

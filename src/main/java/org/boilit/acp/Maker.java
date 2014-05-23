@@ -48,7 +48,7 @@ public final class Maker {
         } else {
             // 非public字段映射到public方法
             methodName = String.valueOf(fieldName.charAt(0)).toUpperCase() + fieldName.substring(1);
-            if (field.getType().equals(boolean.class) || field.getType().equals(Boolean.class)) {
+            if (field.getType().equals(boolean.class)) {
                 methodName = "is" + methodName;
             } else {
                 methodName = "get" + methodName;

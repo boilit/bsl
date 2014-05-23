@@ -43,7 +43,6 @@ public final class Nature extends AbstractOperator {
 
     @Override
     public final Nature optimize() throws Exception {
-        Collections.reverse(children);
         expressions = new AbstractExpression[children.size()];
         children.toArray(expressions);
         children.clear();

@@ -62,11 +62,7 @@ public final class Engine extends AbstractEngine {
         }
         final String resourceLoader = properties.getProperty("resourceLoader");
         if (resourceLoader != null && resourceLoader.trim().length() > 0) {
-            Class clazz = classLoader.loadClass(resourceLoader.trim());
-            IResourceLoader loader = (IResourceLoader) clazz.newInstance();
-            loader.setEngine(engine);
-            loader.setEncoding(engine.getInputEncoding());
-            engine.setResourceLoader(loader);
+            engine.setResourceLoader((IResourceLoader) classLoader.loadClass(resourceLoader.trim()).newInstance());
         }
         final String textProcessor = properties.getProperty("textProcessor");
         if (textProcessor != null && textProcessor.trim().length() > 0) {

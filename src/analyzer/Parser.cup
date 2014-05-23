@@ -209,6 +209,7 @@ directive ::= text:a {: RESULT=a; :}
 	| arg:a SEMI {: RESULT=a; :}
 	| var:a SEMI {: RESULT=a; :}
     | call:a SEMI {: RESULT=a; :}
+	| assign:a SEMI {: RESULT=a; :}
 	| assigns:a SEMI {: RESULT=a; :}
 	| branch:a {: RESULT=a; :}
 	| loop:a {: RESULT=a; :}

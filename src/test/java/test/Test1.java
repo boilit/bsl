@@ -3,6 +3,8 @@ package test;
 import org.boilit.bsl.Engine;
 import org.boilit.bsl.xio.FileResourceLoader;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +14,9 @@ import java.util.Map;
  * @author Boilit
  * @see
  */
-public class BslTest {
+public class Test1 {
     public static void main(String[] args) throws Exception {
-        String file = "D:\\W04WorkSpace\\Maven001\\Bsl\\src\\test\\java\\test\\bsl1.html";
-
-        List<Stock> items = Stock.dummyItems();
+        String file = "D:\\W04WorkSpace\\Maven001\\Bsl\\src\\test\\java\\test\\test1.html";
 
         Engine engine = Engine.getEngine();
         engine.getTemplateCache().clear();
@@ -26,14 +26,8 @@ public class BslTest {
         engine.setUseTemplateCache(true);
         engine.setResourceLoader(new FileResourceLoader());
         engine.setTextProcessor(null);
-        String[][] values = new String[][]{new String[]{"abcd"}, new String[]{"efgh"}};
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("date", new Date());
-        model.put("items", items);
-        model.put("name", "MyName");
-        model.put("value", "MyValue");
-        model.put("values", values);
-        model.put("totleSize", 10);
+        model.put("d", null);
         engine.getTemplate(file).execute(model, System.out);
     }
 }

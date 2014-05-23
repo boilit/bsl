@@ -15,15 +15,17 @@ public final class GBKEncoder extends AbstractEncoder {
 
     public GBKEncoder(final String encoding) {
         super(encoding);
-        if (TABLE_GBK != null) {
-            return;
-        }
-        TABLE_GBK = new byte[Character.MAX_VALUE + 1][];
-        for (int i = Character.MAX_VALUE; i>=0; i--) {
-            try {
-                TABLE_GBK[i] = String.valueOf((char) i).getBytes("GBK");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+        synchronized (GBKEncoder.class) {
+            if (TABLE_GBK != null) {
+                return;
+            }
+            TABLE_GBK = new byte[Character.MAX_VALUE + 1][];
+            for (int i = Character.MAX_VALUE; i>=0; i--) {
+                try {
+                    TABLE_GBK[i] = String.valueOf((char) i).getBytes("GBK");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

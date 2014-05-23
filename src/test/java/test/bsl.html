@@ -52,7 +52,7 @@
     </tr>
     </thead>
     <tbody>
-    <!--[ arg items;loop(item : items){ bpw;]-->
+    <!--[ arg items, totleSize; var s=0;loop(item : items){ bpw; s=1; ]-->
     <tr class="${item_index%2==0?'odd':'even'}">
         <td style="text-align: center">${item_index + 1}</td>
         <td>
@@ -73,6 +73,12 @@
         <!--[ } ]-->
     </tr>
     <!--[ } ]-->
+    <!--[loop(serial:totleSize){]-->
+    ${serial}
+    <!--[}]-->
+    <!--[loop(serial1:totleSize){]-->
+    ${serial}
+    <!--[}]-->
     </tbody>
 </table>
 

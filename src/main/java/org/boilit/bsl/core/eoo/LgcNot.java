@@ -19,7 +19,7 @@ public final class LgcNot extends AbstractUnitaryOperator {
 
     @Override
     public final Object execute(final Context context) throws Exception {
-        return Operation.doLgcNot(this.getExpression().execute(context));
+        return !Operation.toBool(this.getExpression().execute(context));
     }
 
     @Override
