@@ -2,7 +2,7 @@ Boilit Script Language
 ===
 <pre>
 
-<strong>不再维护，不建议使用，该项目废弃。</strong>
+<strong>不再维护，不建议使用，该项目废弃, 目前其替代品未开源。</strong>
 
 Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的脚本语言。
 
@@ -35,10 +35,9 @@ Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的�
 在线文档：<a href="http://boilit.github.io/bsl">http://boilit.github.io/bsl</a>
 基准测试：<a href="https://github.com/boilit/ebm">https://github.com/boilit/ebm</a>
 下载地址: <a href="http://boilit.github.io/bsl/releases/bsl-2.0.2.jar">bsl-2.0.2.jar</a>
-交流QQ群：109365467
+交流QQ群：
 
-软件作者：Boilit(于景洋)
-所在单位：胜利油田胜利软件有限责任公司
+软件作者：于景洋
 </pre>
 
 版本更新
