@@ -2,7 +2,7 @@ Boilit Script Language
 ===
 <pre>
 
-停止维护，不建议使用。
+<strong>不再维护，不建议使用，该项目废弃。</strong>
 
 Bsl全名为Boilit Script Language，是一款主要面向模板引擎方向的脚本语言。
 
